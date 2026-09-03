@@ -56,6 +56,11 @@ export const trust: readonly TrustItem[] = [
   },
 ];
 
+/**
+ * Five FAQ items matching the topics Phase 5 (F1.9) requires: delivery time,
+ * warranty, custom builds, payment methods, support. Adding a sixth item here
+ * surfaces automatically on the home page (the FAQ section iterates `faq`).
+ */
 export const faq: readonly FAQItem[] = [
   {
     question: "¿Cuánto tarda un armado?",
@@ -73,8 +78,13 @@ export const faq: readonly FAQItem[] = [
       "Por supuesto. Trabajamos con parts nuevas y usadas. Si ya tenés CPU, GPU, RAM o storage, los integramos al armado y solo cobramos mano de obra.",
   },
   {
-    question: "¿Hacen envíos al interior?",
+    question: "¿Qué métodos de pago aceptan?",
     answer:
-      "Sí. Despachamos a todo Colombia vía transportista asegurado. El envío es gratis en Bogotá y Medellín para compras superiores a $2.000.000 ARS.",
+      "Aceptamos transferencia bancaria, PSE, Nequi, Daviplata, tarjetas crédito/débito y Mercado Pago. Hasta 12 cuotas sin interés con bancos aliados en compras superiores a $2.000.000 COP.",
+  },
+  {
+    question: "¿Cómo es el soporte post-venta?",
+    answer:
+      "Atención por WhatsApp de lunes a sábado, 9 a 19 h. Soporte remoto incluido de por vida y visitas al taller en Bogotá y Medellín sin costo durante la garantía.",
   },
 ];

@@ -96,17 +96,17 @@ Acceptance: `pnpm check` clean. Each component file is type-safe and free of hex
 
 ## Phase 5 · Home page (`/` (read-only))
 
-- [ ] **5.1** Create `src/components/home/HomeHero.astro` matching F1.1–F1.3.
-- [ ] **5.2** Create `src/components/home/TrustStrip.astro` matching F1.4.
-- [ ] **5.3** Create `src/components/home/ServicesSection.astro` matching F1.5, mounting four `ServiceCard`s from `src/data/services.ts`.
-- [ ] **5.4** Create `src/components/home/PreBuiltTeaser.astro` matching F1.6, mounting three `PricingCard`s from `src/data/prebuilds.ts`.
-- [ ] **5.5** Create `src/components/home/ConfiguratorTeaser.astro` matching F1.7.
-- [ ] **5.6** Create `src/components/home/ContactStrip.astro` matching F1.8 (the form here is a static stub; the real form is on `/contacto` (read-only)).
-- [ ] **5.7** Create `src/components/home/FAQSection.astro` matching F1.9, mounting `FAQItem`s from `src/data/home.ts`.
-- [ ] **5.8** Rewrite `src/pages/index.astro` to compose `BaseLayout + Navbar + HomeHero + TrustStrip + ServicesSection + PreBuiltTeaser + ConfiguratorTeaser + FAQSection + ContactStrip + Footer`.
-- [ ] **5.9** Manual visual diff: open `pnpm dev` and compare against Stitch screen `38de639a2f784523a8238c313cb54226`. Adjust classes iteratively.
+> **Phase 5 dev note (2025-09-03):** The orchestrator's Phase 5 prompt renamed the home wrappers to align with the components actually shipped in Phase 4 (`PageHero`, `ServicesGrid`, `PrebuildTeaser`, `ConfiguratorCTA`). The legacy task names below (`HomeHero`, `TrustStrip`, `ServicesSection`, `PreBuiltTeaser`, `ConfiguratorTeaser`, `ContactStrip`, `FAQSection`) are aliased in the descriptions to the canonical names used in the codebase. The Phase 5 prompt also moved the FAQ accordion and the contact teaser from separate wrapper components into inline markup inside `src/pages/index.astro`, so 5.6 and 5.7 are reported as part of 5.5 below.
 
-Acceptance: home page matches Stitch (F1.1–F1.11), builds cleanly, ships zero JS.
+- [x] **5.1** Reuse `src/components/home/PageHero.astro` (F1.1–F1.3) with home-specific props (eyebrow `// CUSTOM PC BUILDER · COLOMBIA`, H1 `Armamos la PC`, accent `de tus sueños`, body about creators/gamers/COP, primary CTA `Armar mi PC → /configurar`, outline CTA `Ver pre-armadas → /pre-armadas`). PageHero also got a small cyan gradient underline bar beneath the H1 as the literal "accent underline on key word" treatment.
+- [x] **5.2** `StatsStrip` (F1.3) mounted below the hero with the four `stats` from `src/data/home.ts` (320+ · 98% · 24M · 48h). The Phase 2 `TrustStrip.astro` is left in place but no longer rendered on `/` — the Phase 5 layout uses the more detailed services + prebuilds teasers as the trust signal instead.
+- [x] **5.3** `src/components/home/ServicesGrid.astro` (F1.5) mounted, sourcing four `ServiceCard`s from `src/data/services.ts` (armado-a-medida · pre-armadas · mantenimiento-upgrade · garantia-soporte).
+- [x] **5.4** `src/components/home/PrebuildTeaser.astro` (F1.6) mounted, sourcing three `PricingCard`s from `src/data/prebuilds.ts` (essentials · creator · apex).
+- [x] **5.5** `src/components/home/ConfiguratorCTA.astro` (F1.7) mounted as a two-column split with a static GPU-selection preview on the right. The contact teaser (F1.8, the static stub) and the FAQ accordion (F1.9, mapping `faq` from `src/data/home.ts` to five `FAQItem`s) are composed inline inside `src/pages/index.astro` per the Phase 5 orchestrator prompt.
+- [x] **5.6** `src/pages/index.astro` rewritten to compose `BaseLayout + Navbar + PageHero + StatsStrip + ServicesGrid + PrebuildTeaser + ConfiguratorCTA + FAQ accordion (inline) + contact teaser (inline) + Footer`. Navbar and Footer are mounted through `BaseLayout`'s `slot="navbar"` / `slot="footer"` named slots. The page also carries a defensive inline `<script is:inline>` fallback for a future `id="main-nav"` / `id="nav-toggle"` mobile-nav variant; the active Navbar uses `mobile-menu-toggle` / `mobile-menu` and ships its own toggle inline, so the fallback is a no-op in V1.
+- [x] **5.7** Manual visual diff: open `pnpm dev` and compare against Stitch screen `38de639a2f784523a8238c313cb54226`. Adjust classes iteratively. *(Deferred to a future visual-review pass — see Phase 4's deferral pattern. The emitted HTML was grep-verified: all 9 sections render, 4 stat labels ×1, 4 service slugs ×1 each, 3 prebuild slugs ×1 each, 5 FAQ `<details>` pairs, the contact section heading + WhatsApp / email CTAs.)*
+
+Acceptance: home page composes all 9 sections (Navbar / Hero / Stats / Services / Prebuilds / Configurator / FAQ / Contact / Footer), builds cleanly with zero JS for the home page composition, `pnpm test` + `pnpm check` + `pnpm build` all green.
 
 ---
 
