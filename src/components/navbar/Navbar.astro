@@ -2,18 +2,25 @@
 /**
  * Navbar.astro
  *
- * Sticky top navigation for smart-pc. Models the Stitch navbar screen
- * fa168e446daf43698cae0d43a0208c0d:
- *   - glassmorphism background (deep-navy tint with backdrop blur)
- *   - left: wordmark "smart" (cyan) + "-pc" (white) with tagline
- *   - center: nav links (Inicio / Pre-armadas / Configurador / Servicios /
- *     Contacto) with cyan underline on hover and an active-state underline
- *   - right: primary "Arma el tuyo" CTA, cart icon, ES locale chip
- *   - bottom edge: 1px gradient cyan hairline
- *   - mobile (< md): collapses to a hamburger that toggles a dropdown menu.
- *     Kept intentionally simple — no overlay, no animations beyond a show/hide.
+ * Sticky top navigation for smart-pc. Faithfully reproduces the Stitch navbar
+ * screen fa168e446daf43698cae0d43a0208c0d:
+ *
+ *   - `<nav>` is fixed, full-width, z-50, with a glassmorphism surface
+ *     (#0c1333 / 70 + backdrop-blur-xl + 1px white/10 border) and a 1px gradient
+ *     accent hairline along the bottom edge.
+ *   - Brand is a TEXT wordmark — `<span class="text-cyan-400">SMART</span>` plus
+ *     `<span class="text-white">-PC</span>` — with a mono tagline below.
+ *   - Five centered links (Inicio / Pre-armadas / Configurador / Servicios /
+ *     Contacto). Default styling is white/60 with cyan-400 on hover; the active
+ *     link gets a cyan-400 underline (border-b-2) plus bold text. Pre-armadas
+ *     carries a chevron; Configurador carries a "NUEVO" badge pill.
+ *   - Right cluster (desktop): ES locale chip, cart icon, cyan-400 CTA pill
+ *     "Arma el tuyo" with a settings cog.
+ *   - Mobile (< md): the cluster collapses to a hamburger that toggles a
+ *     dropdown menu (`#mobile-menu`) — same `is:inline` toggle pattern used by
+ *     the page-level fallbacks. Per-link `currentPath` is honored so the active
+ *     page keeps its cyan underline on the small menu too.
  */
-import CTAButton from "../ui/CTAButton.astro";
 import NavbarLink from "./NavbarLink.astro";
 
 interface Props {
@@ -26,12 +33,19 @@ const { currentPath = Astro.url.pathname } = Astro.props;
 const navItems: {
   href: string;
   label: string;
-  hasChevron?: boolean;
+  /** Decoration trailing the label. `none` renders the plain link. */
+  trailing?: "chevron" | "badge";
+  /** Badge text, only meaningful when `trailing === "badge"`. */
   badge?: string;
 }[] = [
   { href: "/", label: "Inicio" },
-  { href: "/pre-armadas", label: "Pre-armadas", hasChevron: true },
-  { href: "/configurar", label: "Configurador", badge: "Cobalto" },
+  { href: "/pre-armadas", label: "Pre-armadas", trailing: "chevron" },
+  {
+    href: "/configurar",
+    label: "Configurador",
+    trailing: "badge",
+    badge: "NUEVO",
+  },
   { href: "/servicios", label: "Servicios" },
   { href: "/contacto", label: "Contacto" },
 ];
@@ -44,55 +58,68 @@ const isActive = (href: string): boolean => {
 };
 ---
 
-<header
-  class="sticky top-0 z-50 w-full border-b border-cyan-500/40 backdrop-blur-md"
-  style="background-color: rgba(12, 19, 36, 0.8);"
+<nav
+  class="fixed top-0 w-full z-50 bg-[#0c1333]/70 backdrop-blur-xl border-b border-white/10 duration-200 ease-in-out"
+  aria-label="Principal"
 >
-  <nav
-    class="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between gap-6 px-4 md:px-8"
-    aria-label="Principal"
+  <!-- Accent Line: 1px gradient hairline at the bottom of the nav -->
+  <div
+    class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent opacity-50"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="flex justify-between items-center h-16 px-4 md:px-8 max-w-[1280px] mx-auto"
   >
-    <!-- Wordmark + tagline -->
+    <!-- Brand: TEXT wordmark (NOT an image) -->
     <a
       href="/"
-      class="group flex items-center gap-3"
-      aria-label="smart-pc — ir al inicio"
+      class="flex flex-col group transition-all duration-200 ease-in-out hover:opacity-80"
     >
-      <img src="/logo.jpg" alt="smart-pc" class="h-8 w-auto" />
+      <div
+        class="font-bold tracking-tighter flex items-baseline gap-0.5 text-base leading-none"
+      >
+        <span class="text-cyan-400">SMART</span><span class="text-white">-PC</span
+        >
+      </div>
       <span
-        class="hidden text-xs font-medium text-text-secondary md:inline-block"
+        class="font-mono text-[10px] text-white/40 uppercase tracking-widest leading-none mt-1"
       >
         PCs a tu medida
       </span>
     </a>
 
-    <!-- Center links (desktop only) -->
-    <ul class="hidden flex-1 items-center justify-center gap-2 md:flex">
+    <!-- Nav links (centered, gap-8, hidden on mobile) -->
+    <ul class="hidden md:flex items-center gap-8 h-full">
       {
         navItems.map((item) => (
-          <li>
-            <NavbarLink href={item.href} isActive={isActive(item.href)}>
+          <li class="h-full flex items-center">
+            <NavbarLink
+              href={item.href}
+              isActive={isActive(item.href)}
+              class={item.trailing === "chevron"
+                ? "gap-1"
+                : item.trailing === "badge"
+                  ? "gap-2"
+                  : ""}
+            >
               {item.label}
-              {item.hasChevron && (
+              {item.trailing === "chevron" && (
                 <svg
-                  class="h-3 w-3 text-text-secondary transition-transform group-hover:translate-y-0.5"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.75"
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
                   aria-hidden="true"
                 >
                   <path
-                    d="M3 4.5 6 7.5l3-3"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
                   />
                 </svg>
               )}
-              {item.badge && (
-                <span
-                  class="ml-1 inline-flex items-center rounded-full bg-blue-500 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-text-primary"
-                >
+              {item.trailing === "badge" && item.badge && (
+                <span class="bg-blue-600 text-white px-1.5 py-0.5 rounded-full font-mono text-[10px] leading-none border border-blue-400/50 shadow-[0_0_8px_rgba(5,102,217,0.4)]">
                   {item.badge}
                 </span>
               )}
@@ -102,76 +129,97 @@ const isActive = (href: string): boolean => {
       }
     </ul>
 
-    <!-- Right cluster (desktop) -->
-    <div class="hidden items-center gap-3 md:flex">
-      <CTAButton href="/configurar" variant="primary" size="sm">
-        Arma el tuyo
-      </CTAButton>
+    <!-- Right cluster (desktop only): locale chip + cart + cyan CTA -->
+    <div class="hidden md:flex items-center gap-6">
+      <!-- Locale chip + cart grouped behind a vertical divider -->
+      <div class="flex items-center gap-4 border-r border-white/10 pr-6">
+        <!-- ES locale chip (static, no click) -->
+        <span
+          class="font-mono text-[10px] text-white/60 bg-white/5 px-1.5 py-1 border border-white/10"
+          aria-label="Idioma: Español"
+        >
+          ES
+        </span>
+        <!-- Cart icon button -->
+        <button
+          type="button"
+          aria-label="Carrito"
+          class="text-white/60 hover:text-cyan-400 transition-colors p-2"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
+            ></path>
+          </svg>
+        </button>
+      </div>
 
-      <button
-        type="button"
-        aria-label="Carrito"
-        class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:border-cyan-500 hover:text-cyan-500"
+      <!-- Primary CTA: cyan pill with dark text -->
+      <a
+        href="/configurar"
+        class="bg-cyan-400 text-[#0c1324] px-6 py-2.5 font-bold text-[14px] uppercase tracking-wider hover:bg-cyan-300 transition-all duration-200 border border-transparent shadow-[0_0_15px_rgba(34,211,238,0.15)] flex items-center gap-2"
       >
         <svg
-          viewBox="0 0 24 24"
-          class="h-4 w-4"
+          class="w-[18px] h-[18px]"
           fill="none"
+          viewBox="0 0 24 24"
           stroke="currentColor"
-          stroke-width="1.75"
+          stroke-width="2.5"
           aria-hidden="true"
         >
           <path
-            d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6"
             stroke-linecap="round"
             stroke-linejoin="round"
-          />
-          <circle cx="10" cy="20" r="1.4" fill="currentColor" />
-          <circle cx="17" cy="20" r="1.4" fill="currentColor" />
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          ></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          ></path>
         </svg>
-      </button>
-
-      <span
-        class="inline-flex items-center gap-1 rounded-full border border-border px-2 py-1 text-xs font-medium text-text-secondary"
-        aria-label="Idioma y región: Español de Colombia"
-      >
-        ES
-        <span aria-hidden="true">🇨🇴</span>
-      </span>
+        Arma el tuyo
+      </a>
     </div>
 
-    <!-- Mobile: hamburger toggle -->
+    <!-- Mobile hamburger (visible < md) -->
     <button
-      id="mobile-menu-toggle"
+      id="nav-toggle"
       type="button"
-      class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-text-primary md:hidden"
-      aria-label="Abrir menú"
+      class="md:hidden text-white/60 p-2"
+      aria-label="Menu"
       aria-controls="mobile-menu"
       aria-expanded="false"
-      data-mobile-menu-toggle
     >
       <svg
-        viewBox="0 0 24 24"
-        class="h-5 w-5"
+        class="w-6 h-6"
         fill="none"
+        viewBox="0 0 24 24"
         stroke="currentColor"
         stroke-width="2"
         aria-hidden="true"
       >
         <path
-          d="M4 7h16M4 12h16M4 17h16"
           stroke-linecap="round"
           stroke-linejoin="round"
-        />
+          d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </button>
-  </nav>
+  </div>
 
-  <!-- Mobile dropdown (hidden by default; toggled by inline script) -->
+  <!-- Mobile dropdown menu (hidden by default; toggled by #nav-toggle) -->
   <div
     id="mobile-menu"
-    class="hidden border-t border-border bg-navy-950/95 backdrop-blur-md md:hidden"
-    data-mobile-menu
+    class="hidden border-t border-white/10 bg-[#0c1333]/95 backdrop-blur-md md:hidden"
   >
     <ul class="mx-auto flex max-w-[1280px] flex-col gap-1 px-4 py-3">
       {
@@ -181,35 +229,85 @@ const isActive = (href: string): boolean => {
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
               class:list={[
-                "block rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                 isActive(item.href)
-                  ? "bg-navy-800 text-cyan-500"
-                  : "text-text-secondary hover:bg-navy-800 hover:text-text-primary",
+                  ? "bg-white/5 text-cyan-400"
+                  : "text-white/60 hover:bg-white/5 hover:text-cyan-400",
               ]}
             >
-              {item.label}
+              <span>{item.label}</span>
+              {item.trailing === "badge" && item.badge && (
+                <span class="bg-blue-600 text-white px-1.5 py-0.5 rounded-full font-mono text-[10px] leading-none border border-blue-400/50 shadow-[0_0_8px_rgba(5,102,217,0.4)]">
+                  {item.badge}
+                </span>
+              )}
             </a>
           </li>
         ))
       }
       <li class="pt-2">
-        <CTAButton href="/configurar" variant="primary" size="md" class="w-full">
+        <a
+          href="/configurar"
+          class="bg-cyan-400 text-[#0c1324] flex items-center justify-center gap-2 px-6 py-2.5 font-bold text-sm uppercase tracking-wider hover:bg-cyan-300 transition-all duration-200 w-full"
+        >
+          <svg
+            class="w-[18px] h-[18px]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+          </svg>
           Arma el tuyo
-        </CTAButton>
+        </a>
       </li>
     </ul>
   </div>
-</header>
+</nav>
 
 <script is:inline>
-  document.addEventListener('click', (e) => {
-    const toggle = document.getElementById('mobile-menu-toggle');
-    const menu = document.getElementById('mobile-menu');
+  (() => {
+    const toggle = document.getElementById("nav-toggle");
+    const menu = document.getElementById("mobile-menu");
     if (!toggle || !menu) return;
-    if (toggle.contains(e.target) || e.target === toggle) {
-      menu.classList.toggle('hidden');
-    } else if (!menu.contains(e.target)) {
-      menu.classList.add('hidden');
-    }
-  });
+
+    const setExpanded = (expanded) => {
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+    };
+
+    const closeMenu = () => {
+      menu.classList.add("hidden");
+      setExpanded(false);
+    };
+
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (menu.classList.contains("hidden")) {
+        menu.classList.remove("hidden");
+        setExpanded(true);
+      } else {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (menu.classList.contains("hidden")) return;
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (!menu.contains(target) && !toggle.contains(target)) {
+        closeMenu();
+      }
+    });
+  })();
 </script>
