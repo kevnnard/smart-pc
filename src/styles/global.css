@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/*
+ * smart-pc design tokens — single source of truth.
+ *
+ * Tokens follow the smart-pc Stitch screen
+ * (projects/8152584686730587161/screens/38de639a2f784523a8238c313cb54226).
+ * Components MUST consume these via Tailwind v4 utility classes (e.g.
+ * `bg-cyan-500`, `text-text-primary`, `rounded-md`); raw hex literals are
+ * forbidden outside this file.
+ *
+ * Tailwind v4 reads `@theme` blocks and exposes every `--color-*`,
+ * `--font-*`, `--radius-*`, and `--spacing-*` variable as a utility-class
+ * namespace. Layout-level containers (`--container-max`) live in
+ * `:root` because they are not utility-class generated.
+ */
+@theme {
+  /* === Colors === */
+
+  /* Navy scale — backgrounds + surfaces */
+  --color-navy-950: #0c1324;
+  --color-navy-900: #141b2c;
+  --color-navy-800: #181f31;
+  --color-navy-700: #232a3c;
+  --color-navy-600: #2e3447;
+  --color-navy-500: #32394c;
+
+  /* Outlines / borders */
+  --color-border: #3c494c;
+
+  /* Cyan scale — primary accent */
+  --color-cyan-500: #22d3ee;
+  --color-cyan-400: #2fd9f4;
+  --color-cyan-300: #a2eeff;
+  --color-cyan-600: #006877;
+
+  /* Blue scale — secondary / cobalt */
+  --color-blue-500: #3b82f6;
+  --color-blue-400: #8aebff;
+  --color-blue-600: #002e6a;
+  --color-blue-700: #0566d9;
+
+  /* Violet — tertiary / glow only */
+  --color-violet-500: #8b5cf6;
+
+  /* Text */
+  --color-text-primary: #dce2fa;
+  --color-text-secondary: #bbc9cd;
+  --color-text-muted: #859397;
+
+  /* === Typography === */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* === Spacing (4px base unit) === */
+  --spacing-unit: 4px;
+
+  /* === Border radius === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+}
+
+/*
+ * Layout-level container maximum. Lives outside @theme because Tailwind v4
+ * does not generate utility classes for non-numeric tokens like `--container-max`.
+ * Components reference it via `max-w-[1280px]` or through a single rule below.
+ */
+:root {
+  --container-max: 1280px;
+}
+
+/*
+ * Base resets and global typography. Components add their own sizing via
+ * utility classes; this block only establishes the default body stack and
+ * background.
+ */
+html {
+  background-color: var(--color-navy-950);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: var(--color-navy-950);
+  color: var(--color-text-primary);
+}
+
+::selection {
+  background-color: var(--color-cyan-500);
+  color: var(--color-navy-950);
+}

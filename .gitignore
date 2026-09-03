@@ -1,0 +1,18 @@
+# Local Pi runtime state
+.atl/
+
+# Package manager artifacts
+node_modules/
+
+# Astro build artifacts
+dist/
+.astro/
+
+# Environment files
+.env
+
+# OS metadata
+.DS_Store
+
+# Test coverage
+coverage/

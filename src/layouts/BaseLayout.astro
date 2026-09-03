@@ -1,0 +1,94 @@
+---
+/**
+ * BaseLayout.astro
+ *
+ * Top-level layout for every page. Sets up the HTML document with the smart-pc
+ * branding, fonts (Inter + JetBrains Mono via Google Fonts), SEO meta tags, the
+ * global stylesheet, and the Astro client-side router that powers view
+ * transitions across navigations.
+ *
+ * Props:
+ *   - title?:       string  — page <title>; defaults to a site-wide fallback.
+ *   - description?: string  — meta description + og:description.
+ *   - ogImage?:     string  — absolute or root-relative path to a share image.
+ *   - noindex?:     boolean — emit a `robots: noindex` meta when true.
+ *
+ * The default slot renders the page body. Navbar/Footer are NOT included here
+ * so a page can decide whether to mount them (most pages will).
+ */
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  /** Class list applied to the root <main> wrapper. */
+  mainClass?: string;
+}
+
+const siteName = "smart-pc";
+const defaultTitle = `${siteName} · PCs a tu medida`;
+const defaultDescription =
+  "Armá tu PC a medida o elegí entre nuestras pre-armadas. Garantía 12 meses, envío a todo el país y soporte 24/7.";
+const defaultOgImage = "/og/og-default.png";
+
+const {
+  title = defaultTitle,
+  description = defaultDescription,
+  ogImage = defaultOgImage,
+  noindex = false,
+  mainClass = "",
+} = Astro.props;
+
+const canonical = new URL(
+  Astro.url.pathname,
+  Astro.site ?? Astro.url.origin,
+).toString();
+const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url.origin).toString();
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="es_AR" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+  </head>
+  <body class="min-h-dvh bg-navy-950 text-text-primary antialiased">
+    <slot name="navbar" />
+    <main class={mainClass}>
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

@@ -1,0 +1,45 @@
+---
+/**
+ * NavbarLink.astro
+ *
+ * Single link rendered inside the smart-pc navbar. Animates a cyan underline
+ * on hover and renders the underline persistently when `isActive` is true.
+ *
+ * Props:
+ *   - href:       string           — link target.
+ *   - isActive?:  boolean          — when true, the underline is always shown.
+ *   - class?:     string           — additional utility classes (gap-2, etc.).
+ *
+ * Slot: link label + optional trailing icon (chevron, badge).
+ */
+interface Props {
+  href: string;
+  isActive?: boolean;
+  class?: string;
+}
+
+const { href, isActive = false, class: extraClass = "" } = Astro.props;
+---
+
+<a
+  href={href}
+  aria-current={isActive ? "page" : undefined}
+  class:list={[
+    "group relative inline-flex items-center gap-1 px-1 py-2 text-sm font-medium transition-colors",
+    isActive
+      ? "text-cyan-500"
+      : "text-text-secondary hover:text-text-primary",
+    extraClass,
+  ]}
+>
+  <span><slot /></span>
+  <span
+    aria-hidden="true"
+    class:list={[
+      "pointer-events-none absolute inset-x-1 -bottom-0.5 h-0.5 rounded-full bg-cyan-500 transition-all duration-200 ease-out",
+      isActive
+        ? "opacity-100 scale-x-100"
+        : "opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100",
+    ]}
+  ></span>
+</a>

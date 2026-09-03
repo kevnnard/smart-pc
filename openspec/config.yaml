@@ -1,0 +1,58 @@
+schema: spec-driven
+
+project: smart-pc
+change: v1-initial-release
+strict_tdd: true
+
+context: |
+  Tech stack: Astro 7+ with @tailwindcss/vite 4.3+ (Tailwind v4 via Vite plugin, no PostCSS), React 19+ islands for interactivity via @astrojs/react, TypeScript strict, Biome 2.x for lint/format, Vitest 4.x for unit tests, pnpm 11.x.
+  Architecture: single-package project (not a monorepo). The three-trackr monorepo pattern is the reference but smart-pc does NOT need apps/packages split — it's a single Astro app.
+  Site generation: pure SSG (static). No SSR runtime, no database, no auth, no admin/CMS.
+  Data: static typed sources under src/data/*.ts with strict TypeScript interfaces in src/data/types.ts. PC catalog, components catalog, services, FAQ.
+  Styling: Tailwind v4 with @theme tokens in src/styles/global.css (no tailwind.config.js). Design source = Stitch screen 38de639a2f784523a8238c313cb54226 (project 8152584686730587161).
+  React islands: ONLY for the configurator (/configurar), the contact form (/contacto), and any client-side filter on the catalog. Everything else is Astro components.
+  Forms: Contact form POSTs directly from the browser to Formspree, configured with PUBLIC_FORMSPREE_FORM_ID. No API route, Resend SDK, or server adapter is used.
+  Testing: Vitest unit tests for pure functions (compatibility rules, slug generation, price formatting) and component tests with @testing-library for React islands.
+  i18n: V1 is Spanish (Colombia) only. en/es dictionaries can land in V2.
+  Hosting: SSG output deploys to any static host. Vercel/Netlify/Cloudflare Pages are all viable.
+
+testing:
+  unit: pnpm test
+  unit_watch: pnpm test:watch
+  coverage: pnpm test:coverage
+  check: pnpm check
+  build: pnpm build
+
+workflow:
+  mode: hybrid
+  review_budget_lines: 600
+  rules:
+    - apply MUST run in Strict TDD mode (RED → GREEN → REFACTOR per task).
+    - gentle-ai review (RDD) MUST pass before verify is launched.
+    - verify MUST run only after RDD returns allow.
+    - archive MUST run only after verify passes (build, lint, tests, type-check all green).
+
+rules:
+  proposal:
+    - State in-scope and out-of-scope explicitly.
+    - Identify the design source (Stitch screen) and what it covers.
+  specs:
+    - Use Given/When/Then scenarios per feature.
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY).
+    - Each V1 feature gets a spec section before any task starts.
+  design:
+    - Document folder structure, design tokens (with hex), data model (with TS interface shapes), and per-island contract.
+    - Call out any deviation from the three-trackr pattern and the reason.
+  tasks:
+    - Group by phase (scaffold → design system → pages → interactivity).
+    - Each task MUST be finishable in one session.
+    - First task of each phase MUST add or update a test that defines the expected behavior (RED).
+  apply:
+    tdd: true
+    test_command: pnpm test && pnpm check
+  verify:
+    test_command: pnpm test && pnpm check && pnpm build
+    build_command: pnpm build
+    coverage_threshold: 0
+  archive:
+    - Warn before merging deltas that change the public URL shape (route, slug pattern).

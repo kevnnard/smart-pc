@@ -1,0 +1,33 @@
+---
+import Footer from "../components/footer/Footer.astro";
+import Navbar from "../components/navbar/Navbar.astro";
+import TrustStrip from "../components/ui/TrustStrip.astro";
+/**
+ * Home page (/) — smart-pc.
+ *
+ * Wraps the page in BaseLayout, mounts the global Navbar/Footer through the
+ * named slots, and renders a minimal hero section followed by the trust signal
+ * strip. Deeper home content (catalog teasers, configurator CTA, etc.) is added
+ * in later tickets.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <Navbar slot="navbar" />
+
+  <section
+    class="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-4 px-4 py-24 text-center md:px-8"
+  >
+    <h1 class="text-4xl font-bold tracking-tight text-text-primary md:text-6xl">
+      smart-pc
+    </h1>
+    <p class="text-lg text-text-secondary md:text-xl">
+      Tu PC a tu medida
+    </p>
+  </section>
+
+  <TrustStrip />
+
+  <Footer slot="footer" />
+</BaseLayout>

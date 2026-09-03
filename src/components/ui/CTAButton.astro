@@ -1,0 +1,84 @@
+---
+/**
+ * CTAButton.astro
+ *
+ * Primary / secondary / outline call-to-action button. Renders an `<a>` when
+ * `href` is provided and a real `<button type="button">` otherwise, so the same
+ * component covers link-style CTAs (e.g. "Arma el tuyo" → /configurar) and
+ * form-submit-style CTAs (e.g. future contact form submit) without forcing the
+ * caller to pass a placeholder href.
+ *
+ * Props:
+ *   - href?:     string                       — link target; omit to render <button>.
+ *   - variant?:  "primary" | "secondary" | "outline"  — default "primary".
+ *   - size?:     "sm" | "md" | "lg"           — default "md".
+ *   - type?:     "button" | "submit" | "reset" — only used when href is absent.
+ *   - disabled?: boolean                      — only used when href is absent.
+ *   - class?:    string                       — additional utility classes.
+ *   - ariaLabel?: string                      — overrides the visible label for screen readers.
+ *
+ * Slot: visible label content.
+ */
+type Variant = "primary" | "secondary" | "outline";
+type Size = "sm" | "md" | "lg";
+type ButtonType = "button" | "submit" | "reset";
+
+interface Props {
+  href?: string;
+  variant?: Variant;
+  size?: Size;
+  type?: ButtonType;
+  disabled?: boolean;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  type = "button",
+  disabled = false,
+  class: extraClass = "",
+  ariaLabel,
+} = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-md font-semibold leading-none transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 disabled:cursor-not-allowed disabled:opacity-50";
+
+const variantClasses: Record<Variant, string> = {
+  primary:
+    "bg-cyan-500 text-navy-950 shadow-[0_8px_24px_-12px_rgba(34,211,238,0.6)] hover:bg-cyan-400 hover:shadow-[0_12px_28px_-12px_rgba(34,211,238,0.8)] active:translate-y-px",
+  secondary:
+    "bg-blue-500 text-text-primary hover:bg-blue-400 active:translate-y-px",
+  outline:
+    "border border-cyan-500 bg-transparent text-cyan-500 hover:bg-cyan-500/10 active:translate-y-px",
+};
+
+const sizeClasses: Record<Size, string> = {
+  sm: "h-9 px-3 text-sm",
+  md: "h-11 px-5 text-sm",
+  lg: "h-12 px-6 text-base",
+};
+
+const classes = [base, variantClasses[variant], sizeClasses[size], extraClass]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{
+  href ? (
+    <a href={href} class={classes} aria-label={ariaLabel}>
+      <slot />
+    </a>
+  ) : (
+    <button
+      type={type}
+      disabled={disabled}
+      class={classes}
+      aria-label={ariaLabel}
+    >
+      <slot />
+    </button>
+  )
+}
