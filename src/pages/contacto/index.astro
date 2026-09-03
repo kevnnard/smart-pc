@@ -1,0 +1,93 @@
+---
+import ContactForm from "../../components/contact/ContactForm";
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "Contacto | smart-pc",
+  description: "Escríbenos. Te respondemos en menos de 24 horas.",
+};
+
+const formspreeId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID;
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+  
+  <main>
+    <section class="bg-[#0c1333] py-20">
+      <div class="mx-auto max-w-7xl px-4 text-center">
+        <p class="mb-4 font-mono text-sm text-[#22d3ee]">// CONTACTANOS</p>
+        <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+          ¿En qué te podemos ayudar?
+        </h1>
+        <p class="mx-auto max-w-xl text-lg text-white/60">
+          Respondemos en menos de 24 horas. También podés escribirnos directo por WhatsApp.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-[#0c1324] py-16">
+      <div class="mx-auto max-w-7xl px-4">
+        <div class="grid gap-12 lg:grid-cols-2">
+          <!-- Form -->
+          <div class="rounded-2xl border border-white/10 bg-[#141b30] p-8">
+            <h2 class="mb-6 text-xl font-semibold text-white">Envianos un mensaje</h2>
+            <ContactForm formspreeId={formspreeId} client:load />
+          </div>
+
+          <!-- Info -->
+          <div class="space-y-8">
+            <div>
+              <h3 class="mb-3 text-lg font-semibold text-white">WhatsApp</h3>
+              <a
+                href="https://wa.me/573001234567"
+                class="inline-flex items-center gap-2 text-[#22d3ee] hover:underline"
+              >
+                +57 300 123 4567
+              </a>
+            </div>
+            <div>
+              <h3 class="mb-3 text-lg font-semibold text-white">Email</h3>
+              <a
+                href="mailto:hola@smart-pc.com"
+                class="text-[#22d3ee] hover:underline"
+              >
+                hola@smart-pc.com
+              </a>
+            </div>
+            <div>
+              <h3 class="mb-3 text-lg font-semibold text-white">Horario</h3>
+              <p class="text-white/60">Lunes a viernes, 9am – 6pm (Colombia)</p>
+            </div>
+            <div class="rounded-2xl border border-[#22d3ee]/20 bg-[#22d3ee]/5 p-6">
+              <p class="text-sm text-white/70">
+                💬 La forma más rápida de contactarnos es por WhatsApp. Hacé clic y te respondemos al toque.
+              </p>
+              <a
+                href="https://wa.me/573001234567"
+                class="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#1fb855]"
+              >
+                Abrir WhatsApp →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const nav = document.getElementById('main-nav');
+    const toggle = document.getElementById('nav-toggle');
+    if (nav && toggle) {
+      if (toggle.contains(e.target)) nav.classList.toggle('hidden');
+      else if (!nav.contains(e.target) && !nav.classList.contains('hidden')) nav.classList.add('hidden');
+    }
+  });
+</script>

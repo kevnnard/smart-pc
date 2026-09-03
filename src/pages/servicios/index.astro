@@ -1,0 +1,92 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import CTAButton from "../../components/ui/CTAButton.astro";
+import ServiceCard from "../../components/ui/ServiceCard.astro";
+import { services } from "../../data/services";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "Servicios | smart-pc",
+  description:
+    "Armado a medida, pre-armadas, mantenimiento y garantía. Todos nuestros servicios incluyen soporte técnico.",
+};
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+  
+  <main>
+    <!-- Hero -->
+    <section class="bg-[#0c1333] py-20">
+      <div class="mx-auto max-w-7xl px-4 text-center">
+        <p class="mb-4 font-mono text-sm text-[#22d3ee]">// NUESTROS SERVICIOS</p>
+        <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+          Todo lo que necesitás para tu PC
+        </h1>
+        <p class="mx-auto mb-8 max-w-2xl text-lg text-white/60">
+          Desde el ensamblaje profesional de tu PC ideal hasta el soporte técnico post-venta. Estamos para vos.
+        </p>
+        <CTAButton href="/contacto" variant="primary">
+          Consultanos →
+        </CTAButton>
+      </div>
+    </section>
+
+    <!-- Services grid -->
+    <section class="bg-[#0c1324] py-16">
+      <div class="mx-auto max-w-7xl px-4">
+        <div class="grid gap-8 md:grid-cols-2">
+          {services.map((service) => (
+            <ServiceCard {service} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="bg-[#0c1333] py-16">
+      <div class="mx-auto max-w-4xl px-4">
+        <h2 class="mb-10 text-center text-2xl font-bold text-white">
+          ¿Cómo trabajamos?
+        </h2>
+        <div class="grid gap-8 md:grid-cols-3">
+          <div class="text-center">
+            <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#22d3ee]/30 bg-[#22d3ee]/10">
+              <span class="font-mono text-xl font-bold text-[#22d3ee]">01</span>
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-white">Consultanos</h3>
+            <p class="text-sm text-white/60">Contanos qué necesitás. Te asesoramos sin compromiso.</p>
+          </div>
+          <div class="text-center">
+            <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#22d3ee]/30 bg-[#22d3ee]/10">
+              <span class="font-mono text-xl font-bold text-[#22d3ee]">02</span>
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-white">Cotizamos</h3>
+            <p class="text-sm text-white/60">Armamos una propuesta con componentes y precio transparente.</p>
+          </div>
+          <div class="text-center">
+            <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#22d3ee]/30 bg-[#22d3ee]/10">
+              <span class="font-mono text-xl font-bold text-[#22d3ee]">03</span>
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-white">Ensamblamos</h3>
+            <p class="text-sm text-white/60">Armamos tu PC, la testeamos y la enviamos a todo Colombia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const nav = document.getElementById('main-nav');
+    const toggle = document.getElementById('nav-toggle');
+    if (nav && toggle) {
+      if (toggle.contains(e.target)) nav.classList.toggle('hidden');
+      else if (!nav.contains(e.target) && !nav.classList.contains('hidden')) nav.classList.add('hidden');
+    }
+  });
+</script>
