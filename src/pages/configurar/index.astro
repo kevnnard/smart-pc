@@ -1,0 +1,56 @@
+---
+import Configurator from "../../components/configurator/Configurator";
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import { brand } from "../../data/brand";
+import { components } from "../../data/components";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+/**
+ * Configurator page (/configurar) — smart-pc.
+ *
+ * F4.1–F4.7 · Configurator wizard. Hosts the `Configurator` React island with
+ * `client:load` so the wizard is interactive the moment the page paints. The
+ * catalog and brand data are passed as props (not imported inside the island)
+ * so the island stays serializable and the Astro side keeps the SSR/SSG
+ * snapshot deterministic.
+ *
+ * Composition:
+ *   1. <Navbar>             — global header (slot in BaseLayout).
+ *   2. <Configurator>       — 7-step wizard (React island, client:load).
+ *   3. <Footer>             — global footer (slot in BaseLayout).
+ *
+ * The inline `<script>` at the bottom is a defensive fallback for a future
+ * <Navbar> variant exposing `id="main-nav"` + `id="nav-toggle"`. The active
+ * Navbar uses `id="mobile-menu-toggle"` + `id="mobile-menu"` and ships its own
+ * toggle inline; the fallback is a no-op while that variant is in production.
+ */
+const pageMeta = {
+  title: "Armar mi PC | smart-pc",
+  description:
+    "Armá tu PC ideal componente por componente. Validamos compatibilidad en tiempo real.",
+};
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <Configurator
+    client:load
+    components={components}
+    whatsappUrl={brand.whatsapp}
+  />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const nav = document.getElementById('main-nav');
+    const toggle = document.getElementById('nav-toggle');
+    if (nav && toggle) {
+      if (toggle.contains(e.target)) { nav.classList.toggle('hidden'); }
+      else if (!nav.contains(e.target) && !nav.classList.contains('hidden')) { nav.classList.add('hidden'); }
+    }
+  });
+</script>
