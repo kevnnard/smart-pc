@@ -1,0 +1,62 @@
+---
+import Footer from "../components/footer/Footer.astro";
+import Navbar from "../components/navbar/Navbar.astro";
+import CTAButton from "../components/ui/CTAButton.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+/**
+ * 404 page — smart-pc.
+ *
+ * Generic catch-all rendered by Astro when no other route matches the
+ * requested URL. Astro also emits this file to /404.html during `pnpm build`,
+ * which lets static hosts (Netlify / Vercel / Cloudflare Pages / GitHub Pages)
+ * serve it with a proper 404 status when configured to do so.
+ *
+ * Composition (uses BaseLayout's own <main> via the `mainClass` prop to avoid
+ * nested <main> elements):
+ *   1. <Navbar>          — global header (slot in BaseLayout).
+ *   2. centered 404      — monospace 404 + "Página no encontrada" + body + dual CTA.
+ *   3. <Footer>          — global footer (slot in BaseLayout).
+ *
+ * Tokens used: `bg-navy-950`, `text-cyan-500`, `text-text-primary`, `text-text-secondary`
+ * (no raw hex — matches the Phase 2 "no raw hex outside global.css" rule).
+ */
+const pageMeta = {
+  title: "404 — Página no encontrada | smart-pc",
+  mainClass:
+    "flex min-h-[60vh] flex-col items-center justify-center bg-navy-950 px-4 py-20 text-center",
+};
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <p class="mb-2 font-mono text-6xl font-bold text-cyan-500 md:text-8xl">404</p>
+  <h1 class="mb-4 text-2xl font-bold text-text-primary md:text-3xl">
+    Página no encontrada
+  </h1>
+  <p class="mb-8 max-w-md text-text-secondary">
+    La página que buscás no existe o fue movida. Volvé al inicio o usá el configurador para armar tu PC ideal.
+  </p>
+  <div class="flex flex-col gap-4 sm:flex-row">
+    <CTAButton href="/" variant="primary">
+      ← Volver al inicio
+    </CTAButton>
+    <CTAButton href="/configurar" variant="outline">
+      Armar mi PC
+    </CTAButton>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const nav = document.getElementById('main-nav');
+    const toggle = document.getElementById('nav-toggle');
+    if (nav && toggle) {
+      if (toggle.contains(e.target)) nav.classList.toggle('hidden');
+      else if (!nav.contains(e.target) && !nav.classList.contains('hidden')) nav.classList.add('hidden');
+    }
+  });
+</script>

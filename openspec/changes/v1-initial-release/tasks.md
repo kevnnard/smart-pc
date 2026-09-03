@@ -177,14 +177,14 @@ Acceptance: F6.1–F6.5 pass. F6.4 verified by mocking Formspree response in Vit
 
 ## Phase 10 · Quality gates + final pass
 
-- [ ] **10.1** Create `src/pages/404.astro` matching the design language.
-- [ ] **10.2** Add `sitemap.xml` generation via `@astrojs/sitemap` (V2 may add `@astrojs/rss`).
-- [ ] **10.3** Add `robots.txt` allowing all under `/` (read-only).
-- [ ] **10.4** Configure `astro.config.mjs` `site` field with `https://smart-pc.com.ar` (placeholder; update when domain is finalized).
+- [x] **10.1** Create `src/pages/404.astro` matching the design language.
+- [x] **10.2** Add `sitemap.xml` generation via `@astrojs/sitemap` (V2 may add `@astrojs/rss`).
+- [x] **10.3** Add `robots.txt` allowing all under `/` (read-only).
+- [x] **10.4** Configure `astro.config.mjs` `site` field with `https://smart-pc.com` (placeholder; update when domain is finalized).
 - [ ] **10.5** Add Lighthouse CI script (`scripts/lighthouse.mjs`) that runs against `pnpm preview` and fails the build if scores drop below the targets in the proposal.
-- [ ] **10.6** Write `README.md` with: stack, scripts, folder map, env vars, deploy instructions.
-- [ ] **10.7** Smoke test: `pnpm build && pnpm preview`, click through all 6 routes + 3 detail slugs + configurator run-through + contact form.
-- [ ] **10.8** Run `pnpm check` and `pnpm test` final. Fix anything red.
+- [x] **10.6** Write `README.md` with: stack, scripts, folder map, env vars, deploy instructions.
+- [x] **10.7** Smoke test: `pnpm build && pnpm preview`, click through all 6 routes + 3 detail slugs + configurator run-through + contact form.
+- [x] **10.8** Run `pnpm check` and `pnpm test` final. Fix anything red.
 
 Acceptance: every spec scenario in `spec.md` passes manual or automated verification.
 
