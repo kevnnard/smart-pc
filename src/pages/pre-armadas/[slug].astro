@@ -1,0 +1,147 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import CTAButton from "../../components/ui/CTAButton.astro";
+import SpecList from "../../components/ui/SpecList.astro";
+import { prebuilds } from "../../data/prebuilds";
+import type { PrebuiltPC } from "../../data/types";
+/**
+ * Pre-armada detail page (/pre-armadas/[slug]) — smart-pc.
+ *
+ * F3 · Build detail. `getStaticPaths()` returns one static route per entry in
+ * `src/data/prebuilds.ts`. A request for an unknown slug falls through to
+ * Astro's default 404 (Astro 7 raises `404 Not found` when `getStaticPaths` does
+ * not match).
+ *
+ * Composition:
+ *   1. <Navbar>             — global header (slot).
+ *   2. Header               — back link, badge, name, tagline, large price tag.
+ *   3. Specs                — `SpecList` rendering `prebuild.components` in the
+ *                              default "list" variant (F3.4).
+ *   4. CTA                  — WhatsApp anchor (`wa.me/573001234567`, line 147 of
+ *                              spec.md) + outline CTA to /configurar so the
+ *                              visitor can keep iterating on a custom build.
+ *   5. <Footer>             — global footer (slot).
+ *
+ * The query-param "Cotizar esta build" link to `/contacto?build={slug}` (F3.5)
+ * is not yet wired because `/contacto` itself is Phase 9 work. The primary
+ * WhatsApp anchor covers the F3.5 contact affordance in the meantime.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return prebuilds.map((prebuild) => ({
+    params: { slug: prebuild.slug },
+    props: { prebuild },
+  }));
+}
+
+interface Props {
+  prebuild: PrebuiltPC;
+}
+
+const { prebuild } = Astro.props;
+
+function formatPrice(value: number): string {
+  // `prebuild.basePrice` is integer whole ARS (see src/data/types.ts). Rendered
+  // directly via `Intl.NumberFormat('es-CO', COP)` — no `/ 100` cent conversion.
+  return value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  });
+}
+
+const pageMeta = {
+  title: `${prebuild.name} | smart-pc`,
+  description: prebuild.tagline,
+};
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <!-- Header -->
+  <section class="bg-navy-950 py-16">
+    <div class="mx-auto max-w-7xl px-4">
+      <a
+        href="/pre-armadas"
+        class="mb-6 inline-flex items-center gap-2 text-sm text-text-secondary hover:text-cyan-500"
+      >
+        ← Volver a pre-armadas
+      </a>
+      <div
+        class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
+      >
+        <div>
+          {
+            prebuild.badge && (
+              <span class="mb-2 inline-block rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-500">
+                {prebuild.badge}
+              </span>
+            )
+          }
+          <h1 class="text-3xl font-bold text-text-primary md:text-4xl">
+            {prebuild.name}
+          </h1>
+          <p class="mt-1 text-text-secondary">{prebuild.tagline}</p>
+        </div>
+        <div class="text-right">
+          <div class="text-4xl font-bold text-cyan-500">
+            {formatPrice(prebuild.basePrice)}
+          </div>
+          <div class="text-sm text-text-muted">COP · IVA incluido</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spec list -->
+  <section class="bg-navy-950 py-12">
+    <div class="mx-auto max-w-4xl px-4">
+      <h2 class="mb-6 text-xl font-semibold text-text-primary">
+        Componentes incluidos
+      </h2>
+      <SpecList components={prebuild.components} variant="list" />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-navy-950 py-12">
+    <div class="mx-auto max-w-2xl px-4 text-center">
+      <h2 class="mb-4 text-2xl font-bold text-text-primary">
+        ¿Te interesa esta configuración?
+      </h2>
+      <p class="mb-8 text-text-secondary">
+        Escribinos por WhatsApp o mail. Te ayudamos a elegir la mejor opción
+        para vos.
+      </p>
+      <div class="flex flex-col justify-center gap-4 sm:flex-row">
+        <a
+          href="https://wa.me/573001234567"
+          rel="noopener noreferrer"
+          target="_blank"
+          class="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-500 px-8 py-3.5 font-bold text-navy-950 transition-colors hover:bg-cyan-400"
+        >
+          Consultar por WhatsApp
+        </a>
+        <CTAButton href="/configurar" variant="outline">
+          Modificar en configurador
+        </CTAButton>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const nav = document.getElementById('main-nav');
+    const toggle = document.getElementById('nav-toggle');
+    if (nav && toggle) {
+      if (toggle.contains(e.target)) { nav.classList.toggle('hidden'); }
+      else if (!nav.contains(e.target) && !nav.classList.contains('hidden')) { nav.classList.add('hidden'); }
+    }
+  });
+</script>

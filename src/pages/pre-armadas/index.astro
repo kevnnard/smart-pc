@@ -1,0 +1,96 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import CTAButton from "../../components/ui/CTAButton.astro";
+import PricingCard from "../../components/ui/PricingCard.astro";
+import { prebuilds } from "../../data/prebuilds";
+/**
+ * Pre-armadas catalog page (/pre-armadas) — smart-pc.
+ *
+ * F2.1 — List all curated builds. Iterates `src/data/prebuilds.ts` and renders
+ * one `PricingCard` per prebuild in a 1 / 2 / 3-column responsive grid. Each
+ * card's `featured` flag drives the cyan glow treatment on `PricingCard`.
+ *
+ * Composition:
+ *   1. <Navbar>             — global header (slot).
+ *   2. Hero                 — eyebrow + H1 + body + outline CTA to /configurar.
+ *   3. Catalog grid         — three `PricingCard`s from `prebuilds.ts`.
+ *   4. Comparison note      — small cross-link to /configurar for visitors who
+ *                              need a custom build (F2.1 bottom-of-page CTA).
+ *   5. <Footer>             — global footer (slot).
+ *
+ * Pricing: `PricingCard` already formats `prebuild.basePrice` through
+ * `Intl.NumberFormat('es-CO')` (whole pesos). No extra wrapper is needed here.
+ *
+ * Each `PricingCard`'s "Ver configuración" CTA links to `/pre-armadas/{slug}`
+ * — the detail route is implemented in `[slug].astro` (Task 6.2).
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "PC Pre-armadas | smart-pc",
+  description:
+    "PCs pre-configuradas para creators, gamers y profesionales. Ensamblaje profesional, garantía 24 meses y precios transparentes.",
+};
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <!-- Hero -->
+  <section class="bg-navy-950 py-20">
+    <div class="mx-auto max-w-7xl px-4 text-center">
+      <p class="mb-4 font-mono text-sm text-cyan-500">// NUESTRAS PCs</p>
+      <h1 class="mb-4 text-4xl font-bold text-text-primary md:text-5xl">
+        PCs Pre-armadas
+      </h1>
+      <p class="mx-auto mb-8 max-w-2xl text-lg text-text-secondary">
+        Tres configuraciones pensadas para distintos presupuestos y necesidades.
+        Todas incluyen ensamblaje profesional, garantía de 24 meses y soporte
+        técnico incluido.
+      </p>
+      <CTAButton href="/configurar" variant="outline">
+        ¿Ninguna te convence? Armá la tuya →
+      </CTAButton>
+    </div>
+  </section>
+
+  <!-- Catalog grid -->
+  <section class="bg-navy-950 py-16">
+    <div class="mx-auto max-w-7xl px-4">
+      <div class="grid gap-8 md:grid-cols-3">
+        {
+          prebuilds.map((prebuild) => (
+            <PricingCard prebuild={prebuild} featured={prebuild.featured} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison cross-link -->
+  <section class="bg-navy-950 py-12">
+    <div class="mx-auto max-w-3xl px-4 text-center">
+      <p class="text-text-secondary">
+        ¿Necesitás algo diferente? Usá nuestro{" "}
+        <a href="/configurar" class="text-cyan-500 hover:underline">
+          configurador
+        </a>{" "}
+        para armar tu PC a medida.
+      </p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const nav = document.getElementById('main-nav');
+    const toggle = document.getElementById('nav-toggle');
+    if (nav && toggle) {
+      if (toggle.contains(e.target)) { nav.classList.toggle('hidden'); }
+      else if (!nav.contains(e.target) && !nav.classList.contains('hidden')) { nav.classList.add('hidden'); }
+    }
+  });
+</script>
