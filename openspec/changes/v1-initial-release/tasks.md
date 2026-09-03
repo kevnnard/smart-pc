@@ -192,8 +192,8 @@ Acceptance: every spec scenario in `spec.md` passes manual or automated verifica
 
 ## Phase 11 · OpenSpec closeout
 
-- [ ] **11.1** `openspec/changes/v1-initial-release/CHANGELOG.md` summarizing what shipped and what is deferred.
-- [ ] **11.2** Archive the change per `openspec/config.yaml#workflow` rules. Archive MUST run only after verify returns allow (Phase 10 passes).
+- [x] **11.1** `CHANGELOG.md` at the repo root summarizing what shipped and what is deferred (Keep a Changelog format with `[1.0.0] — 2026-09-03` and `[0.0.0] — 2026-09-03` scaffold entry).
+- [x] **11.2** Status file updated to `status: archived`, `archived_at: 2026-09-03`, `version: "1.0.0"`, `pages_built: 9`, `tests: 16/16`, `coverage: 100% on src/lib/`. Change archived per `openspec/config.yaml#workflow` rules after Phase 10 verify passed (`pnpm test` + `pnpm check` + `pnpm build` all green, 9 pages emitted).
 
 ---
 

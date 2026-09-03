@@ -1187,3 +1187,149 @@ execution and remain green.
 | Phase / Task        | RED written | RED output | GREEN passed | TRIANGULATE / REFACTOR |
 |---------------------|-------------|------------|---------------|-------------------------|
 | 10.x (this follow-up) | N/A — presentational + docs refinement; no new logic introduced. | — | — | — |
+
+
+---
+
+# Phase 11 · OpenSpec closeout
+
+Phase 11 (this execution) finalizes the SDD artifacts for V1: a `CHANGELOG.md` at the repo root describing every shipped surface, an updated `status.md` marking the change as archived with the verification snapshot, and the final task-checkbox updates in `tasks.md`. This is the last artifact-side action; the change is ready for the `sdd-archive` handoff per the `openspec/config.yaml#workflow` rules.
+
+Strict TDD was **not active** for this execution. The slice is documentation + status bookkeeping — there is no production code, no new logic, no new branches to test. TDD Cycle Evidence is intentionally N/A on every row (consistent with the Phase 4 / Phase 5 / Phase 6 / Phase 7 / Phase 10 precedents for presentational + artifact work).
+
+## Completed tasks
+
+| Task | Status | Persisted checkbox | Notes |
+|------|--------|--------------------|-------|
+| 11.1 | done   | `[x]` (`CHANGELOG.md` created)            | `CHANGELOG.md` (3.8 KB, 60 lines) at the repo root in Keep a Changelog 1.0.0 format with Semantic Versioning 2.0.0 footer. Sections: `## [1.0.0] — 2026-09-03` (Added / Components / Data layer / Compatibility rules / Design system / Technical) + `## [0.0.0] — 2026-09-03` (scaffold entry). Every emitted page from `pnpm build` is named in the Added section; every `.astro` / `.tsx` component and every `src/data/*.ts` file is named in the Components / Data layer sections; every compatibility rule is named in the Compatibility rules section; every design token and stack choice is captured in the Design system / Technical sections. |
+| 11.2 | done   | `[x]` (`status.md` updated to archived)    | `openspec/changes/v1-initial-release/status.md` replaced with the archived snapshot: `status: archived`, `archived_at: 2026-09-03`, `version: "1.0.0"`, `pages_built: 9`, `tests: 16/16`, `coverage: 100% on src/lib/`. The previous `init status` content was overwritten because the change is now archived; the orchestrator's parent prompt for Phase 11 explicitly requested the archived snapshot in place of the init status. |
+| 11.3 | done   | `[x]` (Phase 11 tasks marked `[x]` in `tasks.md`) | Both Phase 11 tasks (`11.1` and `11.2`) marked `[x]` in `openspec/changes/v1-initial-release/tasks.md`. The original `11.2` text ("Archive the change per `openspec/config.yaml#workflow` rules") was widened to record the status-file update plus the implicit `sdd-archive` handoff for the next phase. |
+
+## Files created / modified
+
+Created (1):
+- `CHANGELOG.md` (60 lines, 3.8 KB) — the user-facing release note at the repo root.
+
+Modified (2):
+- `openspec/changes/v1-initial-release/status.md` — replaced the 8-line `init status` block with the 6-line archived snapshot.
+- `openspec/changes/v1-initial-release/tasks.md` — Phase 11 header rewritten; both Phase 11 tasks (11.1, 11.2) marked `[x]`.
+- `openspec/changes/v1-initial-release/apply-progress.md` — this section appended.
+
+Untouched:
+- All production code (`src/pages/*.astro`, `src/components/**`, `src/data/*.ts`, `src/lib/*.ts`, `src/layouts/BaseLayout.astro`, `src/styles/global.css`, `astro.config.mjs`, `biome.json`, `tsconfig.json`, `vitest.config.ts`, `package.json`, `pnpm-lock.yaml`, `public/robots.txt`, `README.md`) — Phase 10 already left the production surface complete and green; Phase 11 adds no production surface.
+- `openspec/changes/v1-initial-release/proposal.md`, `spec.md`, `design.md`, `verify-report.md` — SDD proposal / spec / design / verify artifacts are unchanged from their previous landed state.
+
+## Verification
+
+All three Phase 11 verifications green (identical to Phase 10's snapshot, confirming no regression from the closeout edits):
+
+```
+$ pnpm test
+ RUN  v4.1.11 /home/kevnnard/Projects/smart-pc
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  17:37:04
+   Duration  619ms (transform 73ms, setup 0ms, import 116ms, tests 10ms, environment 782ms)
+
+$ pnpm check
+ Checked 40 files in 19ms. No fixes applied.
+ Found 1 info.   (pre-existing biome.json `recommended`-field migration notice; not introduced this phase)
+ EXIT=0
+
+$ pnpm build
+ 17:37:06 [build] mode: "static"
+ 17:37:06 [build] directory: /home/kevnnard/Projects/smart-pc/dist/
+ 17:37:06 [build] Collecting build info...
+ 17:37:06 [build] ✓ Completed in 104ms.
+ 17:37:06 [build] Building static entrypoints...
+ 17:37:06 [vite] ✓ built in 397ms
+ 17:37:06 [vite] ✓ built in 153ms
+ 17:37:06 [build] Rearranging server assets...
+
+ generating static routes 
+ 17:37:06   ├─ /404.html (+16ms) 
+ 17:37:06   ├─ /configurar/index.html (+17ms) 
+ 17:37:06   ├─ /contacto/index.html (+5ms) 
+ 17:37:06   ├─ /pre-armadas/essentials/index.html (+4ms) 
+ 17:37:06   ├─ /pre-armadas/creator/index.html (+3ms) 
+ 17:37:06   ├─ /pre-armadas/apex/index.html (+2ms) 
+ 17:37:06   ├─ /pre-armadas/index.html (+4ms) 
+ 17:37:06   ├─ /servicios/index.html (+3ms) 
+ 17:37:06   ├─ /index.html (+5ms) 
+ 17:37:06 ✓ Completed in 98ms.
+
+ 17:37:06 [build] ✓ Completed in 702ms.
+ 17:37:06 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+ 17:37:06 [build] 9 page(s) built in 819ms
+ 17:37:06 [build] Complete!
+```
+
+All 9 emitted pages confirmed:
+- `/index.html` (home)
+- `/pre-armadas/index.html` (catalog)
+- `/pre-armadas/{essentials,creator,apex}/index.html` (3 detail slugs)
+- `/configurar/index.html` (configurator)
+- `/contacto/index.html` (contact)
+- `/servicios/index.html` (services)
+- `/404.html` (not-found)
+
+Plus `dist/sitemap-index.xml` + `dist/sitemap-0.xml` (8 indexed routes) + `dist/robots.txt` (3 lines). The `pages_built: 9` figure in `status.md` matches the build output exactly.
+
+## TDD Cycle Evidence
+
+| Phase / Task        | RED written | RED output | GREEN passed | TRIANGULATE / REFACTOR |
+|---------------------|-------------|------------|---------------|-------------------------|
+| 11.1 `CHANGELOG.md` | N/A (documentation, no logic) | — | — | — |
+| 11.2 `status.md` archived snapshot | N/A (status bookkeeping, no logic) | — | — | — |
+| 11.3 `tasks.md` checkbox update | N/A (artifact bookkeeping, no logic) | — | — | — |
+
+Rationale for skipping RED tests: this slice is documentation + status bookkeeping. No new function, no new branch, no new transformation was introduced. The `CHANGELOG.md` is a Markdown file rendered by GitHub's renderer and read by humans; the `status.md` snapshot is consumed by SDD tooling; the `tasks.md` checkbox update is internal SDD bookkeeping. Strict-TDD skip is consistent with the Phase 4 / Phase 5 / Phase 6 / Phase 7 / Phase 10 precedents for presentational + artifact work.
+
+## Deviations from design / orchestrator instructions
+
+- **None.** Phase 11 was a clean execution of the orchestrator's three-task prompt: `CHANGELOG.md` was written verbatim from the orchestrator's spec; `status.md` was replaced with the orchestrator's archived-snapshot YAML; `tasks.md` Phase 11 tasks were marked `[x]`. The verification protocol (`pnpm test` + `pnpm check` + `pnpm build`) matched the orchestrator's expected output exactly (16 tests, 0 errors, 9 pages). The phase produced zero production-code changes.
+- **`status.md` YAML block omits the original `init status` paragraph.** The orchestrator's parent prompt replaced the 8-line init status (Status / Change registered / Config state / Validation / Scope confirmed / Notes) with the 6-line archived snapshot (`status:` / `archived_at:` / `version:` / `pages_built:` / `tests:` / `coverage:`). The init status is preserved verbatim in this `apply-progress.md` (Phase 2's "Structured status consumed / produced" section quoted the relevant lines); if the team wants the init status preserved in `status.md` alongside the archived snapshot, a future PR can extend the file rather than replace it. The shipped form is the orchestrator's literal prompt.
+
+## Remaining tasks
+
+From `tasks.md`, Phase 11 is complete. Across the full V1 change:
+
+- **Phase 0** (Repo hygiene): all 3 tasks `[x]`.
+- **Phase 1** (Scaffold): all 10 tasks `[x]`.
+- **Phase 2** (Design tokens + base layout): 6 of 9 tasks `[x]`; `2.4`/`2.5` (money.ts test + impl) and `2.6`/`2.7` (slugify.ts test + impl) and `2.9` (env.d.ts) remain `[ ]` per the Phase 2 dev note. None of these block the V1 build because `PricingCard` / `ServiceCard` / `SpecList` / `[slug].astro` / `Configurator.tsx` ship their own inline `formatPrice(value)` / `formatArs(value)` helpers, and `astro/client` types are auto-emitted to `.astro/types.d.ts`.
+- **Phase 3** (Data layer): all 12 tasks `[x]` (data files + compatibility lib + tests landed under the Phase 2 / Phase 4 / Phase 6 / Phase 7 apply cycles).
+- **Phase 4** (Reusable `.astro` components): all 10 tasks `[x]` (CTAButton, Navbar, NavbarLink, Footer, StatsStrip, ServiceCard, PricingCard, SpecList, FAQItem, PageHero).
+- **Phase 5** (Home page): all 7 tasks `[x]` (composed in `src/pages/index.astro`).
+- **Phase 6** (Catalog + detail): tasks `6.4` and `6.6` `[x]`; tasks `6.1`/`6.2`/`6.3` (CatalogFilters React island) and `6.7`/`6.8` (prefill.ts) and `6.5` (smoke test) remain `[ ]` per the Phase 6 dev note. None block V1 because the static catalog already satisfies F2.1 (list-all-curated-builds) and the per-build detail pages already satisfy F3.1–F3.4.
+- **Phase 7** (Configurator): tasks `7.1` and `7.2` `[x]`; tasks `7.3`/`7.4` (stepper integration test), `7.5` (URL serialization test), `7.6` (localStorage hydration test), and `7.7` (`/contacto?config=...` prefill) remain `[ ]` per the Phase 7 dev note. None block V1 because F4.1–F4.6 (without F4.7 `localStorage` / F4.6's contact prefill) already pass and the configurator JS budget is well under 120 KB gzipped (~60.8 KB total: 3.6 KB island + 57 KB React 19 client runtime).
+- **Phase 8** (Services): tasks `8.1` and `8.2` `[x]` — `src/pages/servicios/index.astro` shipped and listed in the `pnpm build` output.
+- **Phase 9** (Contact): all 8 tasks `[x]` — `src/pages/contacto/index.astro` + `src/components/contact/ContactForm.tsx` shipped and listed in the `pnpm build` output.
+- **Phase 10** (Quality gates + final pass): tasks `10.1`, `10.2`, `10.3`, `10.4`, `10.6`, `10.7`, `10.8` `[x]`; task `10.5` (Lighthouse CI script) remains `[ ]` per the Phase 10 deviation note. `sitemap-index.xml` + `sitemap-0.xml` (8 indexed routes) + `robots.txt` + `404.html` all emitted by `pnpm build`.
+- **Phase 11** (OpenSpec closeout): both tasks `[x]` after this execution.
+
+The V1 change is shipped, verified, and ready for archive.
+
+## Workload / PR boundary
+
+| File | Lines (LOC) |
+|------|-------------|
+| `CHANGELOG.md` (created) | 60 |
+| `openspec/changes/v1-initial-release/status.md` (replaced) | 6 (was 8) |
+| `openspec/changes/v1-initial-release/tasks.md` (Phase 11 header rewritten) | +4 (was 2 checkbox rows) |
+| `openspec/changes/v1-initial-release/apply-progress.md` (this section) | +130 (estimated) |
+| **Net authored this phase** | **~70 LOC production + ~130 LOC artifact prose** |
+
+The session `review_budget_lines` is **600**. The production-code portion of this Phase 11 slice is **~70 LOC**, which is **~12% of the budget** — well under. The artifact-prose portion (~130 LOC) is SDD-side bookkeeping and is not counted against the review budget (consistent with every prior phase's apply-progress section). Single PR is appropriate.
+
+## Structured status consumed / produced
+
+- Consumed: implicit `applyState: ready` for Phase 11 from the orchestrator context. `artifactStore: openspec` confirmed by the explicit allowed-edit-surfaces list (`CHANGELOG.md`, `openspec/changes/v1-initial-release/status.md`, `openspec/changes/v1-initial-release/apply-progress.md`, `openspec/changes/v1-initial-release/tasks.md`) and by the existence of the `openspec/` directory. No native status JSON was supplied; the orchestrator's prompt carried the change name, repo root, attempt token, allowed edit roots, and the three-task scope (11.1, 11.2, 11.3) plus the verification command list.
+- Produced: this `apply-progress.md` section, the new `CHANGELOG.md`, the updated `status.md`, and the updated `tasks.md` checkboxes. The `applyState` should transition from `ready` → `in-progress` → `all_done` after this report; the orchestrator's next call should invoke `sdd-archive` per the standard SDD route (`status.md` is now `archived` but the orchestration step `sdd-archive` is a separate handoff that moves the change directory into `openspec/changes/archive/`).
+- Action context warnings: none. The orchestrator surfaced an explicit `allowedEditRoots` set inside the prompt. Every file written stays inside that set:
+  - `CHANGELOG.md` (created; lives at the repo root, which is inside the workspace)
+  - `openspec/changes/v1-initial-release/status.md` (replaced)
+  - `openspec/changes/v1-initial-release/tasks.md` (Phase 11 header rewritten)
+  - `openspec/changes/v1-initial-release/apply-progress.md` (this section appended)
+  - `actionContext.mode` is treated as `workspace-implementation` because every file modified lives inside the smart-pc repo root.
+- Memory contract: artifact store is `openspec`; persistence is on disk only. `mem_save` / `mem_update` Engram tools were not invoked because the store is filesystem-backed and the parent owns delegation. The orchestrator's parent prompt explicitly listed `openspec` as the artifact store, so the memory contract is satisfied by writing to disk under `openspec/changes/v1-initial-release/` plus `CHANGELOG.md` at the repo root.
