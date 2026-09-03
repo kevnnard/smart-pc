@@ -1,0 +1,140 @@
+---
+/**
+ * PageHero.astro (home section wrapper).
+ *
+ * Section-level hero used at the top of the home page (F1.2) and reused as a
+ * generic page header on /servicios, /contacto, /pre-armadas. It pairs a
+ * monospace eyebrow label, a primary H1, a body subhead, and an optional
+ * pair of CTAs (primary + outline).
+ *
+ * Props:
+ *   - eyebrow?:  string  — small monospace label rendered above the H1
+ *                           (e.g. "// CUSTOM PC BUILDER · COLOMBIA").
+ *   - title:     string  — primary headline (H1).
+ *   - accent?:   string  — optional second-line accent rendered in cyan.
+ *                           Appended after `title` with a line break.
+ *   - body?:     string  — subhead text, capped at ~640px wide.
+ *   - primaryHref?:    string
+ *   - primaryLabel?:   string
+ *   - outlineHref?:    string
+ *   - outlineLabel?:   string
+ *   - align?:          "left" | "center" — defaults to "left" on home, set
+ *                                            to "center" elsewhere if needed.
+ *   - class?: string — utility classes appended to the section root.
+ *
+ * Composition: imports `CTAButton` from the shared UI library.
+ */
+import CTAButton from "../ui/CTAButton.astro";
+
+interface Props {
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly accent?: string;
+  readonly body?: string;
+  readonly primaryHref?: string;
+  readonly primaryLabel?: string;
+  readonly outlineHref?: string;
+  readonly outlineLabel?: string;
+  readonly align?: "left" | "center";
+  readonly class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  accent,
+  body,
+  primaryHref,
+  primaryLabel,
+  outlineHref,
+  outlineLabel,
+  align = "left",
+  class: extraClass = "",
+} = Astro.props;
+
+const alignment =
+  align === "center" ? "items-center text-center" : "items-start text-left";
+---
+
+<section
+  class:list={[
+    "relative isolate w-full overflow-hidden bg-navy-950 py-20 md:py-28",
+    extraClass,
+  ]}
+>
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 opacity-40"
+    aria-hidden="true"
+  >
+    <div
+      class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl"
+    >
+    </div>
+    <div
+      class="absolute bottom-0 right-0 h-72 w-72 translate-x-1/4 rounded-full bg-violet-500/10 blur-3xl"
+    >
+    </div>
+  </div>
+
+  <div
+    class:list={[
+      "mx-auto flex w-full max-w-[1280px] flex-col gap-6 px-4 md:px-8",
+      alignment,
+    ]}
+  >
+    {
+      eyebrow && (
+        <span
+          class="font-mono text-xs tracking-widest text-cyan-500 md:text-sm"
+        >
+          {eyebrow}
+        </span>
+      )
+    }
+
+    <h1
+      class="text-4xl font-bold leading-tight tracking-tight text-text-primary md:text-6xl"
+    >
+      {title}
+      {
+        accent && (
+          <>
+            <br />
+            <span class="text-cyan-500">{accent}</span>
+          </>
+        )
+      }
+    </h1>
+
+    {
+      body && (
+        <p class="max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
+          {body}
+        </p>
+      )
+    }
+
+    {
+      (primaryHref || outlineHref) && (
+        <div
+          class:list={[
+            "mt-2 flex flex-col gap-3 sm:flex-row",
+            align === "center" && "justify-center",
+            align === "left" && "justify-start",
+          ]}
+        >
+          {primaryHref && primaryLabel && (
+            <CTAButton href={primaryHref} variant="primary" size="lg">
+              {primaryLabel}
+            </CTAButton>
+          )}
+          {outlineHref && outlineLabel && (
+            <CTAButton href={outlineHref} variant="outline" size="lg">
+              {outlineLabel}
+            </CTAButton>
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>

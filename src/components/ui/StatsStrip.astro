@@ -1,0 +1,56 @@
+---
+/**
+ * StatsStrip.astro
+ *
+ * Full-width numeric stats strip rendered on a dark-navy surface. Designed to
+ * sit directly below the home hero (F1.3) and optionally repeated between
+ * other content blocks. Renders up to four cells in a responsive grid that
+ * collapses to 2 cells on small viewports.
+ *
+ * Props:
+ *   - items: readonly { label: string; value: string; suffix?: string }[]
+ *     The numeric `value` and the optional `suffix` are rendered as separate
+ *     inline spans so the unit never wraps below the number.
+ *   - class?: string
+ *     Optional utility classes appended to the section root.
+ *
+ * Sourced by the home page from `src/data/home.ts` → `stats`. Consumers
+ * outside of `/` can pass any compatible `readonly` array.
+ */
+
+interface StatItem {
+  readonly label: string;
+  readonly value: string;
+  readonly suffix?: string;
+}
+
+interface Props {
+  readonly items: readonly StatItem[];
+  readonly class?: string;
+}
+
+const { items, class: extraClass = "" } = Astro.props;
+---
+
+<section
+  class:list={["w-full bg-navy-950 py-12", extraClass]}
+  aria-label="Estadísticas clave"
+>
+  <div class="mx-auto w-full max-w-[1280px] px-4 md:px-8">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+      {
+        items.map((item) => (
+          <div class="text-center">
+            <div class="font-mono text-3xl font-bold text-cyan-500 md:text-4xl">
+              <span>{item.value}</span>
+              {item.suffix && <span>{item.suffix}</span>}
+            </div>
+            <div class="mt-1 font-mono text-xs tracking-widest text-text-secondary md:text-sm">
+              {item.label}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

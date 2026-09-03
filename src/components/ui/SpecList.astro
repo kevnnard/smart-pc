@@ -1,0 +1,89 @@
+---
+/**
+ * SpecList.astro
+ *
+ * Compact "spec sheet" view of a `Component[]`. Used inside the prebuild
+ * detail page (`/pre-armadas/[slug]`, F3.x) and any future spec surfaces
+ * (configurator review step, services page parts table, etc.).
+ *
+ * Props:
+ *   - components: readonly Component[] from `src/data/types.ts`
+ *   - variant?:   "list" | "grid" — defaults to "list". The list variant is
+ *                  a vertical stack of zebra-striped rows; the grid variant
+ *                  renders the same data as a 2-column responsive grid (used
+ *                  for narrow sidebars and configurator review).
+ *   - class?:     string — utility classes appended to the root element.
+ *
+ * Each row shows brand + model on a single line, the first three spec
+ * key/value pairs beneath it, and the price on the right edge in cyan.
+ *
+ * Pricing notes:
+ *   - `comp.price` is integer ARS/COP (whole pesos). Rendered with
+ *     `Intl.NumberFormat('es-CO')` directly — no `/ 100` cent conversion.
+ */
+import type { Component } from "../../data/types";
+
+interface Props {
+  readonly components: readonly Component[];
+  readonly variant?: "list" | "grid";
+  readonly class?: string;
+}
+
+const { components, variant = "list", class: extraClass = "" } = Astro.props;
+
+function formatPrice(value: number): string {
+  return value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  });
+}
+
+function formatSpecValue(value: string): string {
+  // Long socket lists ("AM4,AM5,LGA1700") get a single space after each comma
+  // so they breathe when rendered next to other specs.
+  return value.replace(/,/g, ", ");
+}
+---
+
+<div
+  class:list={[
+    variant === "grid"
+      ? "grid grid-cols-1 gap-2 md:grid-cols-2"
+      : "flex flex-col gap-1",
+    extraClass,
+  ]}
+  role="list"
+>
+  {
+    components.map((comp, i) => (
+      <div
+        role="listitem"
+        class:list={[
+          "flex items-center justify-between gap-4 rounded-lg px-3 py-2",
+          variant === "list" && (i % 2 === 0 ? "bg-navy-900" : "bg-navy-700"),
+          variant === "grid" && "bg-navy-900",
+        ]}
+      >
+        <div class="min-w-0 flex-1">
+          <div class="truncate text-sm font-medium text-text-primary">
+            {comp.brand} {comp.model}
+          </div>
+          <div class="mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-text-secondary">
+            {Object.entries(comp.specs)
+              .slice(0, 3)
+              .map(([k, v]) => (
+                <span>
+                  <span class="text-text-muted">{k}:</span>{" "}
+                  {formatSpecValue(v)}
+                </span>
+              ))}
+          </div>
+        </div>
+        <div class="shrink-0 font-mono text-sm font-semibold text-cyan-500">
+          {formatPrice(comp.price)}
+        </div>
+      </div>
+    ))
+  }
+</div>

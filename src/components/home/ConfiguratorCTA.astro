@@ -1,0 +1,147 @@
+---
+/**
+ * ConfiguratorCTA.astro (home section wrapper).
+ *
+ * Configurator teaser (F1.7): a two-column split section. Left column carries
+ * the monospace eyebrow, the H2 "Armá paso a paso.", a body paragraph about
+ * live compatibility, and a primary CTA into `/configurar`. The right column
+ * shows a static preview of step 02 (GPU selection) with three sample GPUs
+ * and their compatibility dot colors (compatible / warning / incompatible)
+ * using the project's design language.
+ *
+ * This is a static, zero-JS preview — the real stepper lives at
+ * `/configurar` and is a React island (Phase 7).
+ *
+ * Props:
+ *   - class?: string — utility classes appended to the section root.
+ *
+ * GPU preview data is hardcoded here for V1; the real list comes from
+ * `src/data/components.ts` in Phase 7.
+ */
+import CTAButton from "../ui/CTAButton.astro";
+
+interface Props {
+  readonly class?: string;
+}
+
+const { class: extraClass = "" } = Astro.props;
+
+type DotStatus = "compatible" | "warning" | "incompatible";
+
+interface PreviewStep {
+  readonly stepNumber: string;
+  readonly title: string;
+  readonly options: readonly {
+    readonly label: string;
+    readonly detail: string;
+    readonly status: DotStatus;
+  }[];
+}
+
+const gpuStep: PreviewStep = {
+  stepNumber: "// 02",
+  title: "Elegí tu GPU",
+  options: [
+    {
+      label: "GeForce RTX 3060",
+      detail: "12 GB GDDR6 · 170W",
+      status: "compatible",
+    },
+    {
+      label: "GeForce RTX 4070",
+      detail: "12 GB GDDR6X · 200W",
+      status: "compatible",
+    },
+    {
+      label: "GeForce RTX 4080 Super",
+      detail: "16 GB GDDR6X · 320W",
+      status: "warning",
+    },
+  ],
+};
+
+const dotClasses: Record<DotStatus, string> = {
+  compatible: "bg-cyan-500 shadow-[0_0_8px_rgba(34,211,238,0.6)]",
+  warning: "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]",
+  incompatible: "bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.6)]",
+};
+
+const dotLabels: Record<DotStatus, string> = {
+  compatible: "Compatible",
+  warning: "Atención",
+  incompatible: "Incompatible",
+};
+---
+
+<section
+  class:list={["w-full bg-navy-950 py-16 md:py-24", extraClass]}
+  aria-labelledby="configurator-cta-heading"
+>
+  <div
+    class="mx-auto grid w-full max-w-[1280px] grid-cols-1 gap-10 px-4 md:grid-cols-2 md:px-8"
+  >
+    <div class="flex flex-col gap-6">
+      <span class="font-mono text-xs tracking-widest text-cyan-500 md:text-sm">
+        // CONFIGURADOR
+      </span>
+      <h2
+        id="configurator-cta-heading"
+        class="text-3xl font-bold leading-tight text-text-primary md:text-4xl"
+      >
+        Armá paso a paso.
+      </h2>
+      <p class="max-w-xl text-base leading-relaxed text-text-secondary md:text-lg">
+        Elegí cada componente y mirá la compatibilidad en vivo. Validamos
+        socket, RAM, PSU y storage interface antes de que confirmes tu
+        pedido, para que tu PC arranque a la primera.
+      </p>
+      <div class="pt-2">
+        <CTAButton href="/configurar" variant="primary" size="lg">
+          Abrir configurador
+        </CTAButton>
+      </div>
+    </div>
+
+    <div
+      class="rounded-2xl border border-border bg-navy-900 p-6 shadow-xl shadow-cyan-500/5 md:p-8"
+      aria-label="Vista previa del paso 02: elección de GPU"
+    >
+      <div class="mb-6 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span
+            class="font-mono text-xs tracking-widest text-cyan-500"
+            aria-hidden="true"
+          >
+            {gpuStep.stepNumber}
+          </span>
+          <h3 class="text-lg font-semibold text-text-primary">
+            {gpuStep.title}
+          </h3>
+        </div>
+        <span class="font-mono text-xs text-text-muted">3 opciones</span>
+      </div>
+
+      <ul class="flex flex-col gap-2">
+        {
+          gpuStep.options.map((option) => (
+            <li class="flex items-center gap-3 rounded-lg bg-navy-700 px-4 py-3">
+              <span
+                class:list={["h-2.5 w-2.5 shrink-0 rounded-full", dotClasses[option.status]]}
+                aria-label={dotLabels[option.status]}
+                title={dotLabels[option.status]}
+              />
+              <div class="min-w-0 flex-1">
+                <div class="truncate text-sm font-medium text-text-primary">
+                  {option.label}
+                </div>
+                <div class="font-mono text-xs text-text-muted">
+                  {option.detail}
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

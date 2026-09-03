@@ -1,0 +1,66 @@
+---
+/**
+ * ServiceCard.astro
+ *
+ * Single tile in the services grid (F1.5 + F5.2). Renders a service's icon,
+ * title, one-line description, and optional "Desde $X COP" starting-price tag.
+ *
+ * Props:
+ *   - service: ServiceRecord from `src/data/types.ts`
+ *   - class?:  string — utility classes appended to the card root.
+ *
+ * Visual:
+ *   - navy surface (`bg-navy-900` ≈ `#141b2c`) with `rounded-2xl`
+ *   - lifts on hover with a subtle translate + cyan shadow glow
+ *   - icon rendered as text (emoji) so no extra asset pipeline is needed
+ *
+ * Sourced from `src/data/services.ts` for both the home ServicesSection and the
+ * `/servicios` catalog. Prices are integer ARS/COP stored on `service.startingPrice`
+ * and rendered with `Intl.NumberFormat('es-CO')` — no `/ 100` cent conversion is
+ * applied because the data layer already stores whole pesos (see `src/data/types.ts`).
+ */
+import type { ServiceRecord } from "../../data/types";
+
+interface Props {
+  readonly service: ServiceRecord;
+  readonly class?: string;
+}
+
+const { service, class: extraClass = "" } = Astro.props;
+
+function formatPrice(value: number): string {
+  return value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  });
+}
+---
+
+<div
+  class:list={[
+    "group relative overflow-hidden rounded-2xl bg-navy-900 p-6 transition-all duration-200",
+    "hover:-translate-y-1 hover:bg-navy-700 hover:shadow-xl hover:shadow-cyan-500/5",
+    extraClass,
+  ]}
+>
+  <div class="mb-4 text-4xl" aria-hidden="true">
+    {service.icon}
+  </div>
+
+  <h3 class="mb-2 text-lg font-semibold text-text-primary">
+    {service.title}
+  </h3>
+
+  <p class="mb-4 text-sm leading-relaxed text-text-secondary">
+    {service.description}
+  </p>
+
+  {
+    service.startingPrice !== undefined && (
+      <div class="font-mono text-xs uppercase tracking-wider text-cyan-500">
+        Desde {formatPrice(service.startingPrice)}
+      </div>
+    )
+  }
+</div>

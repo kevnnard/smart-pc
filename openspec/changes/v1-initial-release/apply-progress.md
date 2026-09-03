@@ -149,3 +149,180 @@ The slice cannot shrink further without removing required surface:
 - Produced: this `apply-progress.md` plus updated `tasks.md` checkboxes under `openspec/changes/v1-initial-release/`.
 - Action context warnings: none. The orchestrator surfaced an explicit `allowedEditRoots` set inside the prompt; every file written stays inside that set. `actionContext.mode` is treated as `workspace-implementation` because files were edited inside the smart-pc repo root.
 - Memory contract: artifact store is `openspec`; persistence is on disk only. `mem_save` / `mem_update` Engram tools were not invoked because the store is filesystem-backed and the parent owns delegation.
+
+---
+
+# Phase 4 · Reusable `.astro` components (UI library + home wrappers)
+
+Phase 4 (this execution) ships the five reusable UI components from tasks 4.4–4.8, plus four home section wrappers (4.9 + the implicit wrappers for the spec's F1.5/F1.6/F1.7 home surfaces). Phase 5 will compose them into `src/pages/index.astro` — this phase only ships the components themselves.
+
+Strict TDD was **not** active for this execution (orchestrator: "data-layer components are mostly composition (no new logic)"). All five UI components are presentational — every byte of behaviour is already covered by the typed `Props` interface and by the data layer (`src/data/types.ts` + the `src/data/*.ts` exports). No new logic, no new rules, no new branch coverage to test. TDD Cycle Evidence table is intentionally empty for this phase (N/A on every row).
+
+## Completed tasks
+
+| Task | Status | Persisted checkbox | Notes |
+|------|--------|--------------------|-------|
+| 4.4  | done   | `[x]` (StatsStrip)            | `src/components/ui/StatsStrip.astro`: full-width `bg-navy-950` strip, 2 → 4 column responsive grid. Renders value + suffix as adjacent spans so the unit never wraps below the number. Source: `stats` from `src/data/home.ts` (now 4 entries — see "Deviations" for the 3 → 4 widening). |
+| 4.5  | done   | `[x]` (ServiceCard)           | `src/components/ui/ServiceCard.astro`: navy-900 surface, `rounded-2xl`, hover-lift + cyan-500/5 shadow glow. Icon rendered as text (emoji per `ServiceRecord.icon`). Conditional `Desde $X COP` starting-price tag using `Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' })`. |
+| 4.6  | done   | `[x]` (PricingCard)           | `src/components/ui/PricingCard.astro`: navy-900 surface, `border-border` by default, `border-cyan-500` + `shadow-cyan-500/20` for `featured`. Featured ribbon (`⭐ Destacado`) for `featured`; non-featured `prebuild.badge` rendered as muted ribbon. Three perks (componentes / garantía / ensamblaje) with check SVG. `CTAButton` (primary for featured, outline otherwise) wired to `/pre-armadas/{slug}`. |
+| 4.7  | done   | `[x]` (SpecList)              | `src/components/ui/SpecList.astro`: list variant = vertical stack with zebra striping (`bg-navy-900` even, `bg-navy-700` odd); grid variant = 2-col responsive grid. Each row = brand + model + first three specs + price in `font-mono text-cyan-500`. Long socket lists (`"AM4,AM5,LGA1700"`) get a space after each comma so the comma-separated values breathe. |
+| 4.8  | done   | `[x]` (FAQItem)               | `src/components/ui/FAQItem.astro`: pure `<details>`/`<summary>`, `list-none marker:hidden` strips the default triangle. Closed: `border-border bg-navy-900`. Open: same surface, `border-cyan-500/30`, chevron rotates 180° via `group-open:rotate-180`. Index rendered as `// 0N` monospace label (matches the F1.9 spec). |
+| 4.9  | done   | `[x]` (PageHero)              | `src/components/home/PageHero.astro`: monospace eyebrow + H1 + optional second-line accent in cyan + body + optional primary + outline CTA pair. Background = `bg-navy-950` with two large blurred `bg-cyan-500/10` + `bg-violet-500/10` radial accents (CSS-only, zero JS). Reusable as a generic page header. |
+| 4.10 | partial| `[x]` (smoke mount documented)| Visual regression is deferred per task notes. Phase 4 dev mounted each component on a throwaway `src/pages/phase4smoke.astro`, ran `pnpm build`, grepped the emitted HTML for the expected class signatures (`cyan-500` ×117, `font-mono` ×40, `details`/`summary` ×9, `grid-cols` ×11, `navy-900` ×24, `navy-950` ×16), then removed the throwaway page. No persistent dev page was added. |
+
+In addition to tasks 4.4–4.9, three home section wrappers landed because the orchestrator's allowed edit surfaces explicitly listed them:
+
+| File | Notes |
+|------|-------|
+| `src/components/home/PrebuildTeaser.astro` (F1.6 wrapper) | `// PRE-ARMADAS` eyebrow + heading + body, 1/2/3-col responsive grid of `PricingCard`s from `src/data/prebuilds.ts`, bottom CTA to `/pre-armadas`. |
+| `src/components/home/ServicesGrid.astro`  (F1.5 wrapper) | `// SERVICIOS` eyebrow + heading + body, 2×2 grid (1-col on mobile) of `ServiceCard`s from `src/data/services.ts`, bottom CTA to `/servicios`. |
+| `src/components/home/ConfiguratorCTA.astro` (F1.7 wrapper) | Two-column split. Left: `// CONFIGURADOR` eyebrow + "Armá paso a paso." H2 + body + primary CTA to `/configurar`. Right: static preview of step 02 (GPU selection) with three sample GPUs and compatibility dots (cyan / amber / red). Zero JS — the real stepper is a React island at `/configurar` (Phase 7). |
+
+## Files created / modified
+
+Created (10):
+- `src/components/ui/StatsStrip.astro` (55 LOC)
+- `src/components/ui/ServiceCard.astro` (65 LOC)
+- `src/components/ui/PricingCard.astro` (137 LOC)
+- `src/components/ui/SpecList.astro` (88 LOC)
+- `src/components/ui/FAQItem.astro` (71 LOC)
+- `src/components/home/PageHero.astro` (139 LOC)
+- `src/components/home/PrebuildTeaser.astro` (81 LOC)
+- `src/components/home/ServicesGrid.astro` (81 LOC)
+- `src/components/home/ConfiguratorCTA.astro` (146 LOC)
+- `src/components/home/` directory itself (was missing; the Phase 2/3 work assumed the home subdirectory existed but never created it)
+
+Modified (2):
+- `src/data/home.ts`: split `stats` from 3 to 4 entries and from `value: "320+"` to `{ value: "320", suffix: "+" }` so each stat renders value + suffix as separate spans (matches the orchestrator's `items: { label, value, suffix? }[]` prop signature on `StatsStrip`). Introduced `StatItemWithSuffix = StatItem & { suffix?: string }` — a structural superset of `StatItem` that the export remains assignable to. `src/data/types.ts` was NOT modified (not in edit surface); the new shape fits the existing `StatItem` contract via `&` intersection.
+- `openspec/changes/v1-initial-release/tasks.md`: marked 4.4–4.10 (and the implicit Phase 4 wrappers) `[x]`. The "Phase 4 dev note" on task 4.10 documents the throwaway smoke mount.
+
+Untouched (deferred to Phase 5):
+- `src/pages/index.astro` — still renders the Phase 2 placeholder hero + `TrustStrip` only. Phase 5 will compose the new home wrappers here.
+- `src/data/types.ts` — not in edit surface; `StatItem` interface unchanged.
+- `src/components/ui/TrustStrip.astro` — Phase 2 general-purpose variant. Phase 5 may add a home-specific `src/components/home/TrustStrip.astro` per task 5.2.
+
+## Verification
+
+```
+$ pnpm test
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Duration  581ms
+
+$ pnpm check
+ Checked 32 files in 7ms. No fixes applied.
+ Found 1 info.
+```
+
+(The single info-level finding is the same pre-existing `biome.json` `recommended`-field migration notice from Phase 1/2 — not introduced by this execution and not a blocker.)
+
+```
+$ pnpm build
+ 16:34:44 [vite] ✓ built in 122ms
+ 16:34:44 [build] Rearranging server assets...
+
+ generating static routes
+ 16:34:44   ├─ /index.html (+19ms)
+ 16:34:44 ✓ Completed in 43ms.
+
+ 16:34:44 [build] ✓ Completed in 589ms
+ 16:34:44 [build] 1 page(s) built in 715ms
+ 16:34:44 [build] Complete!
+```
+
+Additional dev verification (smoke mount, not part of the formal verification protocol):
+
+```
+$ pnpm build   # with src/pages/phase4smoke.astro mounted (throwaway)
+ generating static routes
+ 16:34:37   ├─ /phase4smoke/index.html (+32ms)
+ 16:34:37   ├─ /index.html (+4ms)
+ 16:34:37 ✓ Completed in 70ms.
+ 16:34:37 [build] 2 page(s) built in 688ms
+
+$ grep -oE '(cyan-500|font-mono|details|summary|grid-cols|navy-950|navy-900)' dist/phase4smoke/index.html | sort | uniq -c | sort -rn | head -7
+   117 cyan-500
+    40 font-mono
+    24 navy-900
+    16 navy-950
+    11 grid-cols
+     9 summary
+     8 details
+```
+
+All five UI components and all four home wrappers compiled and rendered without errors. The grep confirms each signature class (`cyan-500`, `font-mono`, `details`/`summary`, `grid-cols`, `navy-950`, `navy-900`) appears in the emitted HTML. The throwaway `src/pages/phase4smoke.astro` was deleted before this report was committed; `pnpm build` afterwards emits only `/index.html` as expected.
+
+## TDD Cycle Evidence
+
+| Phase / Task | RED written | RED output | GREEN passed | TRIANGULATE / REFACTOR |
+|--------------|-------------|------------|---------------|-------------------------|
+| 4.4 StatsStrip   | N/A (presentational composition) | — | — | — |
+| 4.5 ServiceCard  | N/A (presentational composition) | — | — | — |
+| 4.6 PricingCard  | N/A (presentational composition) | — | — | — |
+| 4.7 SpecList     | N/A (presentational composition) | — | — | — |
+| 4.8 FAQItem      | N/A (presentational composition) | — | — | — |
+| 4.9 PageHero     | N/A (presentational composition) | — | — | — |
+
+Rationale for skipping RED tests: the orchestrator's parent prompt for this execution explicitly noted "Strict TDD: Only if explicitly stated; data-layer components are mostly composition (no new logic)." All five UI components and the four home wrappers are presentational — they consume already-validated data (`ServiceRecord`, `PrebuiltPC`, `Component`, `FAQItem`, `StatItem`) and emit HTML. There is no new branch to test, no new rule to validate, no new transformation to triangulate. Smoke verification is performed through `pnpm check` (`tsc --noEmit` covers import resolution and prop-type correctness) and the throwaway mount + `pnpm build` (covers actual rendering).
+
+## Deviations from design / orchestrator instructions
+
+- **Orchestrator's `/ 100` cent conversion dropped from `formatPrice()`.** Both `PricingCard` and `ServiceCard`'s `formatPrice()` use `Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })` directly on `value` without the `(value / 100)` divisor in the orchestrator's prompt. Rationale: the existing data layer (`src/data/types.ts`, `src/data/services.ts`, `src/data/prebuilds.ts`) stores prices as **integer whole pesos** (e.g. `basePrice: 1_300_000` for the Essentials tier = "$1.300.000" COP, a reasonable Colombian entry-level PC). Dividing by 100 would render them as `$13.000`, off by 100×. The orchestrator's literal code would have shipped visually wrong prices. The data shape was preserved (not multiplied by 100 in `src/data/*.ts`); only the format function was corrected.
+- **`StatItem` extended locally instead of in `src/data/types.ts`.** The orchestrator's `StatsStrip` props are `{ label: string; value: string; suffix?: string }[]`. `src/data/types.ts` is NOT in the edit surface, so `StatItem` cannot be widened there. Solution: `src/data/home.ts` defines `StatItemWithSuffix = StatItem & { suffix?: string }` and exports `stats: readonly StatItemWithSuffix[]`. Structural typing means the new shape remains assignable to `readonly StatItem[]`, so the existing `StatItem` interface is still authoritative and any consumer reading `stats` only via `StatItem` keeps working.
+- **`stats` widened from 3 to 4 entries.** The orchestrator's task description said "4 cells in a row, centered layout" but `src/data/home.ts` shipped 3 entries. Added a 4th (`48h` / `RESPUESTA`) so the strip shows four populated cells. The 3-cell content from the previous version was preserved (with value/suffix split): `320+` → `{ value: "320", suffix: "+" }`, `98%` → `{ value: "98", suffix: "%" }`, `24M` → `{ value: "24", suffix: "M" }`.
+- **Hex literals avoided in components.** The orchestrator's `StatsStrip` prompt used `text-[#22d3ee]` and `bg-[#0c1333]`. Both were translated to token-based classes (`text-cyan-500` and `bg-navy-950`) to honor the "no raw hex outside `global.css`" rule established in Phase 2. `#22d3ee` and `--color-cyan-500: #22d3ee` are identical, so no visual change. `#0c1333` vs `--color-navy-950: #0c1324` is 15-bit off in both channels — visually indistinguishable but technically a different value. If the orchestrator needs pixel-exact `#0c1333`, a new `--color-navy-1000` token can land in `src/styles/global.css` later.
+- **`<details>` uses `marker:hidden` + `list-none` instead of inline `::-webkit-details-marker { display: none }`.** The native `<summary>` marker is stripped with the modern Tailwind v4 `marker:hidden` variant plus `list-none` on the summary. Works in Firefox + Safari + Chromium. Cleaner than a CSS hack block.
+- **`SpecList.astro` uses `Component[]` (not `PricedComponent[]`).** The orchestrator's task title referenced the legacy `PricedComponent` type from the original three-trackr design, but `src/data/types.ts` renamed the shape to `Component` in Phase 3. The component imports the canonical `Component` type — same shape, current name.
+- **`ConfiguratorCTA.astro` ships a static preview, not a real stepper.** The right column of the F1.7 configurator teaser is a hardcoded 3-GPU list (RTX 3060 / 4070 / 4080 Super) with compatibility dot colors (cyan / cyan / amber). The real stepper is a React island that lands in Phase 7 at `/configurar`. The teaser is intentionally zero-JS so the home page stays at zero JS.
+- **`FAQItem.astro` adds an `index` prop.** The orchestrator's example only passed `item`, but the F1.9 spec calls for the monospace `// 01 … // 0N` counter label, which requires the position. Added `index: number` as a second required prop. `index + 1` is rendered with `String(...).padStart(2, "0")` so `0`, `1`, `9`, `10` all render as `01`, `02`, `10`, `11`.
+- **`ServiceRecord.icon` rendered as text (emoji), not via a registry.** The data already carries emoji (`🛠️`, `🖥️`, `🔧`, `🛡️`) so no icon-registry indirection is needed in V1. Future-proofing: if a later phase swaps in SVG identifiers, the consumer just swaps the `<div>{service.icon}</div>` for a `<Icon name={service.icon} />` component.
+- **`ConfiguratorCTA.astro` uses raw `bg-cyan-500/10` and `bg-violet-500/10` Tailwind opacity-suffix utilities on the radial blur accents.** Tailwind v4 supports these directly via the generated color utilities; no extra tokens needed.
+- **Biome auto-format applied.** `pnpm format` fixed two formatting nits in `PageHero.astro` (multi-line ternary → single-line) and `SpecList.astro` (multi-line destructure → single-line). Both re-rendered identically after the fix. The `pnpm check` exit code went from 1 to 0 after the auto-format run.
+
+## Remaining tasks
+
+From Phase 4: **none.** Tasks 4.1–4.10 are all `[x]` (4.10 is partial per the visual-regression deferral note, but the artifact-level checkbox is `[x]` because the smoke-mount evidence was captured).
+
+Phase 5 (home composition) is the next gate and is not in scope for this execution. Phase 5 owns:
+- `src/components/home/HomeHero.astro` (or reuse `PageHero.astro` directly — they overlap)
+- `src/components/home/TrustStrip.astro` (Phase 5-specific variant with the `01 / 02 / 03 / 04` counter per F1.4)
+- `src/components/home/ContactStrip.astro` (F1.8 — the static stub of the contact form on the home page)
+- `src/components/home/FAQSection.astro` (F1.9 — wrapper around `FAQItem`)
+- `src/pages/index.astro` composition rewrite
+
+Phase 3 still pending: `src/data/types.ts` data layer fine-tuning is already done (Phase 3 ran as part of this repo's history before Phase 2/4), but the `compatibility` test coverage work (tasks 3.7–3.12) is still unstarted. Not a blocker for `pnpm check` / `pnpm build`; only blocks `pnpm test:coverage` for the `src/lib/` 80% threshold.
+
+## Workload / PR boundary
+
+| File                              | Lines (LOC) |
+|-----------------------------------|-------------|
+| `src/components/ui/StatsStrip.astro`     |  55 |
+| `src/components/ui/ServiceCard.astro`    |  65 |
+| `src/components/ui/PricingCard.astro`    | 137 |
+| `src/components/ui/SpecList.astro`       |  88 |
+| `src/components/ui/FAQItem.astro`        |  71 |
+| `src/components/home/PageHero.astro`     | 139 |
+| `src/components/home/PrebuildTeaser.astro` |  81 |
+| `src/components/home/ServicesGrid.astro`   |  81 |
+| `src/components/home/ConfiguratorCTA.astro`| 146 |
+| `src/data/home.ts` (modified)             |  80 (was 56; +24 for StatItemWithSuffix + 4th stat + JSDoc) |
+| **Total authored this phase** | **+943** |
+
+The session `review_budget_lines` is **600** (from `openspec/config.yaml#workflow.review_budget_lines`). This Phase 4 slice **exceeds the budget by 343 lines** per the gate rule:
+
+> "If the assigned slice cannot land within budget as one cohesive work unit, implement it honestly, then report the final authored line count, why it cannot shrink further, and a `size:exception` recommendation — do not iterate trying to reach the number."
+
+The slice cannot shrink further without removing required surface:
+- `PricingCard.astro` (137 LOC) carries the F1.6 spec: 5 lines of perk list (with check SVG paths that are each ~5 lines × 3 = 15 LOC), CTA import + invocation, featured/ribbon/badge logic, two-layer class branch. Below 100 LOC this component stops being readable.
+- `ConfiguratorCTA.astro` (146 LOC) carries the F1.7 spec: two-column split, hero copy on the left, GPU preview card on the right with three options × ~10 LOC each + dot-class lookup tables. The right column alone is ~85 LOC and is intrinsic to the design.
+- `PageHero.astro` (139 LOC) carries a generic H1 + body + CTA pair + accent-glow background. The two radial blur divs are 12 LOC and the CTA branching is ~30 LOC. Below ~100 LOC the eyebrow + accent line + CTA pair stop fitting in one component.
+- All other files are under 100 LOC individually; further shrinking requires removing JSDoc headers, which is the contract for component-level documentation.
+
+**Recommendation:** `size:exception` for this slice, or split into two stacked PRs — PR-A (the five UI components, ~416 LOC, just under budget) and PR-B (the four home wrappers, ~447 LOC, just under budget). The orchestrator's prompt did not pre-decide; if a stacked split is preferred, Phase 4 can be re-run with `auto-chain` or `feature-branch-chain`.
+
+## Structured status consumed / produced
+
+- Consumed: implicit `applyState: ready` for Phase 4 from the orchestrator context. `artifactStore: openspec` is confirmed by the explicit allowed-edit-surfaces list and by the `openspec/` directory layout. No native status JSON was supplied; the orchestrator's prompt carried the change name, repo root, attempt token, and allowed edit roots.
+- Produced: this `apply-progress.md` plus updated `tasks.md` checkboxes under `openspec/changes/v1-initial-release/`.
+- Action context warnings: none. The orchestrator surfaced an explicit `allowedEditRoots` set inside the prompt. Every file written stays inside that set (9 component files, 1 modified data file, 2 SDD files). One throwaway file (`src/pages/phase4smoke.astro`) was created and removed inside the verification loop; it never entered the final state and never matched any persistent artifact.
+- Memory contract: artifact store is `openspec`; persistence is on disk only. `mem_save` / `mem_update` Engram tools were not invoked because the store is filesystem-backed and the parent owns delegation.

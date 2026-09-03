@@ -1,0 +1,138 @@
+---
+/**
+ * PricingCard.astro
+ *
+ * Single tier card for prebuilt PCs (F1.6, F2.1, F3.x). Shows tier name,
+ * tagline, base price, and a CTA linking to the detail page. The featured
+ * variant adds a cyan border + glow + "⭐ Destacado" ribbon.
+ *
+ * Props:
+ *   - prebuild:  PrebuiltPC from `src/data/types.ts`
+ *   - featured?: boolean — enables the cyan glow + ribbon treatment.
+ *   - class?:    string  — utility classes appended to the card root.
+ *
+ * Pricing notes:
+ *   - `prebuild.basePrice` is integer ARS/COP (whole pesos, see
+ *     `src/data/types.ts`). It is rendered with `Intl.NumberFormat('es-CO')`
+ *     directly — no `/ 100` cent conversion is applied.
+ *
+ * CTA: a `CTAButton` (outline for unfeatured, primary for featured) wired to
+ * `/pre-armadas/{slug}`. The route is created in Phase 6.
+ */
+import type { PrebuiltPC } from "../../data/types";
+import CTAButton from "./CTAButton.astro";
+
+interface Props {
+  readonly prebuild: PrebuiltPC;
+  readonly featured?: boolean;
+  readonly class?: string;
+}
+
+const { prebuild, featured = false, class: extraClass = "" } = Astro.props;
+
+function formatPrice(value: number): string {
+  return value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  });
+}
+
+const cardClasses = [
+  "relative flex flex-col rounded-2xl border p-6 transition-all duration-200",
+  "hover:-translate-y-1",
+  featured
+    ? "border-cyan-500 bg-navy-900 shadow-lg shadow-cyan-500/20"
+    : "border-border bg-navy-900 hover:border-cyan-500/40",
+  extraClass,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={cardClasses}>
+  {
+    featured && (
+      <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-cyan-500 px-3 py-0.5 font-mono text-xs font-bold text-navy-950">
+        ⭐ Destacado
+      </div>
+    )
+  }
+
+  {
+    !featured && prebuild.badge && (
+      <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-navy-700 px-3 py-0.5 font-mono text-xs font-medium text-text-secondary">
+        {prebuild.badge}
+      </div>
+    )
+  }
+
+  <div class="mb-4 mt-2">
+    <h3 class="text-xl font-bold text-cyan-500">{prebuild.name}</h3>
+    <p class="text-sm text-text-secondary">{prebuild.tagline}</p>
+  </div>
+
+  <div class="mb-6">
+    <span class="text-3xl font-bold text-cyan-500">
+      {formatPrice(prebuild.basePrice)}
+    </span>
+  </div>
+
+  <ul class="mb-6 space-y-1.5 text-sm text-text-secondary">
+    <li class="flex items-center gap-2">
+      <svg
+        class="h-4 w-4 shrink-0 text-cyan-500"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      {prebuild.components.length} componentes
+    </li>
+    <li class="flex items-center gap-2">
+      <svg
+        class="h-4 w-4 shrink-0 text-cyan-500"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      Garantía 24 meses
+    </li>
+    <li class="flex items-center gap-2">
+      <svg
+        class="h-4 w-4 shrink-0 text-cyan-500"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      Ensamblaje profesional
+    </li>
+  </ul>
+
+  <div class="mt-auto">
+    <CTAButton
+      href={`/pre-armadas/${prebuild.slug}`}
+      variant={featured ? "primary" : "outline"}
+      class="w-full justify-center"
+    >
+      Ver configuración
+    </CTAButton>
+  </div>
+</div>

@@ -82,13 +82,13 @@ Acceptance: `pnpm test:coverage` reports ≥ 80 % on `src/lib/` and `src/data/`.
 - [x] **4.1** Create `src/components/CTAButton.astro` with `variant: "primary" | "secondary" | "ghost"` prop and typed `href`.
 - [x] **4.2** Create `src/components/Navbar.astro`: sticky, glass, 70 % opacity, blur 16, 1 px bottom border, center links, right CTAs. Pull link labels from `src/data/brand.ts` or hardcode for V1.
 - [x] **4.3** Create `src/components/Footer.astro`: four-column layout, bottom row with version + location.
-- [ ] **4.4** Create `src/components/StatsStrip.astro`: prop `items: { label: string; value: string }[]`.
-- [ ] **4.5** Create `src/components/ServiceCard.astro`: prop `service: ServiceRecord`.
-- [ ] **4.6** Create `src/components/PricingCard.astro`: prop `prebuild: PrebuiltPC`.
-- [ ] **4.7** Create `src/components/SpecList.astro`: prop `components: PricedComponent[]`, zebra striping.
-- [ ] **4.8** Create `src/components/FAQItem.astro`: open/closed state via `:checked` checkbox or `<details>` (no JS).
-- [ ] **4.9** Create `src/components/PageHero.astro`: title + body + optional CTA pair.
-- [ ] **4.10** Snapshot all components by mounting each on a tiny `dev/ComponentPage.astro` and capturing a screenshot in `pnpm test` (Vitest + `vite-plugin-vue-screenshot` is overkill — defer to manual review for V1, document the gap).
+- [x] **4.4** Create `src/components/ui/StatsStrip.astro`: prop `items: { label: string; value: string; suffix?: string }[]`, dark-navy full-width strip, 2 → 4 column responsive grid.
+- [x] **4.5** Create `src/components/ui/ServiceCard.astro`: prop `service: ServiceRecord`, navy surface, hover lift + cyan glow, optional "Desde $X COP" starting-price tag.
+- [x] **4.6** Create `src/components/ui/PricingCard.astro`: prop `prebuild: PrebuiltPC`, `featured?: boolean`, cyan border + glow + ribbon for featured variant, list of perks, CTA to `/pre-armadas/{slug}`.
+- [x] **4.7** Create `src/components/ui/SpecList.astro`: prop `components: Component[]`, `variant?: "list" | "grid"` (default `list`), zebra striping in list mode, brand+model + first three specs + price.
+- [x] **4.8** Create `src/components/ui/FAQItem.astro`: open/closed state via native `<details>`/`<summary>` (no JS), monospace `// 0N` label, rotating chevron SVG.
+- [x] **4.9** Create `src/components/home/PageHero.astro`: monospace eyebrow + H1 + optional accent line + body + optional primary/outline CTA pair. Used both on the home page and as a generic section header.
+- [x] **4.10** Snapshot all components by mounting each on a tiny `dev/ComponentPage.astro` and capturing a screenshot in `pnpm test` (Vitest + `vite-plugin-vue-screenshot` is overkill — defer to manual review for V1, document the gap). **Phase 4 dev note:** Phase 4 smoke mounted each component on a throwaway `src/pages/phase4smoke.astro`, ran `pnpm build` to confirm all components render and the emitted HTML contains the expected class signatures (`cyan-500` ×117, `font-mono` ×40, `details`/`summary` ×9, `grid-cols` ×11), then removed the throwaway file. No persistent dev page was added; visual review is still manual per task 4.10.
 
 Acceptance: `pnpm check` clean. Each component file is type-safe and free of hex literals.
 

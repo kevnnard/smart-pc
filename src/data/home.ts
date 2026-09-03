@@ -11,10 +11,22 @@
  */
 import type { FAQItem, StatItem, TrustItem } from "./types";
 
-export const stats: readonly StatItem[] = [
-  { value: "320+", label: "PCs ARMADAS" },
-  { value: "98%", label: "COMPATIBILIDAD" },
-  { value: "24M", label: "GARANTÍA" },
+/**
+ * The four-cell StatsStrip expects a `suffix` field on each stat so the number
+ * and the unit (e.g. `320` + `+`, `98` + `%`) render in separate spans and the
+ * value can scale up responsively without the unit wrapping mid-line.
+ *
+ * This is a structural superset of `StatItem` (suffix is optional), so the
+ * export remains assignable to `readonly StatItem[]` for downstream consumers
+ * that only need the basic shape.
+ */
+export type StatItemWithSuffix = StatItem & { readonly suffix?: string };
+
+export const stats: readonly StatItemWithSuffix[] = [
+  { value: "320", label: "PCs ARMADAS", suffix: "+" },
+  { value: "98", label: "COMPATIBILIDAD", suffix: "%" },
+  { value: "24", label: "GARANTÍA", suffix: "M" },
+  { value: "48", label: "RESPUESTA", suffix: "h" },
 ];
 
 export const trust: readonly TrustItem[] = [
