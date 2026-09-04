@@ -18,7 +18,7 @@
       ],
       "serviceId": "armado-basico-confirmado",
       "pricingPolicyId": "default",
-      "featured": true,
+      "featured": false,
       "badge": "Más vendido"
     },
     {
@@ -59,7 +59,7 @@
       ],
       "serviceId": "armado-basico-confirmado",
       "pricingPolicyId": "default",
-      "featured": true,
+      "featured": false,
       "badge": "Top tier"
     }
   ]
