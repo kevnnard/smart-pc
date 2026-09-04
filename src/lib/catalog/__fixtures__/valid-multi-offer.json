@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "cpu-amd-ryzen-5-5600",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 5 5600",
+      "specs": { "Cores": "6", "TDP": "65W" },
+      "compatibility": { "socket": "AM4", "tdp": 65 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 12,
+      "restockNote": "Reposición semanal según confirmación de bodega Bogotá.",
+      "sourceStore": "StackPC",
+      "sourceUrl": "https://www.stackpc.com.co/productos/amd-ryzen-5-5600",
+      "lastVerified": "2026-09-04T00:00:00-05:00",
+      "availability": "in-stock",
+      "offers": [
+        {
+          "offerId": "stackpc-ryzen-5-5600",
+          "retailer": "StackPC",
+          "sourceUrl": "https://www.stackpc.com.co/productos/amd-ryzen-5-5600",
+          "sourceCurrency": "COP",
+          "listedAmount": 504000,
+          "sellerCondition": "StackPC · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        },
+        {
+          "offerId": "sdcomputer-ryzen-5-5600",
+          "retailer": "SD Computer",
+          "sourceUrl": "https://sdcomputer.co/products/procesador-amd-ryzen-5-5600",
+          "sourceCurrency": "COP",
+          "listedAmount": 580000,
+          "sellerCondition": "SD Computer · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": "armado-basico-confirmado",
+      "slug": "armado-basico-confirmado",
+      "name": "Armado profesional Bogotá (confirmado)",
+      "description": "Armado, cable management, pruebas y soporte inicial.",
+      "icon": "🛠️",
+      "tier": "pro",
+      "status": "confirmed",
+      "feeCop": 150000,
+      "sourceStore": "Política comercial smart-pc",
+      "sourceUrl": "https://www.smart-pc.example/politica/armado-profesional-bogota",
+      "lastVerified": "2026-09-04T00:00:00-05:00",
+      "confirmationNote": "Tarifa fija confirmada por el propietario."
+    }
+  ],
+  "prebuilds": [
+    {
+      "slug": "essentials",
+      "name": "Essentials",
+      "tier": "essentials",
+      "tagline": "Home · Office · Estudio",
+      "componentIds": ["cpu-amd-ryzen-5-5600"],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true
+    }
+  ],
+  "policy": {
+    "schemaVersion": 1,
+    "freshness": { "staleAfterDays": 30 },
+    "defaultPolicyId": "default",
+    "policies": [
+      {
+        "id": "default",
+        "label": "Margen estándar",
+        "fixedMarginCop": 0,
+        "percentageMargin": 20,
+        "confirmed": true
+      }
+    ]
+  }
+}

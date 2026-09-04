@@ -1,0 +1,82 @@
+---
+/**
+ * StockBadge.astro
+ *
+ * Accessible Spanish stock badge for the `/productos/` page and the
+ * configurator / prebuild surfaces. The badge is the single source of
+ * truth for the in-stock / limited / out-of-stock / unknown labels; the
+ * configurator and the ProductCard both render `<StockBadge>` rather than
+ * hardcoding the strings so a maintainer change to one label updates
+ * every surface at the same time.
+ *
+ * Props:
+ *   - stockStatus:    one of the four `StockStatus` buckets.
+ *   - stockQuantity:  whole units in stock. Quantity is shown only when
+ *                     the field is non-null AND the badge is rendered in a
+ *                     context where a number is meaningful (default: false;
+ *                     the configurator already shows quantities elsewhere).
+ *   - size?:          "sm" | "md"  — defaults to "md".
+ *   - class?:         string        — extra utility classes for the wrapper.
+ *
+ * Accessibility:
+ *   - The visible label is also exposed via `aria-label` so screen readers
+ *     read the Spanish label verbatim without prefixing the surrounding
+ *     context (e.g. "div").
+ *   - The badge uses `role="status"` so the assistive tech announces
+ *     availability changes when the visitor filters the catalog.
+ */
+import type { StockStatus } from "../../lib/catalog/catalog-types";
+import {
+  stockBadgeStyle,
+  stockStatusLabel,
+} from "../../lib/products/stock-labels";
+
+interface Props {
+  readonly stockStatus: StockStatus;
+  readonly stockQuantity?: number | null;
+  readonly size?: "sm" | "md";
+  readonly class?: string;
+}
+
+const {
+  stockStatus,
+  stockQuantity,
+  size = "md",
+  class: extraClass = "",
+} = Astro.props;
+
+const label = stockStatusLabel(stockStatus);
+const style = stockBadgeStyle(stockStatus);
+const showQuantity =
+  stockQuantity !== undefined &&
+  stockQuantity !== null &&
+  Number.isInteger(stockQuantity) &&
+  stockQuantity >= 0;
+const quantityLabel = showQuantity
+  ? stockStatus === "in-stock"
+    ? `${stockQuantity} ${stockQuantity === 1 ? "unidad" : "unidades"} disponibles`
+    : `${stockQuantity} ${stockQuantity === 1 ? "unidad" : "unidades"}`
+  : undefined;
+const ariaLabel =
+  quantityLabel !== undefined ? `${label} · ${quantityLabel}` : label;
+
+const padding = size === "sm" ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-sm";
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-2 rounded-full border font-mono font-medium",
+    padding,
+    style.container,
+    extraClass,
+  ]}
+  role="status"
+  aria-label={ariaLabel}
+  data-stock-status={stockStatus}
+>
+  <span class={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden="true"></span>
+  <span>{label}</span>
+  {showQuantity && (
+    <span class="font-mono opacity-80">· {stockQuantity}</span>
+  )}
+</span>

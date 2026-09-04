@@ -1,12 +1,25 @@
 ---
+import type { ServiceRecord } from "../../data/types";
 /**
  * ServiceCard.astro
  *
  * Single tile in the services grid (F1.5 + F5.2). Renders a service's icon,
- * title, one-line description, and optional "Desde $X COP" starting-price tag.
+ * title, one-line description, and a price surface selected in this order:
+ *
+ *   1. `service.priceLabel` — verbatim string (no `Desde`, no formatting).
+ *      Used by Home-only `HomeServiceRecord` entries whose public price is not
+ *      a single integer COP value (e.g. `Precio según configuración`,
+ *      `Incluido / según diagnóstico`).
+ *   2. `service.startingPrice` — formatted with `formatCop()` from
+ *      `src/lib/money.ts` and prefixed with `Desde`.
+ *
+ * If neither is present, no price surface is rendered (no misleading
+ * `Desde $0` placeholder).
  *
  * Props:
- *   - service: ServiceRecord from `src/data/types.ts`
+ *   - service: ServiceRecord from `src/data/types.ts` (or the
+ *              Home-only `HomeServiceRecord` view model which adds the
+ *              optional `priceLabel` field).
  *   - class?:  string — utility classes appended to the card root.
  *
  * Visual:
@@ -14,27 +27,31 @@
  *   - lifts on hover with a subtle translate + cyan shadow glow
  *   - icon rendered as text (emoji) so no extra asset pipeline is needed
  *
- * Sourced from `src/data/services.ts` for both the home ServicesSection and the
- * `/servicios` catalog. Prices are integer ARS/COP stored on `service.startingPrice`
- * and rendered with `Intl.NumberFormat('es-CO')` — no `/ 100` cent conversion is
- * applied because the data layer already stores whole pesos (see `src/data/types.ts`).
+ * Pricing notes (post PR 2):
+ *   - `service.startingPrice` is integer whole COP (see `src/data/types.ts`).
+ *     Rendered with `formatCop()` from `src/lib/money.ts`.
+ *   - For `confirmed` services this equals the confirmed fee; for
+ *     `recommended` services this is the lower bound of the recommended
+ *     range; for `reference` services this is the reference price when
+ *     present. A recommendation is structurally NEVER surfaced as a
+ *     confirmed price.
  */
-import type { ServiceRecord } from "../../data/types";
+import { formatCop } from "../../lib/money";
 
 interface Props {
-  readonly service: ServiceRecord;
+  readonly service:
+    | ServiceRecord
+    | (ServiceRecord & { readonly priceLabel?: string });
   readonly class?: string;
 }
 
 const { service, class: extraClass = "" } = Astro.props;
 
-function formatPrice(value: number): string {
-  return value.toLocaleString("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  });
-}
+const priceLabel: string | undefined = (
+  service as ServiceRecord & { readonly priceLabel?: string }
+).priceLabel;
+const startingPrice: number | undefined = service.startingPrice;
+const showPrice = priceLabel !== undefined || startingPrice !== undefined;
 ---
 
 <div
@@ -57,9 +74,13 @@ function formatPrice(value: number): string {
   </p>
 
   {
-    service.startingPrice !== undefined && (
+    showPrice && (
       <div class="font-mono text-xs uppercase tracking-wider text-cyan-500">
-        Desde {formatPrice(service.startingPrice)}
+        {priceLabel !== undefined ? (
+          priceLabel
+        ) : (
+          <>Desde {formatCop(startingPrice as number)}</>
+        )}
       </div>
     )
   }

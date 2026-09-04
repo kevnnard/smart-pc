@@ -1,4 +1,5 @@
 ---
+import type { Component } from "../../data/types";
 /**
  * SpecList.astro
  *
@@ -17,11 +18,14 @@
  * Each row shows brand + model on a single line, the first three spec
  * key/value pairs beneath it, and the price on the right edge in cyan.
  *
- * Pricing notes:
- *   - `comp.price` is integer ARS/COP (whole pesos). Rendered with
- *     `Intl.NumberFormat('es-CO')` directly — no `/ 100` cent conversion.
+ * Pricing notes (post PR 2 / Slice 2):
+ *   - `comp.price` is integer whole COP. Rendered with `formatCop()` from
+ *     `src/lib/money.ts` — no `/ 100` cent conversion.
+ *   - When `comp.price === null` (the multi-offer shape's `unconfirmed`
+ *     case), the row renders the "Precio no confirmado" badge instead of
+ *     a fabricated zero. The maintainer never gets a "$ 0" surprise.
  */
-import type { Component } from "../../data/types";
+import { formatCop } from "../../lib/money";
 
 interface Props {
   readonly components: readonly Component[];
@@ -30,14 +34,6 @@ interface Props {
 }
 
 const { components, variant = "list", class: extraClass = "" } = Astro.props;
-
-function formatPrice(value: number): string {
-  return value.toLocaleString("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  });
-}
 
 function formatSpecValue(value: string): string {
   // Long socket lists ("AM4,AM5,LGA1700") get a single space after each comma
@@ -80,8 +76,13 @@ function formatSpecValue(value: string): string {
               ))}
           </div>
         </div>
-        <div class="shrink-0 font-mono text-sm font-semibold text-cyan-500">
-          {formatPrice(comp.price)}
+        <div
+          class:list={[
+            "shrink-0 font-mono text-sm font-semibold",
+            comp.price === null ? "text-amber-400" : "text-cyan-500",
+          ]}
+        >
+          {comp.price === null ? "Precio no confirmado" : formatCop(comp.price)}
         </div>
       </div>
     ))

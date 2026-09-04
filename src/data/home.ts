@@ -1,15 +1,16 @@
 /**
  * smart-pc · home page data (Phase 3).
  *
- * Three arrays consumed by `src/components/home/*` (Phase 5):
- *   - `stats`  → StatsStrip (F1.3) and hero counters
- *   - `trust`  → TrustStrip (F1.4) — four value-prop cards
- *   - `faq`    → FAQSection (F1.9) — accordion items
+ * Arrays consumed by `src/components/home/*` (Phase 5):
+ *   - `stats`        → StatsStrip (F1.3) and hero counters
+ *   - `trust`        → TrustStrip (F1.4) — four value-prop cards
+ *   - `faq`          → FAQSection (F1.9) — accordion items
+ *   - `homeServices` → ServicesGrid (F1.5) — four commercial offerings
  *
  * Adding an entry here automatically surfaces on the home page without
  * touching component code.
  */
-import type { FAQItem, StatItem, TrustItem } from "./types";
+import type { FAQItem, ServiceRecord, StatItem, TrustItem } from "./types";
 
 /**
  * The four-cell StatsStrip expects a `suffix` field on each stat so the number
@@ -86,5 +87,75 @@ export const faq: readonly FAQItem[] = [
     question: "¿Cómo es el soporte post-venta?",
     answer:
       "Atención por WhatsApp de lunes a sábado, 9 a 19 h. Soporte remoto incluido de por vida y visitas al taller en Bogotá y Medellín sin costo durante la garantía.",
+  },
+];
+
+/**
+ * Home-only service view model. Mirrors `ServiceRecord` and adds an optional
+ * `priceLabel` for offerings whose public price is not a single integer COP
+ * value (e.g. configurations priced per build or support included with the
+ * diagnostic). The `ServiceCard` falls back to `priceLabel` before rendering
+ * `Desde {formatCop(startingPrice)}` so the home grid never surfaces misleading
+ * `Desde $0` placeholders.
+ *
+ * Note this is intentionally distinct from `src/data/catalog/services.json`,
+ * which remains the source of truth for quote calculation and retains the
+ * research-market recommended/reference records and the confirmed fee.
+ */
+export type HomeServiceRecord = ServiceRecord & {
+  /**
+   * Optional override for the displayed price. When set, it is rendered
+   * verbatim (no `Desde` prefix, no COP formatting) and supersedes
+   * `startingPrice` for display purposes. Examples:
+   *   - "Precio según configuración"
+   *   - "Incluido / según diagnóstico"
+   */
+  readonly priceLabel?: string;
+};
+
+/**
+ * Four commercial offerings for the home services grid (F1.5). Pricing
+ * surface:
+ *   - `armado-a-medida`: COP 150.000 starting — matches the confirmed
+ *     `armado-basico-confirmado` fee in the quote engine.
+ *   - `pre-armadas`: per-build pricing — no public starting price.
+ *   - `mantenimiento-y-upgrades`: COP 80.000 starting.
+ *   - `garantia-y-soporte`: included with every build / per diagnosis — no
+ *     public starting price.
+ *
+ * Order is intentional: the grid renders top-left → bottom-right in this order.
+ */
+export const homeServices: readonly HomeServiceRecord[] = [
+  {
+    slug: "armado-a-medida",
+    title: "Armado a medida",
+    description:
+      "Ensamble profesional con gestión de cable, pruebas de stress y soporte inicial.",
+    icon: "🛠️",
+    startingPrice: 150_000,
+  },
+  {
+    slug: "pre-armadas",
+    title: "Pre-armadas",
+    description:
+      "Configuraciones listas para usar, optimizadas para cada presupuesto.",
+    icon: "📦",
+    priceLabel: "Precio según configuración",
+  },
+  {
+    slug: "mantenimiento-y-upgrades",
+    title: "Mantenimiento y upgrades",
+    description:
+      "Limpieza, cambio de pasta térmica y upgrades de componentes para extender la vida útil del equipo.",
+    icon: "🔧",
+    startingPrice: 80_000,
+  },
+  {
+    slug: "garantia-y-soporte",
+    title: "Garantía y soporte",
+    description:
+      "Cobertura escrita y soporte técnico de por vida por WhatsApp y en taller.",
+    icon: "🛡️",
+    priceLabel: "Incluido / según diagnóstico",
   },
 ];

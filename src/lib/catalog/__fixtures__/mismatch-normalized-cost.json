@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "cpu-amd-ryzen-5-5600",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 5 5600",
+      "specs": { "Cores": "6" },
+      "compatibility": { "socket": "AM4", "tdp": 65 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 1,
+      "offers": [
+        {
+          "offerId": "amazon-us-5600",
+          "retailer": "Amazon",
+          "sourceUrl": "https://www.amazon.com/dp/B09VCHR1VH",
+          "sourceCurrency": "USD",
+          "listedAmount": 119,
+          "sellerCondition": "Amazon · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "conversionAssumption": {
+            "targetCurrency": "COP",
+            "exchangeRateCopPerUnit": 4100,
+            "rateSource": "trm",
+            "rateAsOf": "2026-09-03T00:00:00-05:00",
+            "notes": "TRM Banrep + envío internacional aprox."
+          },
+          "normalizedCostCop": 999999
+        }
+      ]
+    }
+  ],
+  "services": [],
+  "prebuilds": [],
+  "policy": {
+    "schemaVersion": 1,
+    "freshness": { "staleAfterDays": 30 },
+    "defaultPolicyId": "default",
+    "policies": [
+      {
+        "id": "default",
+        "label": "p",
+        "fixedMarginCop": 0,
+        "percentageMargin": 0,
+        "confirmed": true
+      }
+    ]
+  }
+}

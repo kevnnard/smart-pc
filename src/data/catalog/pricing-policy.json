@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "freshness": { "staleAfterDays": 30 },
+  "defaultPolicyId": "default",
+  "policies": [
+    {
+      "id": "default",
+      "label": "Margen estándar",
+      "fixedMarginCop": 0,
+      "percentageMargin": 20,
+      "confirmed": true,
+      "note": "Margen de negocio; no modifica el precio observado de ningún componente."
+    }
+  ]
+}

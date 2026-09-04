@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "cpu-amd-ryzen-5-5600",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 5 5600",
+      "specs": { "Cores": "6" },
+      "compatibility": { "socket": "AM4", "tdp": 65 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 5,
+      "offers": [
+        {
+          "offerId": "stackpc-5600",
+          "retailer": "StackPC",
+          "sourceUrl": "https://www.stackpc.com.co/productos/amd-ryzen-5-5600",
+          "sourceCurrency": "COP",
+          "listedAmount": 504000,
+          "sellerCondition": "StackPC · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "gpu-amd-rx-7700xt",
+      "category": "gpu",
+      "brand": "AMD",
+      "model": "Radeon RX 7700 XT",
+      "specs": { "VRAM": "12 GB" },
+      "compatibility": { "wattageDraw": 245 },
+      "priceStatus": "verified",
+      "stockStatus": "limited",
+      "stockQuantity": 2,
+      "restockNote": "Reposición estimada 2026-10-15 según proveedor.",
+      "offers": [
+        {
+          "offerId": "ktronix-7700xt",
+          "retailer": "Ktronix",
+          "sourceUrl": "https://www.ktronix.com/marcas/amd/c/amd",
+          "sourceCurrency": "COP",
+          "listedAmount": 2400000,
+          "sellerCondition": "Ktronix · new",
+          "availability": "limited",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "ram-test-out",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Test Out",
+      "specs": { "Capacity": "16 GB" },
+      "compatibility": { "ramType": "DDR4" },
+      "priceStatus": "verified",
+      "stockStatus": "out-of-stock",
+      "stockQuantity": 0,
+      "restockNote": "Descatalogado por el fabricante; verificar alternativa equivalente.",
+      "offers": [
+        {
+          "offerId": "amazon-out",
+          "retailer": "Amazon",
+          "sourceUrl": "https://www.amazon.com/dp/EXAMPLEOUT",
+          "sourceCurrency": "USD",
+          "listedAmount": 50,
+          "sellerCondition": "Amazon · new",
+          "availability": "out-of-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "conversionAssumption": {
+            "targetCurrency": "COP",
+            "exchangeRateCopPerUnit": 4600,
+            "rateSource": "trm",
+            "rateAsOf": "2026-09-03T00:00:00-05:00",
+            "notes": "TRM Banrep + envío internacional aprox."
+          },
+          "normalizedCostCop": 230000
+        }
+      ]
+    },
+    {
+      "id": "ssd-unknown",
+      "category": "storage",
+      "brand": "Kingston",
+      "model": "Test Unknown",
+      "specs": { "Capacity": "1 TB" },
+      "compatibility": { "interface_": "nvme" },
+      "priceStatus": "unconfirmed",
+      "stockStatus": "unknown",
+      "stockQuantity": null,
+      "offers": [
+        {
+          "offerId": "ml-listing",
+          "retailer": "MercadoLibre Colombia",
+          "sourceUrl": "https://listado.mercadolibre.com.co/ssd-nvme-1tb",
+          "sourceCurrency": "COP",
+          "listedAmount": 350000,
+          "sellerCondition": "MercadoLibre third-party · new",
+          "availability": "unknown",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "category-page"
+        }
+      ]
+    }
+  ],
+  "services": [],
+  "prebuilds": [],
+  "policy": {
+    "schemaVersion": 1,
+    "freshness": { "staleAfterDays": 30 },
+    "defaultPolicyId": "default",
+    "policies": [
+      {
+        "id": "default",
+        "label": "p",
+        "fixedMarginCop": 0,
+        "percentageMargin": 0,
+        "confirmed": true
+      }
+    ]
+  }
+}

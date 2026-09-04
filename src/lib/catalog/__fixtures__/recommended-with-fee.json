@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "services": [
+    {
+      "id": "armado-basico",
+      "slug": "armado-basico",
+      "name": "Armado básico",
+      "description": "Montaje básico.",
+      "icon": "🛠️",
+      "status": "recommended",
+      "feeCop": 50000,
+      "recommendedMinCop": 30000,
+      "recommendedMaxCop": 80000,
+      "sourceStore": "Investigación Bogotá",
+      "sourceUrl": "https://www.ktronix.com/servicio-armado",
+      "lastVerified": "2025-02-18T00:00:00-05:00",
+      "confirmationNote": "Rango sugerido pendiente de confirmación del propietario."
+    }
+  ]
+}

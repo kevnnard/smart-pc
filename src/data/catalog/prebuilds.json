@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "prebuilds": [
+    {
+      "slug": "essentials",
+      "name": "Essentials",
+      "tier": "essentials",
+      "tagline": "Home · Office · Estudio",
+      "componentIds": [
+        "cpu-amd-ryzen-5-5600",
+        "mb-asus-prime-b550m-k",
+        "ram-corsair-16gb-ddr4-3200",
+        "ssd-samsung-980-500gb",
+        "psu-corsair-rm650x",
+        "cooler-cooler-master-hyper-212",
+        "case-corsair-4000d-airflow",
+        "os-windows-11-home-oem"
+      ],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true,
+      "badge": "Más vendido"
+    },
+    {
+      "slug": "creator",
+      "name": "Creator",
+      "tier": "creator",
+      "tagline": "Creator · Streaming · 1440p",
+      "componentIds": [
+        "cpu-amd-ryzen-7-5800x",
+        "gpu-nvidia-rtx-4070",
+        "mb-asus-rog-strix-b550-f",
+        "ram-kingston-32gb-ddr4-3600",
+        "ssd-wd-sn850x-1tb",
+        "psu-corsair-rm850x",
+        "cooler-deepcool-ak620",
+        "case-nzxt-h5-flow",
+        "os-windows-11-home-oem"
+      ],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true
+    },
+    {
+      "slug": "apex",
+      "name": "Apex",
+      "tier": "apex",
+      "tagline": "4K Gaming · Workstation",
+      "componentIds": [
+        "cpu-amd-ryzen-9-7900x",
+        "gpu-nvidia-rtx-4080-super",
+        "mb-asus-rog-strix-x670e-e",
+        "ram-gskill-64gb-ddr5-6000",
+        "ssd-samsung-990-pro-2tb",
+        "psu-corsair-rm1000x-shift",
+        "cooler-arctic-liquid-freezer-iii-360",
+        "case-nzxt-h5-flow",
+        "os-windows-11-home-oem"
+      ],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true,
+      "badge": "Top tier"
+    }
+  ]
+}

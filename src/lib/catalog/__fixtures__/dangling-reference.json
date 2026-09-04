@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "cpu-amd-ryzen-5-5600",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 5 5600",
+      "specs": { "Cores": "6" },
+      "compatibility": { "socket": "AM4", "tdp": 65 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 4,
+      "offers": [
+        {
+          "offerId": "primary-5600",
+          "retailer": "Ktronix",
+          "sourceUrl": "https://www.ktronix.com/amd-ryzen-5-5600",
+          "sourceCurrency": "COP",
+          "listedAmount": 320000,
+          "sellerCondition": "Ktronix · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": "armado-basico-confirmado",
+      "slug": "armado-basico-confirmado",
+      "name": "Armado profesional Bogotá (confirmado)",
+      "description": "Armado, cable management, pruebas y soporte inicial.",
+      "status": "confirmed",
+      "feeCop": 150000,
+      "sourceStore": "smart-pc",
+      "sourceUrl": "https://www.smart-pc.com/servicios/confirmados",
+      "lastVerified": "2025-02-18T00:00:00-05:00",
+      "confirmationNote": "Tarifa fija confirmada por el propietario."
+    }
+  ],
+  "prebuilds": [
+    {
+      "slug": "essentials",
+      "name": "Essentials",
+      "tier": "essentials",
+      "tagline": "Home · Office · Estudio",
+      "componentIds": ["cpu-amd-ryzen-5-5600", "missing-component-id"],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true
+    }
+  ],
+  "policy": {
+    "schemaVersion": 1,
+    "freshness": { "staleAfterDays": 30 },
+    "defaultPolicyId": "default",
+    "policies": [
+      {
+        "id": "default",
+        "label": "p",
+        "fixedMarginCop": 0,
+        "percentageMargin": 0,
+        "confirmed": true
+      }
+    ]
+  }
+}

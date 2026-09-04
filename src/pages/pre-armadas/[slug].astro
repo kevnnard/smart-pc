@@ -18,16 +18,24 @@ import type { PrebuiltPC } from "../../data/types";
  *   2. Header               — back link, badge, name, tagline, large price tag.
  *   3. Specs                — `SpecList` rendering `prebuild.components` in the
  *                              default "list" variant (F3.4).
- *   4. CTA                  — WhatsApp anchor (`wa.me/573001234567`, line 147 of
+ *   4. Breakdown            — Quote breakdown line items (PR 2): components,
+ *                              service, fixed margin, percentage margin,
+ *                              total margin, final total.
+ *   5. CTA                  — WhatsApp anchor (`wa.me/573001234567`, line 147 of
  *                              spec.md) + outline CTA to /configurar so the
  *                              visitor can keep iterating on a custom build.
- *   5. <Footer>             — global footer (slot).
+ *   6. <Footer>             — global footer (slot).
  *
- * The query-param "Cotizar esta build" link to `/contacto?build={slug}` (F3.5)
- * is not yet wired because `/contacto` itself is Phase 9 work. The primary
- * WhatsApp anchor covers the F3.5 contact affordance in the meantime.
+ * Pricing notes (post PR 2):
+ *   - `prebuild.basePrice` is the derived final customer price in whole COP,
+ *     computed by the quote engine from referenced components + confirmed
+ *     service + disclosed margin (see `src/data/components.ts` /
+ *     `src/lib/quotes/calculate-quote.ts`). Rendered via `formatCop()`.
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { catalog } from "../../lib/catalog/load-catalog";
+import { formatCop, PRICE_VARIATION_NOTICE } from "../../lib/money";
+import { calculateQuote } from "../../lib/quotes/calculate-quote";
 
 export function getStaticPaths() {
   return prebuilds.map((prebuild) => ({
@@ -42,15 +50,22 @@ interface Props {
 
 const { prebuild } = Astro.props;
 
-function formatPrice(value: number): string {
-  // `prebuild.basePrice` is integer whole ARS (see src/data/types.ts). Rendered
-  // directly via `Intl.NumberFormat('es-CO', COP)` — no `/ 100` cent conversion.
-  return value.toLocaleString("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  });
-}
+// Re-derive the quote breakdown at render time so the page discloses the
+// component subtotal, confirmed service fee, fixed margin, percentage margin,
+// total margin, and final total as separate line items.
+const catalogPrebuild = catalog.byPrebuildSlug.get(prebuild.slug);
+const quote = catalogPrebuild
+  ? calculateQuote(
+      {
+        componentIds: catalogPrebuild.componentIds,
+        serviceId: catalogPrebuild.serviceId,
+        pricingPolicyId: catalogPrebuild.pricingPolicyId,
+      },
+      catalog,
+      new Date(),
+    )
+  : null;
+const breakdown = quote?.ok ? quote.quote.lines : null;
 
 const pageMeta = {
   title: `${prebuild.name} | smart-pc`,
@@ -87,10 +102,27 @@ const pageMeta = {
           <p class="mt-1 text-text-secondary">{prebuild.tagline}</p>
         </div>
         <div class="text-right">
-          <div class="text-4xl font-bold text-cyan-500">
-            {formatPrice(prebuild.basePrice)}
-          </div>
-          <div class="text-sm text-text-muted">COP · IVA incluido</div>
+          {
+            prebuild.basePrice === null ? (
+              <>
+                <div class="text-4xl font-bold text-amber-400">
+                  Pendiente de confirmación
+                </div>
+                <div class="mt-2 text-sm text-text-muted">
+                  Esta configuración incluye componentes sin precio
+                  exacto confirmado. Te enviaremos una cotización
+                  detallada por WhatsApp al contactarnos.
+                </div>
+              </>
+            ) : (
+              <>
+                <div class="text-4xl font-bold text-cyan-500">
+                  {formatCop(prebuild.basePrice)}
+                </div>
+                <div class="text-sm text-text-muted">COP · IVA incluido</div>
+              </>
+            )
+          }
         </div>
       </div>
     </div>
@@ -103,8 +135,70 @@ const pageMeta = {
         Componentes incluidos
       </h2>
       <SpecList components={prebuild.components} variant="list" />
+      {
+        prebuild.basePrice === null && (
+          <p class="mt-4 text-xs text-amber-400">
+            Esta configuración incluye componentes con precio no
+            confirmado. Te contactaremos por WhatsApp para confirmar
+            antes de cotizar.
+          </p>
+        )
+      }
     </div>
   </section>
+
+  <!-- Quote breakdown (PR 2) -->
+  {
+    breakdown && (
+      <section class="bg-navy-950 py-12">
+        <div class="mx-auto max-w-4xl px-4">
+          <h2 class="mb-6 text-xl font-semibold text-text-primary">
+            Desglose del precio (COP)
+          </h2>
+          <div class="overflow-hidden rounded-2xl border border-border bg-navy-900">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-navy-800 text-text-muted">
+                <tr>
+                  <th class="px-4 py-3 font-mono text-xs uppercase tracking-wider">
+                    Concepto
+                  </th>
+                  <th class="px-4 py-3 text-right font-mono text-xs uppercase tracking-wider">
+                    Importe
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {breakdown.map((line) => (
+                  <tr
+                    class="border-t border-border"
+                    class:list={[
+                      line.kind === "total" && "bg-navy-800 font-semibold",
+                    ]}
+                  >
+                    <td class="px-4 py-3 text-text-primary">
+                      {line.label}
+                      {line.kind === "percentage-margin" && line.rate !== undefined && (
+                        <span class="ml-2 text-xs text-text-muted">
+                          ({line.rate}%)
+                        </span>
+                      )}
+                    </td>
+                    <td
+                      class="px-4 py-3 text-right font-mono text-cyan-500"
+                      class:list={[line.kind === "total" && "text-lg"]}
+                    >
+                      {formatCop(line.amountCop)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-4 text-xs text-text-muted">{PRICE_VARIATION_NOTICE}</p>
+        </div>
+      </section>
+    )
+  }
 
   <!-- CTA -->
   <section class="bg-navy-950 py-12">

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "id": "cpu-amd-ryzen-5-5600",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 5 5600",
+      "specs": { "Cores": "6" },
+      "compatibility": { "socket": "AM4", "tdp": 65 },
+      "observedPriceCop": 320000,
+      "sourceStore": "Ktronix",
+      "sourceUrl": "https://www.ktronix.com/amd-ryzen-5-5600",
+      "lastVerified": "2025-02-18T00:00:00-05:00"
+    }
+  ],
+  "services": [],
+  "prebuilds": [],
+  "policy": {
+    "schemaVersion": 1,
+    "freshness": { "staleAfterDays": 30 },
+    "defaultPolicyId": "default",
+    "policies": [
+      {
+        "id": "default",
+        "label": "Margen estándar",
+        "fixedMarginCop": 0,
+        "percentageMargin": 20,
+        "confirmed": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,128 @@
+---
+/**
+ * QuoteBreakdown.astro
+ *
+ * Customer-facing quote breakdown used by the configurator summary step
+ * and the prebuild detail page. Renders the engine's `Quote.lines` in
+ * the spec-mandated order (components → service → fixed-margin →
+ * percentage-margin → total-margin → total), with the COP 150,000
+ * confirmed Professional Bogotá assembly and the 20% component-subtotal
+ * margin displayed as separate line items so the visitor can audit every
+ * line.
+ *
+ * The component never invents a number. When the quote engine returns
+ * `{ ok: false }` (price-unconfirmed / service-not-confirmed / etc.) the
+ * caller passes `errorMessage` and the breakdown surfaces the
+ * "Pendiente de confirmación" amber state instead of fabricating a
+ * final total.
+ *
+ * The data flows from `src/lib/quotes/calculate-quote.ts` →
+ * `buildQuoteBreakdownRows` (pure helper, unit-tested) → this Astro
+ * template. The helper handles the row id + formatting so the template
+ * only renders.
+ */
+import type { StaleWarning } from "../../lib/catalog/freshness";
+import { PRICE_VARIATION_NOTICE } from "../../lib/money";
+import type { QuoteLine } from "../../lib/quotes/quote-types";
+import {
+  buildQuoteBreakdownRows,
+  staleWarningSummary,
+} from "../../lib/ui/provenance";
+
+interface Props {
+  readonly lines: readonly QuoteLine[];
+  readonly staleWarnings?: readonly StaleWarning[];
+  readonly errorMessage?: string;
+  readonly class?: string;
+}
+
+const {
+  lines,
+  staleWarnings = [],
+  errorMessage,
+  class: extraClass = "",
+} = Astro.props;
+
+const rows = buildQuoteBreakdownRows(lines);
+const warnings = staleWarningSummary(staleWarnings);
+const visibleLines = errorMessage ? rows.filter((r) => !r.isTotal) : rows;
+---
+
+<section
+  class:list={[
+    "overflow-hidden rounded-2xl border border-border bg-navy-900",
+    extraClass,
+  ]}
+  data-quote-breakdown
+  aria-label="Desglose de la cotización"
+>
+  <header class="flex items-center justify-between gap-4 border-b border-border px-5 py-3">
+    <h3 class="text-base font-semibold text-text-primary">
+      Desglose (COP)
+    </h3>
+    <span class="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+      Spec · precio público observado
+    </span>
+  </header>
+
+  <table class="w-full text-left text-sm">
+    <tbody>
+      {visibleLines.map((row) => (
+        <tr
+          class="border-b border-border last:border-b-0"
+          class:list={[row.isHighlighted && "bg-navy-800/40"]}
+          data-line-kind={row.kind}
+        >
+          <td class="px-5 py-2 text-text-secondary">
+            {row.label}
+            {row.kind === "percentage-margin" && row.rate !== undefined && (
+              <span class="ml-2 font-mono text-xs text-text-muted">
+                ({row.rate}%)
+              </span>
+            )}
+          </td>
+          <td class="px-5 py-2 text-right font-mono text-cyan-400">
+            {row.amountLabel}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  {errorMessage ? (
+    <div class="border-t border-border bg-amber-500/10 px-5 py-4 text-sm text-amber-300">
+      <p class="font-semibold">Total pendiente de confirmación</p>
+      <p class="mt-1 text-xs text-amber-200/80">{errorMessage}</p>
+    </div>
+  ) : (
+    rows
+      .filter((r) => r.isTotal)
+      .map((row) => (
+        <div class="flex items-center justify-between border-t border-border bg-navy-800 px-5 py-4">
+          <span class="text-base font-semibold text-text-primary">
+            {row.label}
+          </span>
+          <span class="font-mono text-2xl font-bold text-cyan-400">
+            {row.amountLabel}
+          </span>
+        </div>
+      ))
+  )}
+
+  {warnings.length > 0 && (
+    <footer class="border-t border-border bg-navy-800/40 px-5 py-3 text-[11px] text-amber-300">
+      <p class="font-mono uppercase tracking-widest text-amber-400">
+        Observaciones de frescura
+      </p>
+      <ul class="mt-1 space-y-0.5">
+        {warnings.map((w) => (
+          <li>
+            {w.id}: {w.ageDays} días sin re-verificar.
+          </li>
+        ))}
+      </ul>
+    </footer>
+  )}
+
+  <p class="px-5 py-3 text-[10px] text-text-muted">{PRICE_VARIATION_NOTICE}</p>
+</section>

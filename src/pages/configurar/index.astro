@@ -5,6 +5,13 @@ import Navbar from "../../components/navbar/Navbar.astro";
 import { brand } from "../../data/brand";
 import { components } from "../../data/components";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import type {
+  CatalogService,
+  PricingPolicy,
+} from "../../lib/catalog/catalog-types";
+import { catalog } from "../../lib/catalog/load-catalog";
+import { formatCop } from "../../lib/money";
+import { calculateQuote } from "../../lib/quotes/calculate-quote";
 
 /**
  * Configurator page (/configurar) — smart-pc.
@@ -14,6 +21,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  * catalog and brand data are passed as props (not imported inside the island)
  * so the island stays serializable and the Astro side keeps the SSR/SSG
  * snapshot deterministic.
+ *
+ * Pricing policy (post PR 2):
+ *   - The default pricing policy and the confirmed `armado-basico-confirmado`
+ *     service are loaded from the JSON catalog at build time and passed to
+ *     the island. The configurator renders a COP quote breakdown driven by
+ *     `calculateQuote`. If a maintainer changes the policy or service in
+ *     JSON, the surface updates on the next build without any code change.
  *
  * Composition:
  *   1. <Navbar>             — global header (slot in BaseLayout).
@@ -25,6 +39,44 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  * Navbar uses `id="mobile-menu-toggle"` + `id="mobile-menu"` and ships its own
  * toggle inline; the fallback is a no-op while that variant is in production.
  */
+
+const confirmedService = catalog.services.find(
+  (s): s is CatalogService & { status: "confirmed" } =>
+    s.status === "confirmed",
+);
+
+if (!confirmedService) {
+  throw new Error(
+    "Configurator page requires at least one confirmed service in the catalog.",
+  );
+}
+
+const pricingPolicy =
+  catalog.byPolicyId.get(catalog.defaultPolicyId) ??
+  (catalog.policies[0] as PricingPolicy | undefined);
+
+if (!pricingPolicy) {
+  throw new Error(
+    "Configurator page requires at least one pricing policy in the catalog.",
+  );
+}
+
+// Quote result for the configurator entry summary (start screen).
+const initialQuote = calculateQuote(
+  {
+    componentIds: [],
+    serviceId: confirmedService.id,
+    pricingPolicyId: pricingPolicy.id,
+  },
+  catalog,
+  new Date(),
+);
+
+const initialFinalTotal =
+  initialQuote.ok && initialQuote.quote.lines.length > 0
+    ? formatCop(initialQuote.quote.finalTotalCop)
+    : "—";
+
 const pageMeta = {
   title: "Armar mi PC | smart-pc",
   description:
@@ -39,9 +91,15 @@ const pageMeta = {
     client:load
     components={components}
     whatsappUrl={brand.whatsapp}
+    service={confirmedService}
+    pricingPolicy={pricingPolicy}
   />
 
   <Footer slot="footer" />
+  <!-- Initial state hint: confirmed service fee + default policy disclosed for SEO. -->
+  <span class="hidden" aria-hidden="true">
+    Servicio: {confirmedService.name} · Subtotal inicial: {initialFinalTotal}
+  </span>
 </BaseLayout>
 
 <script is:inline>

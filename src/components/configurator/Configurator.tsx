@@ -1,24 +1,29 @@
 /**
- * smart-pc · Configurator island (Phase 7).
+ * smart-pc · Configurator island (Phase 7 → PR 2 migrated to COP).
  *
  * The first React island on the site — a 7-step wizard that lets visitors pick
  * every PC part (CPU, motherboard, RAM, GPU, storage, PSU) and surface real-time
  * compatibility against `validate()` from `src/lib/compatibility.ts`.
  *
- * Architectural notes:
+ * Architectural notes (post PR 2):
  *
  *   - The page (`src/pages/configurar/index.astro`) hydrates this island with
  *     `client:load` so the wizard is interactive immediately on arrival.
- *   - All prices flow from `Component.price` (integer whole pesos per
- *     `src/data/types.ts`) and are formatted with `Intl.NumberFormat('es-CO', COP)`
- *     directly — no `/ 100` cent conversion is applied anywhere in the island.
- *     This matches the convention Phase 4 established in `PricingCard`,
- *     `ServiceCard`, `SpecList`, and the prebuild detail page.
- *   - `validate(selection)` is the single source of truth for compatibility. The
- *     island never recomputes socket / PSU / RAM rules locally; the
- *     `getPsuBadge()` helper is a presentation-only shortcut that surfaces the
- *     "Potencia justa" hint inline on PSU cards BEFORE the visitor reaches the
- *     summary step. The final word on compatibility lives in `validate()`.
+ *   - All prices flow from `Component.price` (integer whole COP per
+ *     `src/data/types.ts`) and are formatted with `formatCop()` from
+ *     `src/lib/money.ts`. No `/ 100` cent conversion is applied anywhere in
+ *     the island.
+ *   - The summary step renders a `QuoteBreakdown` driven by `calculateQuote`.
+ *     If the visitor-selected service is a `recommended` (not `confirmed`)
+ *     record, the summary suppresses the final total and surfaces the
+ *     "pendiente de confirmación" notice instead — same rule as the
+ *     build-time path (see design.md §7.3).
+ *   - `validate(selection)` is the single source of truth for compatibility.
+ *     The island never recomputes socket / PSU / RAM rules locally; the
+ *     `getPsuBadge()` helper is a presentation-only shortcut that surfaces
+ *     the "Potencia justa" hint inline on PSU cards BEFORE the visitor
+ *     reaches the summary step. The final word on compatibility lives in
+ *     `validate()`.
  *   - The WhatsApp CTA URL is `whatsappUrl + ?text=<encoded summary>` so the
  *     storefront can route the request through the standard `wa.me` endpoint.
  *
@@ -30,13 +35,24 @@
 import type { JSX } from "react";
 import { useMemo, useState } from "react";
 import type { Component, PCSelection } from "../../data/types";
+import type {
+  CatalogService,
+  PricingPolicy,
+} from "../../lib/catalog/catalog-types";
 import { validate } from "../../lib/compatibility";
+import { buildConfiguratorCatalog } from "../../lib/configurator/configurator-catalog";
+import { formatCop, PRICE_VARIATION_NOTICE } from "../../lib/money";
+import { calculateQuote } from "../../lib/quotes/calculate-quote";
 
 interface Props {
   /** Full catalog; the island filters by category at render time. */
   readonly components: readonly Component[];
   /** Pre-built `https://wa.me/{number}` URL the storefront already trusts. */
   readonly whatsappUrl: string;
+  /** Service the visitor is selecting. Must be `confirmed` for a final total. */
+  readonly service: CatalogService;
+  /** Pricing policy whose margin is disclosed in the breakdown. */
+  readonly pricingPolicy: PricingPolicy;
 }
 
 type Step =
@@ -67,19 +83,6 @@ const STEP_LABELS: Record<Step, string> = {
   psu: "Fuente",
   summary: "Resumen",
 };
-
-/**
- * Format an integer-COP amount into the storefront's currency string.
- * `Intl.NumberFormat('es-CO', COP)` produces "$ 1.300.000" — a thin space
- * separates the symbol from the digits, matching every other price surface.
- */
-function formatArs(value: number): string {
-  return value.toLocaleString("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  });
-}
 
 /** Compact two-spec summary for the option card grid. */
 function getSpecSummary(comp: Component): string {
@@ -113,6 +116,8 @@ function getPsuBadge(
 export default function Configurator({
   components,
   whatsappUrl,
+  service,
+  pricingPolicy,
 }: Props): JSX.Element {
   const [step, setStep] = useState<Step>("cpu");
   const [cpu, setCpu] = useState<Component | undefined>(undefined);
@@ -131,16 +136,65 @@ export default function Configurator({
 
   const compatibility = useMemo(() => validate(selection), [selection]);
 
-  const totalPrice = useMemo(() => {
-    return (
-      (cpu?.price ?? 0) +
-      (motherboard?.price ?? 0) +
-      (gpu?.price ?? 0) +
-      (psu?.price ?? 0) +
-      ram.reduce((sum, c) => sum + c.price, 0) +
-      storage.reduce((sum, c) => sum + c.price, 0)
-    );
-  }, [cpu, motherboard, ram, gpu, storage, psu]);
+  // The configurator's quote uses the visitor's current selection, the
+  // configured service and pricing policy. Per spec, only a `confirmed`
+  // service produces a final total — recommended/reference services return
+  // `service-not-confirmed` and the breakdown is rendered without the final
+  // total. Slice 2: when ANY selected component is `priceStatus:
+  // "unconfirmed"` (i.e. legacy `price === null`), the quote engine emits
+  // `price-unconfirmed` and the breakdown renders without the final total.
+  const selectedComponents = useMemo<readonly Component[]>(() => {
+    const list: Component[] = [];
+    if (cpu) list.push(cpu);
+    if (motherboard) list.push(motherboard);
+    if (gpu) list.push(gpu);
+    if (psu) list.push(psu);
+    for (const r of ram) list.push(r);
+    for (const s of storage) list.push(s);
+    return list;
+  }, [cpu, motherboard, gpu, psu, ram, storage]);
+
+  // The component subtotal (without margin) is the sum of selected
+  // prices, used for the live card subtotal display and as the basis
+  // for the WhatsApp message. Slice 2: a component with `price === null`
+  // (unconfirmed) contributes 0 to this displayed subtotal — the
+  // breakdown still surfaces the `price-unconfirmed` quote error so
+  // the visitor never sees a half-true final total.
+  const componentSubtotalCop = useMemo(() => {
+    return selectedComponents.reduce((sum, c) => sum + (c.price ?? 0), 0);
+  }, [selectedComponents]);
+
+  // The configurator's quote uses the visitor's current selection, the
+  // configured service and pricing policy. Per spec, only a `confirmed`
+  // service produces a final total — recommended/reference services return
+  // `service-not-confirmed` and the breakdown is rendered without the final
+  // total. Slice 2: when ANY selected component is `priceStatus:
+  // "unconfirmed"` (i.e. legacy `price === null`), the quote engine emits
+  // `price-unconfirmed` and the breakdown renders without the final total.
+  const componentIds = useMemo(
+    () => selectedComponents.map((c) => c.id),
+    [selectedComponents],
+  );
+
+  const quoteResult = useMemo(
+    () =>
+      calculateQuote(
+        {
+          componentIds,
+          serviceId: service.id,
+          pricingPolicyId: pricingPolicy.id,
+        },
+        // Slice 2: pass the actual selected components (not a placeholder).
+        // The configurator synthesizes the minimum offer record for each
+        // selected component so the quote engine's `selectReference` runs
+        // against real `offers[]`. Unconfirmed components carry no offers,
+        // so the engine emits `price-unconfirmed` rather than fabricating a
+        // zero.
+        buildConfiguratorCatalog(selectedComponents, service, pricingPolicy),
+        new Date(),
+      ),
+    [componentIds, selectedComponents, service, pricingPolicy],
+  );
 
   const filteredMotherboards = useMemo(
     () =>
@@ -223,9 +277,9 @@ export default function Configurator({
         `Almacenamiento: ${storage.map((s) => `${s.brand} ${s.model}`).join(", ")}`,
       );
     if (psu) lines.push(`Fuente: ${psu.brand} ${psu.model}`);
-    lines.push(`Total estimado: ${formatArs(totalPrice)} COP`);
+    lines.push(`Subtotal componentes: ${formatCop(componentSubtotalCop)} COP`);
     return encodeURIComponent(lines.join("\n"));
-  }, [cpu, motherboard, ram, gpu, storage, psu, totalPrice]);
+  }, [cpu, motherboard, ram, gpu, storage, psu, componentSubtotalCop]);
 
   const stepIndex = STEPS.indexOf(step);
 
@@ -427,19 +481,73 @@ export default function Configurator({
                       </div>
                     </div>
                     <div className="font-semibold text-cyan-500">
-                      {formatArs(comp.price)}
+                      {comp.price === null
+                        ? "Precio no confirmado"
+                        : formatCop(comp.price)}
                     </div>
                   </div>
                 ))}
             </div>
 
-            {/* Total */}
-            <div className="flex items-center justify-between rounded-2xl border border-cyan-500/30 bg-navy-900 px-6 py-5">
-              <span className="text-text-secondary">Total estimado</span>
-              <span className="text-2xl font-bold text-cyan-500 md:text-3xl">
-                {formatArs(totalPrice)} COP
-              </span>
-            </div>
+            {/* Quote breakdown */}
+            {quoteResult.ok ? (
+              <div className="overflow-hidden rounded-2xl border border-border bg-navy-900">
+                <div className="border-b border-border px-5 py-3">
+                  <h3 className="text-base font-semibold text-text-primary">
+                    Desglose (COP)
+                  </h3>
+                </div>
+                <table className="w-full text-left text-sm">
+                  <tbody>
+                    {quoteResult.quote.lines
+                      .filter((line) => line.kind !== "total")
+                      .map((line) => (
+                        <tr
+                          key={line.kind}
+                          className="border-b border-border last:border-b-0"
+                        >
+                          <td className="px-5 py-2 text-text-secondary">
+                            {line.label}
+                            {line.kind === "percentage-margin" &&
+                              line.rate !== undefined && (
+                                <span className="ml-2 text-xs text-text-muted">
+                                  ({line.rate}%)
+                                </span>
+                              )}
+                          </td>
+                          <td className="px-5 py-2 text-right font-mono text-cyan-500">
+                            {formatCop(line.amountCop)}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+                <div className="flex items-center justify-between border-t border-border bg-navy-800 px-5 py-4">
+                  <span className="text-base font-semibold text-text-primary">
+                    Total (COP)
+                  </span>
+                  <span className="font-mono text-2xl font-bold text-cyan-500">
+                    {formatCop(quoteResult.quote.finalTotalCop)}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-amber-500/50 bg-amber-500/10 p-5">
+                <div className="font-semibold text-amber-400">
+                  Total pendiente de confirmación
+                </div>
+                <p className="mt-2 text-sm text-text-secondary">
+                  El servicio seleccionado requiere confirmación del propietario
+                  antes de generar un total final. Te contactaremos por WhatsApp
+                  para confirmar el valor del armado.
+                </p>
+                <p className="mt-2 text-xs text-text-muted">
+                  Subtotal componentes: {formatCop(componentSubtotalCop)} COP
+                </p>
+              </div>
+            )}
+
+            <p className="text-xs text-text-muted">{PRICE_VARIATION_NOTICE}</p>
 
             {/* WhatsApp CTA */}
             {cpu && (
@@ -520,8 +628,12 @@ function ComponentCard({
       <div className="mt-1 font-semibold text-text-primary">{comp.model}</div>
       <div className="mt-2 text-xs text-text-muted">{getSpecSummary(comp)}</div>
       <div className="mt-3 font-bold text-cyan-500">
-        {formatArs(comp.price)}
+        {comp.price === null ? "Precio no confirmado" : formatCop(comp.price)}
       </div>
     </button>
   );
 }
+
+// buildConfiguratorCatalog is implemented in
+// src/lib/configurator/configurator-catalog.ts so it is unit-testable
+// without React. This island is the only consumer.

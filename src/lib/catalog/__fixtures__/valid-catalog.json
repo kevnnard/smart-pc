@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "cpu-amd-ryzen-5-5600",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 5 5600",
+      "specs": { "Cores": "6", "TDP": "65W" },
+      "compatibility": { "socket": "AM4", "tdp": 65 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 12,
+      "offers": [
+        {
+          "offerId": "ktronix-amd-ryzen-5-5600",
+          "retailer": "Ktronix",
+          "sourceUrl": "https://www.ktronix.com/amd-ryzen-5-5600",
+          "sourceCurrency": "COP",
+          "listedAmount": 320000,
+          "sellerCondition": "Ktronix · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "ram-corsair-16gb-ddr4-3200",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance LPX 16 GB DDR4-3200",
+      "specs": { "Capacity": "16 GB" },
+      "compatibility": { "ramType": "DDR4" },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 8,
+      "offers": [
+        {
+          "offerId": "alkosto-corsair-16gb-ddr4",
+          "retailer": "Alkosto",
+          "sourceUrl": "https://www.alkosto.com/corsair-vengeance-16gb-ddr4",
+          "sourceCurrency": "COP",
+          "listedAmount": 110000,
+          "sellerCondition": "Alkosto · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ],
+      "notes": "Precio observado en promoción."
+    },
+    {
+      "id": "ssd-samsung-980-500gb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "980 500 GB NVMe",
+      "specs": { "Capacity": "500 GB" },
+      "compatibility": { "interface_": "nvme" },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 15,
+      "imageUrl": "https://cdn.example.com/corsair-16gb.jpg",
+      "offers": [
+        {
+          "offerId": "clonesyperifericos-samsung-980-500gb",
+          "retailer": "Clones y Periféricos",
+          "sourceUrl": "https://www.clonesyperifericos.com/samsung-980-500gb",
+          "sourceCurrency": "COP",
+          "listedAmount": 95000,
+          "sellerCondition": "Clones y Periféricos · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "psu-corsair-rm650x",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM650x 650W 80+ Gold",
+      "specs": { "Wattage": "650 W" },
+      "compatibility": { "wattage": 650 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 6,
+      "offers": [
+        {
+          "offerId": "ktronix-corsair-rm650x",
+          "retailer": "Ktronix",
+          "sourceUrl": "https://www.ktronix.com/corsair-rm650x",
+          "sourceCurrency": "COP",
+          "listedAmount": 195000,
+          "sellerCondition": "Ktronix · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "mb-asus-prime-b550m-k",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "Prime B550M-K",
+      "specs": { "Chipset": "B550" },
+      "compatibility": {
+        "socket": "AM4",
+        "ramType": "DDR4",
+        "ramSlots": 2,
+        "formFactor": "mATX"
+      },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 4,
+      "offers": [
+        {
+          "offerId": "alkosto-asus-prime-b550m-k",
+          "retailer": "Alkosto",
+          "sourceUrl": "https://www.alkosto.com/asus-prime-b550m-k",
+          "sourceCurrency": "COP",
+          "listedAmount": 240000,
+          "sellerCondition": "Alkosto · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "gpu-nvidia-rtx-3060",
+      "category": "gpu",
+      "brand": "NVIDIA",
+      "model": "GeForce RTX 3060",
+      "specs": { "VRAM": "12 GB GDDR6" },
+      "compatibility": { "wattageDraw": 170 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 3,
+      "offers": [
+        {
+          "offerId": "ktronix-nvidia-rtx-3060",
+          "retailer": "Ktronix",
+          "sourceUrl": "https://www.ktronix.com/nvidia-rtx-3060",
+          "sourceCurrency": "COP",
+          "listedAmount": 620000,
+          "sellerCondition": "Ktronix · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "cooler-noctua-nh-d15",
+      "category": "cooler",
+      "brand": "Noctua",
+      "model": "NH-D15",
+      "specs": { "Type": "Air tower" },
+      "compatibility": { "socket": "AM4,AM5,LGA1700", "tdp": 250 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 5,
+      "offers": [
+        {
+          "offerId": "clonesyperifericos-noctua-nh-d15",
+          "retailer": "Clones y Periféricos",
+          "sourceUrl": "https://www.clonesyperifericos.com/noctua-nh-d15",
+          "sourceCurrency": "COP",
+          "listedAmount": 195000,
+          "sellerCondition": "Clones y Periféricos · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "case-corsair-4000d",
+      "category": "case",
+      "brand": "Corsair",
+      "model": "4000D Airflow",
+      "specs": { "Form Factor": "ATX" },
+      "compatibility": { "formFactor": "ATX" },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 2,
+      "offers": [
+        {
+          "offerId": "ktronix-corsair-4000d-airflow",
+          "retailer": "Ktronix",
+          "sourceUrl": "https://www.ktronix.com/corsair-4000d-airflow",
+          "sourceCurrency": "COP",
+          "listedAmount": 220000,
+          "sellerCondition": "Ktronix · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "os-windows-11-home",
+      "category": "os",
+      "brand": "Microsoft",
+      "model": "Windows 11 Home OEM",
+      "specs": { "Edition": "Home" },
+      "compatibility": {},
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 10,
+      "offers": [
+        {
+          "offerId": "alkosto-windows-11-home-oem",
+          "retailer": "Alkosto",
+          "sourceUrl": "https://www.alkosto.com/windows-11-home-oem",
+          "sourceCurrency": "COP",
+          "listedAmount": 380000,
+          "sellerCondition": "Alkosto · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": "armado-basico",
+      "slug": "armado-basico",
+      "name": "Armado básico",
+      "description": "Montaje, POST y prueba de arranque.",
+      "icon": "🛠️",
+      "tier": "basic",
+      "status": "recommended",
+      "recommendedMinCop": 30000,
+      "recommendedMaxCop": 80000,
+      "sourceStore": "Investigación Bogotá",
+      "sourceUrl": "https://www.ktronix.com/servicio-armado",
+      "lastVerified": "2025-02-18T00:00:00-05:00",
+      "confirmationNote": "Rango sugerido pendiente de confirmación del propietario."
+    },
+    {
+      "id": "armado-profesional",
+      "slug": "armado-profesional",
+      "name": "Armado profesional",
+      "description": "Cable management, validación y pruebas extendidas.",
+      "icon": "🛠️",
+      "tier": "pro",
+      "status": "recommended",
+      "recommendedMinCop": 120000,
+      "recommendedMaxCop": 200000,
+      "sourceStore": "Investigación Bogotá",
+      "sourceUrl": "https://www.alkosto.com/servicio-armado-profesional",
+      "lastVerified": "2025-02-18T00:00:00-05:00",
+      "confirmationNote": "Rango sugerido pendiente de confirmación del propietario."
+    },
+    {
+      "id": "promo-retail-armado",
+      "slug": "promo-retail-armado",
+      "name": "Armado promocional de retail",
+      "description": "Evidencia de promoción con compra de partes.",
+      "icon": "🎁",
+      "status": "reference",
+      "referencePriceCop": 11490,
+      "referenceNote": "Gratis o ~COP 11.490 con compra de partes que califiquen. Evidencia, no tarifa propia.",
+      "sourceStore": "Alkosto",
+      "sourceUrl": "https://www.alkosto.com/promocion-armado",
+      "lastVerified": "2025-02-18T00:00:00-05:00"
+    },
+    {
+      "id": "armado-basico-confirmado",
+      "slug": "armado-basico-confirmado",
+      "name": "Armado profesional Bogotá (confirmado)",
+      "description": "Armado, cable management, pruebas y soporte inicial.",
+      "icon": "🛠️",
+      "tier": "pro",
+      "status": "confirmed",
+      "feeCop": 150000,
+      "sourceStore": "Decisión comercial smart-pc",
+      "sourceUrl": "https://www.smart-pc.com/servicios/confirmados",
+      "lastVerified": "2025-02-18T00:00:00-05:00",
+      "confirmationNote": "Tarifa fija confirmada por el propietario."
+    }
+  ],
+  "prebuilds": [
+    {
+      "slug": "essentials",
+      "name": "Essentials",
+      "tier": "essentials",
+      "tagline": "Home · Office · Estudio",
+      "componentIds": [
+        "cpu-amd-ryzen-5-5600",
+        "gpu-nvidia-rtx-3060",
+        "mb-asus-prime-b550m-k",
+        "ram-corsair-16gb-ddr4-3200",
+        "ssd-samsung-980-500gb",
+        "psu-corsair-rm650x",
+        "cooler-noctua-nh-d15"
+      ],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true,
+      "badge": "Más vendido"
+    },
+    {
+      "slug": "creator",
+      "name": "Creator",
+      "tier": "creator",
+      "tagline": "Creator · Streaming · 1440p",
+      "componentIds": [
+        "cpu-amd-ryzen-5-5600",
+        "gpu-nvidia-rtx-3060",
+        "mb-asus-prime-b550m-k",
+        "ram-corsair-16gb-ddr4-3200",
+        "ssd-samsung-980-500gb",
+        "psu-corsair-rm650x",
+        "cooler-noctua-nh-d15"
+      ],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true
+    },
+    {
+      "slug": "apex",
+      "name": "Apex",
+      "tier": "apex",
+      "tagline": "4K Gaming · Workstation",
+      "componentIds": [
+        "cpu-amd-ryzen-5-5600",
+        "gpu-nvidia-rtx-3060",
+        "mb-asus-prime-b550m-k",
+        "ram-corsair-16gb-ddr4-3200",
+        "ssd-samsung-980-500gb",
+        "psu-corsair-rm650x",
+        "cooler-noctua-nh-d15"
+      ],
+      "serviceId": "armado-basico-confirmado",
+      "pricingPolicyId": "default",
+      "featured": true,
+      "badge": "Top tier"
+    }
+  ],
+  "policy": {
+    "schemaVersion": 1,
+    "freshness": { "staleAfterDays": 30 },
+    "defaultPolicyId": "default",
+    "policies": [
+      {
+        "id": "default",
+        "label": "Margen estándar",
+        "fixedMarginCop": 0,
+        "percentageMargin": 20,
+        "confirmed": true,
+        "note": "Margen de negocio; no modifica el precio observado de ningún componente."
+      }
+    ]
+  }
+}

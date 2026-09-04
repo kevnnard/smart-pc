@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "cpu-amd-ryzen-5-5600",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 5 5600",
+      "specs": { "Cores": "6" },
+      "compatibility": { "socket": "AM4", "tdp": 65 },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": 4,
+      "offers": [
+        {
+          "offerId": "bad-url-5600",
+          "retailer": "Bogus",
+          "sourceUrl": "not a url",
+          "sourceCurrency": "COP",
+          "listedAmount": 320000,
+          "sellerCondition": "Bogus · new",
+          "availability": "in-stock",
+          "checkedAt": "2025-02-18T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ]
+    }
+  ],
+  "services": [],
+  "prebuilds": [],
+  "policy": {
+    "schemaVersion": 1,
+    "freshness": { "staleAfterDays": 30 },
+    "defaultPolicyId": "default",
+    "policies": [
+      {
+        "id": "default",
+        "label": "p",
+        "fixedMarginCop": 0,
+        "percentageMargin": 0,
+        "confirmed": true
+      }
+    ]
+  }
+}

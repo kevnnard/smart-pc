@@ -3,8 +3,12 @@
  * ServicesGrid.astro (home section wrapper).
  *
  * Home services grid (F1.5): monospace `// SERVICIOS` eyebrow, a 2×2 grid of
- * `ServiceCard`s (single column on mobile) sourced from
- * `src/data/services.ts`, and a bottom CTA linking to `/servicios`.
+ * `ServiceCard`s (single column on mobile) sourced from the Home-only
+ * `homeServices` array in `src/data/home.ts`, and a bottom CTA linking to
+ * `/servicios`. The full catalog (research ranges + confirmed fee) remains
+ * available to the quote engine via `src/data/catalog/services.json` and is
+ * surfaced on `/servicios`; the Home grid deliberately uses a curated
+ * commercial-only set.
  *
  * Props:
  *   - eyebrow?:  string — defaults to "// SERVICIOS".
@@ -14,7 +18,7 @@
  *                              Defaults to true.
  *   - class?:    string — utility classes appended to the section root.
  */
-import { services } from "../../data/services";
+import { homeServices } from "../../data/home";
 import ServiceCard from "../ui/ServiceCard.astro";
 
 interface Props {
@@ -60,7 +64,7 @@ const {
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       {
-        services.map((service) => (
+        homeServices.map((service) => (
           <ServiceCard service={service} />
         ))
       }

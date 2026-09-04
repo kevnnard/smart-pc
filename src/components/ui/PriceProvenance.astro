@@ -1,0 +1,269 @@
+---
+/**
+ * PriceProvenance.astro
+ *
+ * Multi-offer provenance renderer for any component or quote that exposes a
+ * reference price. Used by:
+ *   - the configurator's per-component breakdown row,
+ *   - the prebuild detail page,
+ *   - any future product page that surfaces the multi-offer evidence.
+ *
+ * Built strictly on top of the pure `buildProvenanceRows` /
+ * `buildProvenanceSummary` helpers in `src/lib/ui/provenance.ts`. Astro
+ * cannot unit-test this component, but the helper is unit-tested so the
+ * data shape this component consumes is pinned in CI.
+ *
+ * Rendering contract:
+ *   - Header: "Referencia: COP X" + retailer + checked date + "USD convertido"
+ *     badge when applicable.
+ *   - "precio provisional" badge for provisional components.
+ *   - "precio por confirmar" placeholder for unconfirmed components (no
+ *     header, only a note).
+ *   - Per-offer table sorted by `(currency, listedAmount, offerId)` with
+ *     a "menor COP verificado" badge on the chosen reference.
+ *   - Stale warnings as data: `ageDays` chip + `isStale` styling.
+ *   - The selected reference row uses the cyan accent; category-page and
+ *     404-or-missing rows render in muted text so they read as evidence
+ *     of search availability, not as a competitor offer.
+ *   - Every `sourceUrl` becomes an `<a rel="nofollow noopener external">`
+ *     link; we never fetch it.
+ */
+import type { EvidenceStatus, Offer } from "../../lib/catalog/catalog-types";
+import { formatCop, PRICE_VARIATION_NOTICE } from "../../lib/money";
+import type { ReferenceProvenance } from "../../lib/quotes/quote-types";
+import {
+  buildProvenanceRows,
+  buildProvenanceSummary,
+  type ProvenanceRow,
+} from "../../lib/ui/provenance";
+
+interface Props {
+  /** Component id (for accessibility labels + data attribute). */
+  readonly componentId: string;
+  /** Component name (e.g. "AMD Ryzen 5 5600"). */
+  readonly componentName: string;
+  /** The quote-engine's reference for this component, if any. */
+  readonly reference: ReferenceProvenance | undefined;
+  /** Every offer of the component (confirmed, category-page, 404). */
+  readonly offers: readonly Offer[];
+  /** "verified" | "provisional" | "unconfirmed". */
+  readonly priceStatus: "verified" | "provisional" | "unconfirmed";
+  /** Build timestamp injected for staleness calculations. */
+  readonly now: Date;
+  readonly staleAfterDays: number;
+  readonly class?: string;
+}
+
+const {
+  componentId,
+  componentName,
+  reference,
+  offers,
+  priceStatus,
+  now,
+  staleAfterDays,
+  class: extraClass = "",
+} = Astro.props;
+
+const summary = buildProvenanceSummary(reference);
+const rows: readonly ProvenanceRow[] = buildProvenanceRows({
+  selectedOfferId: reference?.offerId,
+  selectedReferencePriceCop: reference?.referencePriceCop,
+  offers,
+  now,
+  staleAfterDays,
+});
+
+const referencePriceLabel =
+  reference && reference.referencePriceCop !== undefined
+    ? formatCop(reference.referencePriceCop)
+    : "Precio por confirmar";
+
+const referencePriceClass =
+  reference && reference.referencePriceCop !== undefined
+    ? priceStatus === "provisional"
+      ? "text-amber-400"
+      : "text-cyan-400"
+    : "text-amber-400";
+
+// Map evidence status to a chip color so the per-row badge is readable.
+function evidenceChipClass(status: EvidenceStatus): string {
+  switch (status) {
+    case "confirmed":
+      return "border-cyan-500/40 bg-cyan-500/10 text-cyan-300";
+    case "category-page":
+      return "border-border bg-navy-800 text-text-secondary";
+    case "404-or-missing":
+      return "border-red-500/40 bg-red-500/10 text-red-400";
+    default: {
+      const exhaustive: never = status;
+      return exhaustive;
+    }
+  }
+}
+
+function evidenceLabel(status: EvidenceStatus): string {
+  switch (status) {
+    case "confirmed":
+      return "evidencia confirmada";
+    case "category-page":
+      return "categoría / listado";
+    case "404-or-missing":
+      return "404 o faltante";
+    default: {
+      const exhaustive: never = status;
+      return exhaustive;
+    }
+  }
+}
+
+function availabilityLabel(value: string): string {
+  switch (value) {
+    case "in-stock":
+      return "En stock";
+    case "limited":
+      return "Stock limitado";
+    case "out-of-stock":
+      return "Sin stock";
+    case "unknown":
+      return "Sin confirmar";
+    default:
+      return value;
+  }
+}
+---
+
+<section
+  class:list={[
+    "rounded-2xl border border-border bg-navy-900 p-5",
+    extraClass,
+  ]}
+  aria-label={`Provenance de precio para ${componentName}`}
+  data-provenance={componentId}
+>
+  <header class="flex items-baseline justify-between gap-3">
+    <div>
+      <p class="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+        Provenance
+      </p>
+      <h4 class="mt-1 text-lg font-semibold text-text-primary">
+        {componentName}
+      </h4>
+    </div>
+    {priceStatus === "provisional" && (
+      <span class="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-amber-400">
+        precio provisional
+      </span>
+    )}
+    {priceStatus === "unconfirmed" && (
+      <span class="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-amber-400">
+        precio por confirmar
+      </span>
+    )}
+  </header>
+
+  {summary && reference && reference.referencePriceCop !== undefined ? (
+    <div class="mt-4 rounded-xl border border-border bg-navy-800 p-4">
+      <p class="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+        Referencia observada
+      </p>
+      <p class:list={["mt-1 font-mono text-2xl font-bold", referencePriceClass]}>
+        {referencePriceLabel}
+      </p>
+      <p class="mt-2 text-xs text-text-secondary">
+        Visto en{" "}
+        <a
+          href={summary.sourceUrl}
+          target="_blank"
+          rel="nofollow noopener external"
+          class="text-cyan-400 hover:text-cyan-300 hover:underline"
+        >
+          {summary.retailer}
+        </a>{" "}
+        el <span class="font-mono">{summary.checkedAt}</span>.
+        {summary.currencyHint === "USD" && (
+          <span class="ml-2 inline-block rounded-full border border-cyan-500/40 bg-cyan-500/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-cyan-300">
+            USD convertido
+          </span>
+        )}
+      </p>
+    </div>
+  ) : (
+    <p class="mt-4 rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-300">
+      No encontramos evidencia confirmada para este componente. La cotización
+      final queda pendiente de confirmación.
+    </p>
+  )}
+
+  {rows.length > 0 && (
+    <table class="mt-4 w-full text-left text-xs">
+      <thead>
+        <tr class="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+          <th class="pb-2 font-normal">Retailer</th>
+          <th class="pb-2 font-normal">Moneda</th>
+          <th class="pb-2 text-right font-normal">Precio listado</th>
+          <th class="pb-2 font-normal">Evidencia</th>
+          <th class="pb-2 font-normal">Verificado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+            <tr
+              class="border-t border-border align-top"
+              class:list={[
+                row.isSelectedReference && "bg-navy-800/60",
+              ]}
+              data-provenance-row={row.offerId}
+            >
+              <td class="py-2 pr-3 text-text-primary">
+                <div class="flex flex-col gap-1">
+                  <span>{row.retailer}</span>
+                  {row.sourceUrl && (
+                    <a
+                      href={row.sourceUrl}
+                      target="_blank"
+                      rel="nofollow noopener external"
+                      class="break-all text-cyan-400 hover:text-cyan-300 hover:underline"
+                    >
+                      Ver fuente
+                    </a>
+                  )}
+                </div>
+              </td>
+              <td class="py-2 pr-3 font-mono text-text-secondary">
+                {row.sourceCurrency}
+              </td>
+              <td class="py-2 pr-3 text-right font-mono text-text-primary">
+                {row.sourceCurrency === "COP"
+                  ? formatCop(row.listedAmount)
+                  : `${row.sourceCurrency} ${row.listedAmount.toLocaleString("en-US", { maximumFractionDigits: 2 })}`}
+                {row.isSelectedReference && (
+                  <span class="ml-2 inline-block rounded-full border border-cyan-500/40 bg-cyan-500/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-cyan-300">
+                    menor COP verificado
+                  </span>
+                )}
+                {row.isStale && row.ageDays !== undefined && (
+                  <span class="ml-2 inline-block rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-amber-400">
+                    {row.ageDays}d sin verificar
+                  </span>
+                )}
+              </td>
+              <td class="py-2 pr-3">
+                <span class:list={["inline-block rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider", evidenceChipClass(row.evidenceStatus as EvidenceStatus)]}>
+                  {evidenceLabel(row.evidenceStatus as EvidenceStatus)}
+                </span>
+                <span class="mt-1 block font-mono text-[10px] text-text-muted">
+                  {availabilityLabel(row.availability)}
+                </span>
+              </td>
+              <td class="py-2 pr-3 font-mono text-[10px] text-text-muted">
+                {row.checkedAt}
+              </td>
+            </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+
+  <p class="mt-4 text-[10px] text-text-muted">{PRICE_VARIATION_NOTICE}</p>
+</section>

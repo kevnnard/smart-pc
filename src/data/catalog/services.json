@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "services": [
+    {
+      "id": "armado-basico",
+      "slug": "armado-basico",
+      "name": "Armado básico",
+      "description": "Montaje, POST y prueba de arranque.",
+      "icon": "🛠️",
+      "tier": "basic",
+      "status": "recommended",
+      "recommendedMinCop": 30000,
+      "recommendedMaxCop": 80000,
+      "sourceStore": "Tecno-site",
+      "sourceUrl": "https://tienda.tecno-site.com/producto/servicio-armado-y-configuracion/",
+      "lastVerified": "2026-09-04T00:00:00-05:00",
+      "confirmationNote": "Rango referencial basado en Tecno-site Bogotá. Precio referencial; confirmar vendedor, stock, envío y garantía. Pendiente de confirmación del propietario."
+    },
+    {
+      "id": "armado-profesional",
+      "slug": "armado-profesional",
+      "name": "Armado profesional",
+      "description": "Armado con cable management, pruebas de estrés y soporte inicial.",
+      "icon": "🛠️",
+      "tier": "pro",
+      "status": "recommended",
+      "recommendedMinCop": 120000,
+      "recommendedMaxCop": 200000,
+      "sourceStore": "Tienvir",
+      "sourceUrl": "https://tienvir.co/products/instalacion-y-montaje-profesional-de-pc-gamer",
+      "lastVerified": "2026-09-04T00:00:00-05:00",
+      "confirmationNote": "Rango referencial basado en Tienvir Bogotá. Precio referencial; confirmar vendedor, stock, envío y garantía. Pendiente de confirmación del propietario."
+    },
+    {
+      "id": "promo-retail-armado",
+      "slug": "promo-retail-armado",
+      "name": "Armado promocional de retail",
+      "description": "Promoción observada con compra de partes que califiquen.",
+      "icon": "🎁",
+      "status": "reference",
+      "referencePriceCop": 11490,
+      "referenceNote": "Gratis o ~COP 11.490 con compra de partes que califiquen. Evidencia, no tarifa propia.",
+      "sourceStore": "Stackpc",
+      "sourceUrl": "https://www.stackpc.com.co/servicios",
+      "lastVerified": "2026-09-04T00:00:00-05:00"
+    },
+    {
+      "id": "armado-basico-confirmado",
+      "slug": "armado-basico-confirmado",
+      "name": "Armado profesional Bogotá (confirmado)",
+      "description": "Armado, cable management, pruebas y soporte inicial.",
+      "icon": "🛠️",
+      "tier": "pro",
+      "status": "confirmed",
+      "feeCop": 150000,
+      "sourceStore": "Política comercial smart-pc (referencia KAMALEON)",
+      "sourceUrl": "https://www.kamaleon.com.co/producto.php?Prod=Ensamble-de-Computador&StrProd=1210",
+      "lastVerified": "2026-09-04T00:00:00-05:00",
+      "confirmationNote": "Tarifa fija confirmada por el propietario (COP 150000). La URL apunta a KAMALEON como referencia de servicio de ensamble en Bogotá; no claima que KAMALEON cobre COP 150000."
+    }
+  ]
+}

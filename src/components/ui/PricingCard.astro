@@ -1,4 +1,5 @@
 ---
+import type { PrebuiltPC } from "../../data/types";
 /**
  * PricingCard.astro
  *
@@ -11,15 +12,16 @@
  *   - featured?: boolean — enables the cyan glow + ribbon treatment.
  *   - class?:    string  — utility classes appended to the card root.
  *
- * Pricing notes:
- *   - `prebuild.basePrice` is integer ARS/COP (whole pesos, see
- *     `src/data/types.ts`). It is rendered with `Intl.NumberFormat('es-CO')`
- *     directly — no `/ 100` cent conversion is applied.
+ * Pricing notes (post PR 2):
+ *   - `prebuild.basePrice` is the derived final customer price in whole COP,
+ *     computed by the quote engine from referenced components + confirmed
+ *     service + disclosed margin (see `src/data/components.ts` /
+ *     `src/lib/quotes/calculate-quote.ts`). Rendered via `formatCop()`.
  *
  * CTA: a `CTAButton` (outline for unfeatured, primary for featured) wired to
  * `/pre-armadas/{slug}`. The route is created in Phase 6.
  */
-import type { PrebuiltPC } from "../../data/types";
+import { formatCop } from "../../lib/money";
 import CTAButton from "./CTAButton.astro";
 
 interface Props {
@@ -29,14 +31,6 @@ interface Props {
 }
 
 const { prebuild, featured = false, class: extraClass = "" } = Astro.props;
-
-function formatPrice(value: number): string {
-  return value.toLocaleString("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  });
-}
 
 const cardClasses = [
   "relative flex flex-col rounded-2xl border p-6 transition-all duration-200",
@@ -73,9 +67,24 @@ const cardClasses = [
   </div>
 
   <div class="mb-6">
-    <span class="text-3xl font-bold text-cyan-500">
-      {formatPrice(prebuild.basePrice)}
+    <span
+      class:list={[
+        "text-3xl font-bold",
+        prebuild.basePrice === null ? "text-amber-400" : "text-cyan-500",
+      ]}
+    >
+      {prebuild.basePrice === null
+        ? "Pendiente de confirmación"
+        : formatCop(prebuild.basePrice)}
     </span>
+    {
+      prebuild.basePrice === null && (
+        <p class="mt-2 text-xs text-text-muted">
+          El precio final requiere confirmación de precios de uno o más
+          componentes.
+        </p>
+      )
+    }
   </div>
 
   <ul class="mb-6 space-y-1.5 text-sm text-text-secondary">
