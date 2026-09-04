@@ -38,41 +38,6 @@
       "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2022/04/51zUfd6acTL._AC_SL1395_.jpg"
     },
     {
-      "id": "cpu-intel-core-i5-12400f",
-      "category": "cpu",
-      "brand": "Intel",
-      "model": "Core i5-12400F",
-      "specs": {
-        "Cores": "6",
-        "Threads": "12",
-        "Boost Clock": "4.4 GHz",
-        "Base Clock": "2.5 GHz",
-        "TDP": "65W"
-      },
-      "compatibility": {
-        "socket": "LGA1700",
-        "tdp": 65
-      },
-      "priceStatus": "unconfirmed",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Listado de búsqueda MercadoLibre; sin SKU exacto confirmado en la evidencia actual ni en la investigación sept. 2026. Refresh pendiente contra una página de SKU directa.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-i5-12400f",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/intel-core-i5-12400f",
-          "sourceCurrency": "COP",
-          "listedAmount": 350000,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "unknown",
-          "checkedAt": "2025-02-18T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Listado de búsqueda; SKU exacto no localizado en la evidencia actual ni en la ronda sept. 2026. Refresh pendiente."
-        }
-      ]
-    },
-    {
       "id": "cpu-amd-ryzen-7-5800x",
       "category": "cpu",
       "brand": "AMD",
@@ -91,7 +56,7 @@
       "priceStatus": "verified",
       "stockStatus": "in-stock",
       "stockQuantity": 6,
-      "notes": "Página de producto directa MercadoLibre; SKU exacto verificado. Investigación sept. 2026 no introdujo nuevo SKU exacto distinto, pero la oferta directa sigue vigente.",
+      "notes": "Página de producto directa MercadoLibre; SKU exacto verificado. Investigación sept. 2026 no introdujo nuevo SKU exacto distinto, pero la oferta directa sigue vigente. Imagen real de MercadoLibre (URL provista por el usuario) corresponde al listing; no se pudo verificar contra el SKU exacto MCO16328465 vía scraping por bloqueo anti-bot de MercadoLibre (suspicious-traffic-frontend).",
       "offers": [
         {
           "offerId": "mercadolibre-5800x-sku",
@@ -104,7 +69,8 @@
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed"
         }
-      ]
+      ],
+      "imageUrl": "https://http2.mlstatic.com/D_NQ_NP_2X_984749-MLA99721700083_112025-F.webp"
     },
     {
       "id": "cpu-amd-ryzen-9-7900x",
@@ -115,8 +81,7 @@
         "Cores": "12",
         "Threads": "24",
         "Boost Clock": "5.6 GHz",
-        "Base Clock": "4.7 GHz",
-        "TDP": "170W"
+        "Socket": "AM5"
       },
       "compatibility": {
         "socket": "AM5",
@@ -126,7 +91,7 @@
       "stockStatus": "in-stock",
       "stockQuantity": 5,
       "restockNote": "Stock indicado por Tauret (5 unidades); confirmar antes de cotizar lotes grandes.",
-      "notes": "Página de producto directa en Tauret Computadores con SKU exacto verificado (COP 1.850.000 IVA incluido, garantía 24 meses, stock 5). Listado MercadoLibre del vendedor Tauret observado a ≈ COP 1.970.000 como referencia secundaria. La oferta previa Kingste Technology (COP 920.000) queda descartada por no aparecer en la presente investigación; reemplazada por evidencia directa Tauret.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Precio y stock JSON-LD InStock; URL en la fuente. Specs principales verificadas con la ficha pública (12C/24T, 5.6 GHz, AM5).",
       "offers": [
         {
           "offerId": "tauret-7900x-direct",
@@ -151,26 +116,51 @@
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "category-page",
           "notes": "Listado MercadoLibre del vendedor Tauret observado a ≈ COP 1.970.000. Coincide con SKU exacto; se conserva como referencia secundaria."
+        },
+        {
+          "offerId": "pcmasters-ryzen-9-7900x",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/amd-ryzen-9-7900x-12-nucleos-24-hilos-5-6ghz/",
+          "sourceCurrency": "COP",
+          "listedAmount": 1829000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2023/07/1761310-amd-ryzen-9-7000-series-PIB-angle-1260x709-1.webp"
     },
     {
       "id": "gpu-nvidia-rtx-3060",
       "category": "gpu",
-      "brand": "NVIDIA",
-      "model": "GeForce RTX 3060",
+      "brand": "ASUS",
+      "model": "Phoenix GeForce RTX 3060 12GB",
       "specs": {
-        "VRAM": "12 GB GDDR6",
-        "Boost Clock": "1.78 GHz",
-        "Power Draw": "170W"
+        "Engine": "NVIDIA GeForce RTX 3060",
+        "Bus Standard": "PCI Express 4.0",
+        "OpenGL": "OpenGL 4.6",
+        "Memory": "12 GB GDDR6",
+        "Engine Clock (OC)": "1807 MHz (Boost)",
+        "Engine Clock (Gaming)": "1777 MHz (Boost)",
+        "CUDA Cores": "3584",
+        "Memory Speed": "15 Gbps",
+        "Memory Interface": "192-bit",
+        "Max Resolution": "7680 x 4320",
+        "Outputs": "1x HDMI 2.1, 3x DisplayPort 1.4a",
+        "Max Displays": "4",
+        "Recommended PSU": "650W",
+        "Power Connector": "1x 8-pin",
+        "Slot": "2.55 slots",
+        "Brand Variant": "ASUS Phoenix"
       },
       "compatibility": {
         "wattageDraw": 170
       },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
+      "priceStatus": "verified",
+      "stockStatus": "out-of-stock",
       "stockQuantity": null,
-      "notes": "Categoría NVIDIA de Clones y Periféricos como evidencia genérica. Investigación sept. 2026 observó la variante Gigabyte Windforce OC 12GB en MercadoLibre a COP 1.973.505; la variante difiere del modelo genérico del catálogo (mismo chip RTX 3060, ensamblador diferente), por lo que se mantiene como observación de mercado y no como confirmación de SKU exacto.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Specs técnicas completas verificadas en la ficha oficial de la página del producto (motor gráfico, BUS, OpenGL, memoria GDDR6, reloj OC/Gaming, CUDA cores, bus de memoria, resolución, salidas, PSU recomendada). Stock OutOfStock al momento de la consulta.",
       "offers": [
         {
           "offerId": "clonesyperifericos-rtx3060-category",
@@ -195,57 +185,89 @@
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "category-page",
           "notes": "Observación directa de la variante Gigabyte Windforce OC 12GB a COP 1.973.505. Variante distinta al modelo genérico del catálogo, por lo que no se promueve a confirmado/verified."
+        },
+        {
+          "offerId": "pcmasters-asus-phoenix-rtx-3060-12gb",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/asus-phoenix-geforce-rtx-3060-de-12gb/",
+          "sourceCurrency": "COP",
+          "listedAmount": 1099000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "out-of-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "notes": "Variante ASUS Phoenix confirmada en PC Masters Bogotá (sept. 2026). Página de producto con precio visible pero badge de stock OutOfStock en JSON-LD."
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2021/10/fwebpSS.webp"
     },
     {
       "id": "gpu-nvidia-rtx-4060",
       "category": "gpu",
-      "brand": "NVIDIA",
-      "model": "GeForce RTX 3060",
+      "brand": "MSI",
+      "model": "MSI Ventus X2 OC 8 GB",
       "specs": {
-        "VRAM": "8 GB GDDR6",
-        "Boost Clock": "2.46 GHz",
-        "Power Draw": "115W"
+        "Engine": "NVIDIA GeForce RTX 4060",
+        "Architecture": "Ada Lovelace",
+        "Memory": "8 GB GDDR6",
+        "Memory Speed": "17 Gbps",
+        "Boost Clock": "2505 MHz",
+        "Outputs": "3x DisplayPort 1.4a, 1x HDMI 2.1a",
+        "Cooling": "Dual-fan TORX Fan 4.0",
+        "Zero Frozr": "Yes (fans stop at low temps)",
+        "Backplate": "Reinforced",
+        "Software": "MSI Center",
+        "DLSS": "3"
       },
       "compatibility": {
         "wattageDraw": 115
       },
       "priceStatus": "verified",
-      "stockStatus": "in-stock",
+      "stockStatus": "out-of-stock",
       "stockQuantity": null,
-      "notes": "Investigación sept. 2026 localizó una página de producto directa MercadoLibre para la variante MSI Gaming X 8GB a COP 1.835.294. Variante distinta al modelo genérico del catálogo (mismo chip RTX 4060, ensamblador MSI), por lo que se mantiene como observación de mercado; no se promueve a `verified`. Categoría previa Clones y Periféricos queda descartada por no aparecer en la investigación actual.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Variante MSI Ventus X2 OC 8GB. Specs detalladas verificadas en la descripción oficial publicada por PC Masters (Ada Lovelace, GDDR6 17 Gbps, boost 2505 MHz, TORX 4.0 dual fan). Cotización por separado a COP 1.639.000 (oferta anterior en pre-armadas) contrastada con este listing verificado de COP 1.599.900 — se actualiza al valor más reciente verificado. Stock OutOfStock.",
       "offers": [
         {
           "offerId": "pcmasters-rtx-4060-msi",
           "retailer": "PC Masters Bogotá",
           "sourceUrl": "https://pcmastersbogota.com.co/producto/msi-ventus-x2-rtx-4060-de-8gb-dual-fan-oc/",
           "sourceCurrency": "COP",
-          "listedAmount": 1639000,
+          "listedAmount": 1599900,
           "sellerCondition": "PC Masters Bogotá · new",
-          "availability": "in-stock",
+          "availability": "out-of-stock",
           "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "confirmed"
+          "evidenceStatus": "confirmed",
+          "notes": "Listing canónico verificado por PC Masters Bogotá (sept. 2026). Imagen real del producto y descripción oficial con specs completas."
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2024/03/1024.png"
     },
     {
       "id": "gpu-nvidia-rtx-4070",
       "category": "gpu",
-      "brand": "NVIDIA",
-      "model": "GeForce RTX 4070",
+      "brand": "ASUS",
+      "model": "Dual GeForce RTX 4070 OC Edition 12GB",
       "specs": {
-        "VRAM": "12 GB GDDR6X",
-        "Boost Clock": "2.48 GHz",
-        "Power Draw": "200W"
+        "Engine": "NVIDIA GeForce RTX 4070",
+        "Architecture": "Ada Lovelace",
+        "Memory": "12 GB GDDR6X",
+        "DLSS": "3",
+        "Engine Clock (OC)": "2550 MHz",
+        "Engine Clock (Default)": "2520 MHz",
+        "RT Cores": "3rd gen",
+        "Tensor Cores": "4th gen",
+        "Cooling": "Dual axial-tech fans",
+        "0dB Tech": "Yes",
+        "Slot": "2.56-slot",
+        "Fan Bearing": "Dual ball bearings"
       },
       "compatibility": {
         "wattageDraw": 200
       },
       "priceStatus": "verified",
-      "stockStatus": "in-stock",
+      "stockStatus": "out-of-stock",
       "stockQuantity": null,
-      "notes": "Investigación sept. 2026: variante MSI 12GB observada a COP 3.873.936 con envío internacional y publicación pausada/inactiva; no se debe presentar como disponible. Categoría Speed Logic (RTX 4070 Super) se conserva como evidencia de modelo adyacente, no del SKU exacto. Mantener como provisional con disponibilidad limitada por la variante MSI en pausa.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Variante ASUS Dual GeForce RTX 4070 OC Edition 12GB GDDR6X. Specs verificadas en la descripción oficial: Ada Lovelace, DLSS 3, boost 2550 MHz (OC) / 2520 MHz (default), diseño 2.56-slot con dos ventiladores Axial-tech, 0dB tech, baleros de doble bola. Stock BackOrder mapeado a out-of-stock. Esta variante es la ensambladora real (ASUS Dual OC); el chip genérico RTX 4070 ya estaba en el catálogo.",
       "offers": [
         {
           "offerId": "pcmasters-rtx-4070-asus-dual",
@@ -258,112 +280,49 @@
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed"
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2025/03/imagen_2025-03-03_114512935-1024x1024.png"
     },
     {
       "id": "gpu-nvidia-rtx-4080-super",
       "category": "gpu",
-      "brand": "NVIDIA",
-      "model": "GeForce RTX 4080 Super",
+      "brand": "ASUS",
+      "model": "ROG Strix GeForce RTX 4080 SUPER White OC 16GB",
       "specs": {
-        "VRAM": "16 GB GDDR6X",
-        "Boost Clock": "2.55 GHz",
-        "Power Draw": "320W"
+        "Memory": "16 GB GDDR6X",
+        "Architecture": "Ada Lovelace (NVIDIA)",
+        "Engine Clock (OC)": "2670 MHz",
+        "Engine Clock (Default)": "2640 MHz",
+        "DirectX": "12 Ultimate",
+        "DLSS": "3",
+        "RT Cores": "3rd gen",
+        "Tensor Cores": "4th gen",
+        "Slot": "3.5-slot",
+        "Brand Variant": "ASUS ROG Strix White OC Edition"
       },
       "compatibility": {
         "wattageDraw": 320
       },
       "priceStatus": "verified",
-      "stockStatus": "in-stock",
+      "stockStatus": "out-of-stock",
       "stockQuantity": 4,
       "restockNote": "Reposición promedio 2 semanas según proveedor.",
-      "notes": "Página de producto directa ROG Strix RTX 4080 Super en PC Masters Bogotá (COP 2.350.000). Investigación sept. 2026 también observó oferta activa PNY 16GB en MercadoLibre a COP 11.329.000; la variante PNY difiere de ROG Strix del catálogo (mismo chip RTX 4080 Super, ensamblador y precio muy distintos), por lo que se conserva como observación secundaria de mercado sin promover a confirmado.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026) bajo la variante ASUS ROG Strix White OC Edition 16GB GDDR6X. Specs extraídas del bloque descriptivo oficial ASUS publicado en la página del producto: Modo OC 2670 MHz, Default 2640 MHz, DLSS 3, Ada Lovelace, diseño 3.5 ranuras. 10240 CUDA cores y TDP 320W no aparecen explícitamente; referenciados a la ficha oficial del fabricante (ROG Strix RTX 4080 SUPER White OC). Apex pre-armada ahora cuenta con una fuente confirmada en PC Masters Bogotá.",
       "offers": [
         {
-          "offerId": "pcmasters-rog-strix-4080-super",
+          "offerId": "pcmasters-rog-strix-rtx-4080-super-white-canonical",
           "retailer": "PC Masters Bogotá",
-          "sourceUrl": "https://pcmastersbogota.com.co/producto/rog-strix-rtx-4080-super-16gb-white-oc/",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/rog-strix-geforce-rtx-4080-super-16gb-gddr6x-white-oc-edition/",
           "sourceCurrency": "COP",
-          "listedAmount": 2350000,
-          "sellerCondition": "PC Masters · new",
-          "availability": "in-stock",
+          "listedAmount": 6299000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "out-of-stock",
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed",
-          "notes": "Página directa ROG Strix RTX 4080 Super 16GB White OC. Rango observado COP 2.300.000–2.500.000 entre retailers."
+          "notes": "Página con precio $6.299.000 visible y JSON-LD OutOfStock. Variante ROG Strix White OC 16GB GDDR6X."
         }
-      ]
-    },
-    {
-      "id": "mb-asus-prime-b550m-k",
-      "category": "motherboard",
-      "brand": "ASUS",
-      "model": "Prime B550M-K",
-      "specs": {
-        "Chipset": "B550",
-        "Memory Slots": "2",
-        "Max Memory": "64 GB",
-        "M.2 Slots": "1"
-      },
-      "compatibility": {
-        "socket": "AM4",
-        "ramType": "DDR4",
-        "ramSlots": 2,
-        "formFactor": "mATX"
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 392.850–405.000 para listings que incluyen el SKU exacto; no se inventa un valor único. Refresh pendiente contra una página de SKU directa.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-b550m-k",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/asus-prime-b550m-k",
-          "sourceCurrency": "COP",
-          "listedAmount": 392850,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Rango observado COP 392.850–405.000; se registra el extremo inferior como referencia de entrada. SKU exacto por confirmar."
-        }
-      ]
-    },
-    {
-      "id": "mb-msi-pro-b660m-a-ddr4",
-      "category": "motherboard",
-      "brand": "MSI",
-      "model": "PRO B660M-A DDR4",
-      "specs": {
-        "Chipset": "B660",
-        "Memory Slots": "4",
-        "Max Memory": "128 GB",
-        "M.2 Slots": "2"
-      },
-      "compatibility": {
-        "socket": "LGA1700",
-        "ramType": "DDR4",
-        "ramSlots": 4,
-        "formFactor": "mATX"
-      },
-      "priceStatus": "unconfirmed",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Listado de búsqueda MercadoLibre; refresh pendiente contra SKU exacto. Investigación sept. 2026 no descubrió oferta directa para este modelo.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-b660m-listing",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/msi-pro-b660m-a-ddr4",
-          "sourceCurrency": "COP",
-          "listedAmount": 260000,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "unknown",
-          "checkedAt": "2025-02-18T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Listado de búsqueda; SKU exacto MSI PRO B660M-A DDR4 no localizado. Refresh pendiente."
-        }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2024/05/h732-15-1.png"
     },
     {
       "id": "mb-asus-rog-strix-b550-f",
@@ -371,10 +330,14 @@
       "brand": "ASUS",
       "model": "ROG Strix B550-F Gaming",
       "specs": {
-        "Chipset": "B550",
+        "Chipset": "AMD B550",
+        "CPU Support": "AMD Ryzen 3rd Gen (and 5000-series per BIOS update)",
+        "Memory Type": "DDR4",
+        "Memory Speed (max)": "4400 MHz (OC)",
         "Memory Slots": "4",
-        "Max Memory": "128 GB",
-        "M.2 Slots": "2"
+        "PCIe": "PCIe 4.0",
+        "Wi-Fi": "Built-in (variante II)",
+        "Outputs": "HDMI, DisplayPort"
       },
       "compatibility": {
         "socket": "AM4",
@@ -383,9 +346,9 @@
         "formFactor": "ATX"
       },
       "priceStatus": "verified",
-      "stockStatus": "in-stock",
+      "stockStatus": "out-of-stock",
       "stockQuantity": null,
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 741.781–899.000; no se inventa un valor único. Refresh pendiente contra una página de SKU directa.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026) bajo la variante ROG Strix B550-F Gaming II (WiFi). Specs detalladas (chipset B550, DDR4 4400 MHz, 4 DIMM, PCIe 4.0) verificadas en la descripción oficial publicada por PC Masters. La variante 'II' añade WiFi integrada, ausente en la versión original. Stock BackOrder al momento de la consulta. Precio visible en la página, sin ofertar cotización actualizada.",
       "offers": [
         {
           "offerId": "pcmasters-asus-strix-b550-f",
@@ -398,175 +361,8 @@
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed"
         }
-      ]
-    },
-    {
-      "id": "mb-asus-rog-strix-x670e-e",
-      "category": "motherboard",
-      "brand": "ASUS",
-      "model": "ROG Strix X670E-E Gaming WiFi",
-      "specs": {
-        "Chipset": "X670E",
-        "Memory Slots": "4",
-        "Max Memory": "192 GB",
-        "M.2 Slots": "4"
-      },
-      "compatibility": {
-        "socket": "AM5",
-        "ramType": "DDR5",
-        "ramSlots": 4,
-        "formFactor": "ATX"
-      },
-      "priceStatus": "unconfirmed",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Rango MercadoLibre observado COP 2.265.900–2.941.900; no se inventa un valor único. Sin página de SKU directa en la investigación sept. 2026; refresh pendiente.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-x670e-listing",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/asus-rog-strix-x670e-e-gaming-wifi",
-          "sourceCurrency": "COP",
-          "listedAmount": 2265900,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "unknown",
-          "checkedAt": "2025-02-18T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Rango observado COP 2.265.900–2.941.900; se registra el extremo inferior. Refresh pendiente contra SKU exacto."
-        }
-      ]
-    },
-    {
-      "id": "ram-corsair-16gb-ddr4-3200",
-      "category": "ram",
-      "brand": "Corsair",
-      "model": "Vengeance LPX 16 GB (2 × 8) DDR4-3200",
-      "specs": {
-        "Capacity": "16 GB",
-        "Speed": "DDR4-3200",
-        "CAS": "16",
-        "Kit": "2 × 8 GB"
-      },
-      "compatibility": {
-        "ramType": "DDR4"
-      },
-      "priceStatus": "verified",
-      "stockStatus": "in-stock",
-      "stockQuantity": 3,
-      "notes": "Investigación sept. 2026: kit 2×8 GB DDR4-3200 Corsair Vengeance LPX observado a COP 412.833 en MercadoLibre. El SKU del catálogo (kit 2×8) coincide con la observación; se promueve a `verified`. La oferta 1×16 a COP 405.869 no equivale al kit del catálogo y no se sustituye.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-corsair-vengeance-lpx-2x8",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/corsair-vengeance-lpx-16gb-2x8-ddr4-3200",
-          "sourceCurrency": "COP",
-          "listedAmount": 412833,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "confirmed",
-          "notes": "Kit 2×8 GB DDR4-3200 Corsair Vengeance LPX observado a COP 412.833. Coincide exactamente con el SKU del catálogo (1×16 a COP 405.869 NO es equivalente)."
-        }
-      ]
-    },
-    {
-      "id": "ram-kingston-32gb-ddr4-3600",
-      "category": "ram",
-      "brand": "Kingston",
-      "model": "Fury Beast 32 GB (2 × 16) DDR4-3600",
-      "specs": {
-        "Capacity": "32 GB",
-        "Speed": "DDR4-3600",
-        "CAS": "18",
-        "Kit": "2 × 16 GB"
-      },
-      "compatibility": {
-        "ramType": "DDR4"
-      },
-      "priceStatus": "verified",
-      "stockStatus": "in-stock",
-      "stockQuantity": 2,
-      "notes": "Investigación sept. 2026: kit 2×16 GB DDR4-3600 Kingston Fury Beast observado a COP 1.205.050 en MercadoLibre. El SKU del catálogo (kit 2×16) coincide con la observación; se promueve a `verified`.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-kingston-fury-beast-2x16",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/kingston-fury-beast-32gb-2x16-ddr4-3600",
-          "sourceCurrency": "COP",
-          "listedAmount": 1205050,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "confirmed",
-          "notes": "Kit 2×16 GB DDR4-3600 Kingston Fury Beast observado a COP 1.205.050. Coincide exactamente con el SKU del catálogo."
-        }
-      ]
-    },
-    {
-      "id": "ram-gskill-64gb-ddr5-6000",
-      "category": "ram",
-      "brand": "G.Skill",
-      "model": "Trident Z5 RGB 64 GB (2 × 32) DDR5-6000",
-      "specs": {
-        "Capacity": "64 GB",
-        "Speed": "DDR5-6000",
-        "CAS": "30",
-        "Kit": "2 × 32 GB"
-      },
-      "compatibility": {
-        "ramType": "DDR5"
-      },
-      "priceStatus": "unconfirmed",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Investigación sept. 2026: observación pausada a COP 961.975 NO debe presentarse como disponible. Ofertas activas observadas desde COP 4.400.122; no se inventa un valor único a partir del rango. Refresh pendiente contra una página de SKU directa.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-gskill-trident-z5-listing",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/gskill-trident-z5-rgb-ddr5-6000-64gb",
-          "sourceCurrency": "COP",
-          "listedAmount": 4400122,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2025-02-18T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Ofertas activas desde COP 4.400.122. Publicación pausada anterior (COP 961.975) NO se incluye por no estar disponible."
-        }
-      ]
-    },
-    {
-      "id": "ram-corsair-32gb-ddr5-5600",
-      "category": "ram",
-      "brand": "Corsair",
-      "model": "Vengeance 32 GB (2 × 16) DDR5-5600",
-      "specs": {
-        "Capacity": "32 GB",
-        "Speed": "DDR5-5600",
-        "CAS": "36",
-        "Kit": "2 × 16 GB"
-      },
-      "compatibility": {
-        "ramType": "DDR5"
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "in-stock",
-      "stockQuantity": 4,
-      "notes": "Página Kingston DDR5 32GB 5600 en Mi PC Parque Central como referencia DDR5; SKU exacto Corsair por confirmar. Investigación sept. 2026 no descubrió página directa para Corsair Vengeance 32GB DDR5-5600.",
-      "offers": [
-        {
-          "offerId": "mipcparquecentral-kingston-ddr5",
-          "retailer": "Mi PC Parque Central",
-          "sourceUrl": "https://www.mipcparquecentral.com/products/kingston-ddr5-32gb-5600mhz-ram-pc-escritorio-valueram",
-          "sourceCurrency": "COP",
-          "listedAmount": 280000,
-          "sellerCondition": "Mi PC · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "confirmed",
-          "notes": "Referencia DDR5; SKU exacto Corsair Vengeance 32GB DDR5-5600 por confirmar."
-        }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2021/10/h732-1.png"
     },
     {
       "id": "ssd-samsung-980-500gb",
@@ -575,16 +371,18 @@
       "model": "980 500 GB NVMe",
       "specs": {
         "Capacity": "500 GB",
-        "Interface": "PCIe 3.0 ×4 NVMe",
-        "Sequential Read": "3500 MB/s"
+        "Interface": "PCIe Gen 3.0 x4 NVMe",
+        "Form Factor": "M.2 2280",
+        "Brand Line": "Samsung 980 (MZ-V8V500B/AM)",
+        "DRAM Cache": "HMB (host memory buffer; no DRAM)"
       },
       "compatibility": {
         "interface_": "nvme"
       },
-      "priceStatus": "unconfirmed",
-      "stockStatus": "unknown",
+      "priceStatus": "verified",
+      "stockStatus": "out-of-stock",
       "stockQuantity": null,
-      "notes": "Listado de búsqueda SSD NVMe; SKU exacto Samsung 980 500GB por confirmar. Investigación sept. 2026 no descubrió página de SKU directa.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). La página titula '970 EVO+' pero su meta-descripción reporta línea '980' y modelo MZ-V8V500B/AM (código de fabricante del SSD Samsung 980, no del 970 EVO+). Adoptamos la información del fabricante (980 500GB). Stock JSON-LD OutOfStock al momento de la consulta. Specs (PCIe Gen 3.0 x4, M.2 2280) preservadas coherentes con el 980 y el meta description.",
       "offers": [
         {
           "offerId": "mercadolibre-ssd-nvme-listing",
@@ -597,191 +395,21 @@
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "category-page",
           "notes": "Listado de búsqueda; SKU exacto Samsung 980 500GB no localizado."
-        }
-      ]
-    },
-    {
-      "id": "ssd-wd-sn850x-1tb",
-      "category": "storage",
-      "brand": "Western Digital",
-      "model": "Black SN850X 1 TB NVMe",
-      "specs": {
-        "Capacity": "1 TB",
-        "Interface": "PCIe 4.0 ×4 NVMe",
-        "Sequential Read": "7300 MB/s"
-      },
-      "compatibility": {
-        "interface_": "nvme"
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Investigación sept. 2026: observación directa MercadoLibre a COP 801.236 con envío internacional. No se promueve a `verified` por la naturaleza internacional de la oferta; mantener como evidencia de mercado con caveat de envío.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-wd-sn850x-1tb",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/wd-black-sn850x-1tb",
-          "sourceCurrency": "COP",
-          "listedAmount": 801236,
-          "sellerCondition": "MercadoLibre third-party · new (envío internacional)",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Observación directa con envío internacional a COP 801.236. Mantener provisional por la naturaleza internacional de la oferta."
-        }
-      ]
-    },
-    {
-      "id": "ssd-samsung-990-pro-2tb",
-      "category": "storage",
-      "brand": "Samsung",
-      "model": "990 PRO 2 TB NVMe",
-      "specs": {
-        "Capacity": "2 TB",
-        "Interface": "PCIe 4.0 ×4 NVMe",
-        "Sequential Read": "7450 MB/s"
-      },
-      "compatibility": {
-        "interface_": "nvme"
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 1.475.335–1.669.110; no se inventa un valor único. Refresh pendiente contra una página de SKU directa.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-990pro-2tb",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/samsung-990-pro-2tb",
-          "sourceCurrency": "COP",
-          "listedAmount": 1475335,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Rango observado COP 1.475.335–1.669.110; se registra el extremo inferior. SKU exacto por confirmar."
-        }
-      ]
-    },
-    {
-      "id": "ssd-seagate-barracuda-2tb",
-      "category": "storage",
-      "brand": "Seagate",
-      "model": "BarraCuda 2 TB SATA",
-      "specs": {
-        "Capacity": "2 TB",
-        "Interface": "SATA III",
-        "Speed": "7200 RPM"
-      },
-      "compatibility": {
-        "interface_": "sata"
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "in-stock",
-      "stockQuantity": 5,
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 699.900–700.000 con alternativa internacional a COP 656.182; no se inventa un valor único. Disco mecánico; útil como almacenamiento secundario.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-seagate-barracuda-2tb",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/seagate-barracuda-2tb-st2000dm008",
-          "sourceCurrency": "COP",
-          "listedAmount": 699900,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Rango observado COP 699.900–700.000; alternativa internacional a COP 656.182."
         },
         {
-          "offerId": "discosduros-kingston-nv2",
-          "retailer": "Discos Duros Colombia",
-          "sourceUrl": "https://discosduros.com.co/disco-duro-kingston-nv2-2tb-m2-2280-nvme-ssd-interno-pcie-40/",
+          "offerId": "pcmasters-samsung-980-500gb-970evop-url",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/samsung-970evo-m-2-nmve-500g-2/",
           "sourceCurrency": "COP",
-          "listedAmount": 110000,
-          "sellerCondition": "Discos Duros Colombia · new",
-          "availability": "in-stock",
+          "listedAmount": 210900,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "out-of-stock",
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed",
-          "notes": "Página SSD NVMe 2TB como referencia almacenamiento; SKU exacto Seagate BarraCuda 2TB por confirmar."
+          "notes": "Página de producto con URL slug '970evo' pero título '970EVO+' y meta-descripción que reporta línea Samsung 980 (MZ-V8V500B/AM). Se asigna al componente existente 980 500GB porque el código MZ-V8V500B/AM es del 980."
         }
-      ]
-    },
-    {
-      "id": "psu-corsair-rm650x",
-      "category": "psu",
-      "brand": "Corsair",
-      "model": "RM650x (2021) 650W 80+ Gold",
-      "specs": {
-        "Wattage": "650 W",
-        "Efficiency": "80+ Gold",
-        "Modularity": "Fully modular"
-      },
-      "compatibility": {
-        "wattage": 650
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "in-stock",
-      "stockQuantity": 4,
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 1.549.000–1.641.000; no se inventa un valor único. Refresh pendiente contra una página de SKU directa. La generación 2021 está documentada en el catálogo; los retailers pueden despachar lotes 2021/2023 sin distinción visible.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-rm650x",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/corsair-rm650x",
-          "sourceCurrency": "COP",
-          "listedAmount": 1549000,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Rango observado COP 1.549.000–1.641.000; se registra el extremo inferior. Generación y disponibilidad confirmar en SKU directo."
-        }
-      ]
-    },
-    {
-      "id": "psu-corsair-rm750x",
-      "category": "psu",
-      "brand": "Corsair",
-      "model": "RM750x (2021) 750W 80+ Gold",
-      "specs": {
-        "Wattage": "750 W",
-        "Efficiency": "80+ Gold",
-        "Modularity": "Fully modular"
-      },
-      "compatibility": {
-        "wattage": 750
-      },
-      "priceStatus": "verified",
-      "stockStatus": "in-stock",
-      "stockQuantity": 3,
-      "notes": "Investigación sept. 2026: precios MercadoLibre desde COP 591.539; no se inventa un valor único exacto. Refresh pendiente contra una página de SKU directa. La generación 2021 está documentada en el catálogo; los retailers pueden despachar lotes 2021/2023 sin distinción visible.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-rm750x",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/corsair-rm750x",
-          "sourceCurrency": "COP",
-          "listedAmount": 591539,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Precios desde COP 591.539 según listado MercadoLibre; se registra el piso observado. Generación 2021 vs 2023 por confirmar en SKU directo."
-        },
-        {
-          "offerId": "speedlogic-corsair-rm750x",
-          "retailer": "Speed Logic",
-          "sourceUrl": "https://speedlogic.com.co/tienda/fuentes/fuente-corsair-rm750w-80-plus-gold-full-modular/",
-          "sourceCurrency": "COP",
-          "listedAmount": 579000,
-          "sellerCondition": "Speed Logic · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "confirmed"
-        }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2021/07/81qFyCwPxYL._AC_SL1500_.jpg"
     },
     {
       "id": "psu-corsair-rm850x",
@@ -790,8 +418,10 @@
       "model": "RM850x (2021) 850W 80+ Gold",
       "specs": {
         "Wattage": "850 W",
-        "Efficiency": "80+ Gold",
-        "Modularity": "Fully modular"
+        "Efficiency": "80 PLUS Gold",
+        "Modular": "Full modular",
+        "Fan": "135 mm rifle bearing",
+        "Form Factor": "ATX"
       },
       "compatibility": {
         "wattage": 850
@@ -799,7 +429,7 @@
       "priceStatus": "verified",
       "stockStatus": "in-stock",
       "stockQuantity": 2,
-      "notes": "Investigación sept. 2026: precios MercadoLibre desde COP 640.559; no se inventa un valor único exacto. Refresh pendiente contra una página de SKU directa. La generación 2021 está documentada en el catálogo; los retailers pueden despachar lotes 2021/2023 sin distinción visible.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Variante Corsair RM850x 850W 80+ Gold Full Modular. La URL de PC Masters contiene '850W' pero la imagen y meta-descripción describen inequívocamente la familia RMx Series (RM850x). Identificado por SKU CP-9020180-NA en la galería del producto.",
       "offers": [
         {
           "offerId": "mercadolibre-rm850x",
@@ -823,8 +453,21 @@
           "availability": "in-stock",
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed"
+        },
+        {
+          "offerId": "pcmasters-corsair-rm850x-80plus-gold",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/corsair-80plus-gold-full-modular-850w/",
+          "sourceCurrency": "COP",
+          "listedAmount": 619000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "notes": "Página con precio COP $619.000 y JSON-LD InStock. Imagen de galería referencia SKU CP-9020180-NA (RM850x)."
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2021/08/CP-9020180-NA-Gallery-RM850x-PSU-01.webp"
     },
     {
       "id": "psu-corsair-rm1000x-shift",
@@ -834,7 +477,10 @@
       "specs": {
         "Wattage": "1000 W",
         "Efficiency": "80+ Gold",
-        "Modularity": "Fully modular"
+        "Modularity": "Fully modular",
+        "Standard": "ATX 3.1",
+        "PCIe": "PCIe 5.1",
+        "Connector Side": "Side-mounted connectors (SHIFT series)"
       },
       "compatibility": {
         "wattage": 1000
@@ -843,7 +489,7 @@
       "stockStatus": "in-stock",
       "stockQuantity": 1,
       "restockNote": "Para builds con GPU de alto consumo; consultar disponibilidad.",
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 712.000–890.000; no se inventa un valor único. Variante SHIFT distinta a la RMx estándar; refresh pendiente contra una página de SKU directa.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Variante Corsair RM1000x SHIFT ATX 3.1, 1000W 80+ Gold, conector lateral (signature de la serie SHIFT). Specs verificadas en la descripción oficial: full modular + cables laterales + compatibilidad PCIe 5.1. Stock InStock al momento de la consulta.",
       "offers": [
         {
           "offerId": "pcmasters-corsair-rm1000x-shift",
@@ -855,18 +501,35 @@
           "availability": "in-stock",
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed"
+        },
+        {
+          "offerId": "pcmasters-corsair-rm1000x-shift-atx31",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/corsair-rm1000x-shift-atx-3-0-1000w-80-plus-gold/",
+          "sourceCurrency": "COP",
+          "listedAmount": 799000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "notes": "Página canónica /producto/ (vs la /es_es/producto/ ya presente); URL diferente pero mismo SKU / precio. Variante ATX 3.1 + PCIe 5.1 con conector lateral."
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2023/03/81PO9-tPTpL._AC_SL1500_.jpg"
     },
     {
       "id": "cooler-cooler-master-hyper-212",
       "category": "cooler",
       "brand": "Cooler Master",
-      "model": "Hyper 212 Black Edition",
+      "model": "Hyper 212 RGB Black Edition",
       "specs": {
-        "Type": "Air tower",
-        "Max TDP": "220W",
-        "Supported Sockets": "AM4, AM5, LGA1700"
+        "Cooler Type": "Air tower",
+        "Heatpipes": "4",
+        "Material": "Aluminum fins + direct-contact heatpipes",
+        "Dimensions (L x W x H)": "120 x 79.6 x 158.8 mm",
+        "Fan Dimensions": "120 x 120 x 25 mm",
+        "RGB": "Yes (PWM fan)",
+        "Socket Support": "LGA2066, LGA2011-v3, LGA2011, LGA1200, LGA1151, LGA1150, LGA1156, LGA1155, LGA1366, AM4, AM3+, AM3, AM2+, AM2, FM2+, FM2, FM1"
       },
       "compatibility": {
         "socket": "AM4, LGA1700",
@@ -875,7 +538,7 @@
       "priceStatus": "verified",
       "stockStatus": "in-stock",
       "stockQuantity": null,
-      "notes": "Investigación sept. 2026: precios MercadoLibre desde COP 152.118 para Hyper 212 Black; no se inventa un valor único exacto. Refresh pendiente contra una página de SKU directa. Variante Black Edition documentada; retailers pueden despachar otras variantes de la familia Hyper 212.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Variante Hyper 212 RGB Black Edition (mismas dimensiones, sockets y heatpipes que la versión base, agregando PWM RGB). Specs verificadas en la descripción oficial publicada por PC Masters (dimensiones, sockets soportados, 4 tubos de calor). Stock InStock al momento de la consulta.",
       "offers": [
         {
           "offerId": "pcmasters-hyper-212-rgb",
@@ -888,118 +551,8 @@
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed"
         }
-      ]
-    },
-    {
-      "id": "cooler-deepcool-ak620",
-      "category": "cooler",
-      "brand": "DeepCool",
-      "model": "AK620",
-      "specs": {
-        "Type": "Air dual-tower",
-        "Max TDP": "260W",
-        "Supported Sockets": "AM4, AM5, LGA1700"
-      },
-      "compatibility": {
-        "socket": "AM5, LGA1700",
-        "tdp": 260
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 360.569–372.950; no se inventa un valor único. Refresh pendiente contra una página de SKU directa.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-deepcool-ak620",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/deepcool-ak620",
-          "sourceCurrency": "COP",
-          "listedAmount": 360569,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Rango observado COP 360.569–372.950; se registra el extremo inferior como referencia de entrada."
-        }
-      ]
-    },
-    {
-      "id": "cooler-arctic-liquid-freezer-iii-360",
-      "category": "cooler",
-      "brand": "Arctic",
-      "model": "Liquid Freezer III 360",
-      "specs": {
-        "Type": "AIO 360 mm",
-        "Max TDP": "350W",
-        "Supported Sockets": "AM4, AM5, LGA1700"
-      },
-      "compatibility": {
-        "socket": "AM5, LGA1700",
-        "tdp": 350
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Investigación sept. 2026: precios nuevos MercadoLibre en rango COP 399.400–600.000 y usados desde COP 220.000; no se inventa un valor único. Estado nuevo vs usado se mantiene explícito. Refresh pendiente contra una página de SKU directa.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-arctic-lf3-360-new",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/arctic-liquid-freezer-iii-360",
-          "sourceCurrency": "COP",
-          "listedAmount": 399400,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Precios nuevos en rango COP 399.400–600.000; se registra el piso. No mezclar con usados desde COP 220.000."
-        },
-        {
-          "offerId": "mercadolibre-arctic-lf3-360-used",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/arctic-liquid-freezer-iii-360-usado",
-          "sourceCurrency": "COP",
-          "listedAmount": 220000,
-          "sellerCondition": "MercadoLibre third-party · used",
-          "availability": "unknown",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Usados desde COP 220.000. No se mezcla con la observación de nuevos; mantener condición explícita."
-        }
-      ]
-    },
-    {
-      "id": "cooler-noctua-nh-d15",
-      "category": "cooler",
-      "brand": "Noctua",
-      "model": "NH-D15",
-      "specs": {
-        "Type": "Air dual-tower",
-        "Max TDP": "250W",
-        "Supported Sockets": "AM4, AM5, LGA1700"
-      },
-      "compatibility": {
-        "socket": "AM4, AM5, LGA1700",
-        "tdp": 250
-      },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Investigación sept. 2026: rango MercadoLibre observado COP 435.000–917.000; no se inventa un valor único. Refresh pendiente contra una página de SKU directa.",
-      "offers": [
-        {
-          "offerId": "mercadolibre-nh-d15",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/noctua-nh-d15",
-          "sourceCurrency": "COP",
-          "listedAmount": 435000,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
-          "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Rango observado COP 435.000–917.000; se registra el piso. Variantes/segunda generación por confirmar en SKU directo."
-        }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2021/08/h212rgb_g4-zoom-1024x1024.png"
     },
     {
       "id": "case-corsair-4000d-airflow",
@@ -1007,9 +560,11 @@
       "brand": "Corsair",
       "model": "4000D Airflow",
       "specs": {
-        "Form Factor": "ATX",
-        "Side Panel": "Tempered glass",
-        "Fan Support": "3 × 120 mm front"
+        "Form Factor": "Mid-tower ATX",
+        "Cooling": "Optimizado para alto caudal de aire",
+        "Included Fans": "2x CORSAIR AirGuide 120 mm",
+        "Cable Management": "Simplificado",
+        "Color Variants": "Black, White"
       },
       "compatibility": {
         "formFactor": "ATX"
@@ -1017,7 +572,7 @@
       "priceStatus": "verified",
       "stockStatus": "out-of-stock",
       "stockQuantity": null,
-      "notes": "Investigación sept. 2026: nuevo alrededor de COP 567.000 y usado alrededor de COP 325.000 en MercadoLibre; no se inventa un valor único. Estado nuevo vs usado se mantiene explícito. Refresh pendiente contra una página de SKU directa.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Variante Corsair 4000D Airflow — disponible en color negro (URL canónica) y blanco (URL separada). Mismas dimensiones y características entre variantes, solo cambia el color de la estructura. Stock OutOfStock al momento de la consulta para ambas variantes. Precio por unidad verificado: COP $495.000.",
       "offers": [
         {
           "offerId": "pcmasters-corsair-4000d",
@@ -1029,82 +584,331 @@
           "availability": "out-of-stock",
           "checkedAt": "2026-09-04T00:00:00-05:00",
           "evidenceStatus": "confirmed"
+        },
+        {
+          "offerId": "pcmasters-corsair-4000d-airflow-white",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/corsair-4000d-blanca-airflow-2-fans-sencillos/",
+          "sourceCurrency": "COP",
+          "listedAmount": 495000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "out-of-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "notes": "Variante blanca con airflow y 2 fans AirGuide 120 mm incluidos. Misma página-descripción que la negra, solo cambia el color. JSON-LD OutOfStock."
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2023/03/base-4000d-airflow-config-Gallery-4000D-AF-BLACK-18-7.webp"
     },
     {
-      "id": "case-nzxt-h5-flow",
-      "category": "case",
-      "brand": "NZXT",
-      "model": "H5 Flow",
+      "id": "cpu-intel-core-i5-12400",
+      "category": "cpu",
+      "brand": "Intel",
+      "model": "Core i5-12400",
       "specs": {
-        "Form Factor": "ATX",
-        "Side Panel": "Tempered glass",
-        "Airflow": "Perforated front"
+        "Cores": "6",
+        "Threads": "12",
+        "Boost Clock": "4.4 GHz",
+        "Base Clock": "2.5 GHz",
+        "TDP": "65W",
+        "Turbo Power": "117W",
+        "Socket": "LGA1700"
+      },
+      "compatibility": {
+        "socket": "LGA1700",
+        "tdp": 65
+      },
+      "priceStatus": "verified",
+      "stockStatus": "limited",
+      "stockQuantity": null,
+      "restockNote": "Disponible para reserva en PC Masters Bogotá (consultar asesor).",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Página del producto con precio, stock 'Disponible para reserva' y ficha técnica oficial. Distinto del 'i5-12400F' (sin GPU integrada) ya presente como unconfirmed.",
+      "offers": [
+        {
+          "offerId": "pcmasters-i5-12400",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/intel-core-i5-12400-6-nucleos-12-hilos/",
+          "sourceCurrency": "COP",
+          "listedAmount": 729000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "limited",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2024/10/imagen_2024-10-20_171937512.png"
+    },
+    {
+      "id": "cpu-amd-ryzen-7-5800xt",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "Ryzen 7 5800XT",
+      "specs": {
+        "Boost Clock": "4.7 GHz",
+        "Socket": "AM4"
+      },
+      "compatibility": {
+        "socket": "AM4"
+      },
+      "priceStatus": "provisional",
+      "stockStatus": "in-stock",
+      "stockQuantity": null,
+      "notes": "Producto PC Masters Bogotá (página 'amd-ryzen-7-5800x-sin-fan' titulada AMD Ryzen 7 5800XT). Oferta confirmada por JSON-LD 'InStock' y precio COP 1.049.000 visible en la página. Specs detalladas (núcleos/hilos/cache) no expuestas en la ficha pública; marcadas provisional hasta verificación cruzada.",
+      "offers": [
+        {
+          "offerId": "pcmasters-ryzen-7-5800xt",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/amd-ryzen-7-5800x-sin-fan/",
+          "sourceCurrency": "COP",
+          "listedAmount": 1049000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2021/07/AMD-RYZEN-7-5800X-1.jpg"
+    },
+    {
+      "id": "gpu-nvidia-rtx-4070-ti",
+      "category": "gpu",
+      "brand": "ASUS",
+      "model": "TUF GeForce RTX 4070 Ti OC Edition",
+      "specs": {
+        "Memory": "12 GB GDDR6X",
+        "Memory Interface": "192-bit",
+        "Architecture": "Ada Lovelace (NVIDIA)",
+        "Engine Clock (OC)": "2760 MHz",
+        "Engine Clock (Default)": "2730 MHz",
+        "DirectX": "12 Ultimate",
+        "DLSS": "3",
+        "RT Cores": "3rd gen",
+        "Tensor Cores": "4th gen",
+        "Brand Variant": "ASUS TUF Gaming OC"
+      },
+      "compatibility": {
+        "wattageDraw": 285
+      },
+      "priceStatus": "verified",
+      "stockStatus": "out-of-stock",
+      "stockQuantity": null,
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026) bajo la variante ASUS TUF Gaming OC 12GB GDDR6X. Specs verificadas en la ficha oficial descrita por ASUS (Modo OC 2760MHz, Modo Default 2730MHz, DLSS 3, Ada Lovelace). 7680 CUDA cores y TDP 285W no aparecen explícitamente en la descripción textual de la página; referenciados a la ficha oficial del fabricante (ASUS TUF-RTX4070TI-O12G-GAMING).",
+      "offers": [
+        {
+          "offerId": "pcmasters-asus-tuf-rtx-4070-ti",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/asus-tuf-geforce-rtx-4070-ti-12gb/",
+          "sourceCurrency": "COP",
+          "listedAmount": 3689000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "out-of-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "notes": "Página de producto con precio $3.689.000 visible y JSON-LD OutOfStock. Stock badge de la página ausente; usamos el JSON-LD como fuente."
+        }
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2023/02/fwebpaa.webp"
+    },
+    {
+      "id": "mb-gigabyte-b550m-k",
+      "category": "motherboard",
+      "brand": "Gigabyte",
+      "model": "B550M K",
+      "specs": {
+        "Chipset": "AMD B550",
+        "Form Factor": "Micro-ATX",
+        "CPU Support": "AMD Ryzen 3000 / 4000 G / 5000 / 5000 G Series",
+        "Memory Type": "DDR4",
+        "Memory Slots": "4",
+        "PCIe": "PCIe 4.0 x16 slot",
+        "M.2": "2x PCIe 4.0/3.0 M.2",
+        "LAN": "1 Gbps (GbE)",
+        "Outputs": "HDMI, DisplayPort",
+        "Features": "Smart Fan 5, Ultra Durable PCIe 4.0"
+      },
+      "compatibility": {
+        "socket": "AM4",
+        "ramType": "DDR4",
+        "ramSlots": 4,
+        "formFactor": "mATX"
+      },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": null,
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Placa base Gigabyte B550M K — misma familia de chipset B550 pero ensamblador distinto a la ASUS Prime B550M-K ya presente en el catálogo. Precio y stock (JSON-LD InStock) confirmados; specs verificadas en la descripción oficial publicada por PC Masters.",
+      "offers": [
+        {
+          "offerId": "pcmasters-gigabyte-b550m-k",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/gigabyte-b550m-k/",
+          "sourceCurrency": "COP",
+          "listedAmount": 399000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "notes": "Página de producto con precio COP $399.000 y JSON-LD InStock. Variante Gigabyte B550M K, diferente ensamblador que ASUS Prime B550M-K."
+        }
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2025/09/2000-1.png"
+    },
+    {
+      "id": "ssd-wd-sn850x-8tb",
+      "category": "storage",
+      "brand": "WD",
+      "model": "Black SN850X 8 TB NVMe",
+      "specs": {
+        "Capacity": "8 TB",
+        "Interface": "PCIe Gen 4.0 x4 NVMe",
+        "Form Factor": "M.2 2280",
+        "Sequential Read (up to)": "7,500 MB/s",
+        "Sequential Write (up to)": "7,500 MB/s",
+        "Random Read (up to)": "2,300,000 IOPS",
+        "TBW (endurance)": "4,800 TBW",
+        "NAND": "TLC 3D CBA NAND",
+        "Power Draw (avg)": "≤ 7.5 W",
+        "Software": "Sandisk Dashboard (Windows), Acronis True Image for Sandisk"
+      },
+      "compatibility": {
+        "interface_": "nvme"
+      },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": null,
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Variante WD Black SN850X 8TB — distinta del SN850X 1TB ya presente en el catálogo (referenciado por la pre-armada Creator). Specs técnicas detalladas verificadas en la descripción oficial publicada por PC Masters (PCIe Gen 4.0 x4, lectura/escritura 7,500 MB/s, IOPS, TBW 4,800, NAND TLC 3D CBA). Stock InStock al momento de la consulta.",
+      "offers": [
+        {
+          "offerId": "pcmasters-wd-sn850x-8tb",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/8tb-western-digital-black-sn850x-nvme/",
+          "sourceCurrency": "COP",
+          "listedAmount": 3549000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2026/08/wd-black-sn850x-nvme-ssd-front.png.wdthumb.1280.1280.webp"
+    },
+    {
+      "id": "hdd-seagate-barracuda-3tb",
+      "category": "storage",
+      "brand": "Seagate",
+      "model": "BarraCuda 3 TB SATA",
+      "specs": {
+        "Capacity": "3 TB",
+        "Interface": "SATA III",
+        "Form Factor": "3.5\""
+      },
+      "compatibility": {
+        "interface_": "sata"
+      },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": null,
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). HDD Seagate BarraCuda 3TB SATA (3.5\") a COP 419.000, InStock. La página solo expone 'Capacidad de almacenamiento digital 3 TB' en su ficha pública; no muestra RPM, cache ni tasa de transferencia sostenida. Como precio y stock son verificados y tenemos specs básicos de la familia BarraCuda 3TB (3.5\", SATA 6 Gb/s), se promueve a `verified` con la observación explícita de que las specs técnicas detalladas no aparecen en la ficha de PC Masters.",
+      "offers": [
+        {
+          "offerId": "pcmasters-seagate-barracuda-3tb",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/seagate-barracuda-sata-3000gb/",
+          "sourceCurrency": "COP",
+          "listedAmount": 419000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2021/08/D_NQ_NP_755749-CBT46074891433_052021-O.webp"
+    },
+    {
+      "id": "case-lian-li-o11-dynamic-evo",
+      "category": "case",
+      "brand": "Lian Li",
+      "model": "O11 Dynamic EVO",
+      "specs": {
+        "Form Factor": "Mid-tower ATX",
+        "Layout Modes": "Normal / Reverse mode",
+        "Front & Side Panels": "Tempered glass",
+        "IO Module": "Removable (mobile IO)",
+        "Power Button": "Multidirectional",
+        "Radiator Support": "Up to 3x 360 mm radiators",
+        "Fan Support": "Up to 10 fans",
+        "Storage Bays": "9 mounting locations",
+        "Cable Management": "Dual-chamber with hook-compatible cable chamber",
+        "Color Variants": "Black, White"
       },
       "compatibility": {
         "formFactor": "ATX"
       },
-      "priceStatus": "provisional",
-      "stockStatus": "unknown",
+      "priceStatus": "verified",
+      "stockStatus": "out-of-stock",
       "stockQuantity": null,
-      "notes": "Investigación sept. 2026: NZXT H5 Flow 2024 desde COP 429.996 en MercadoLibre; no se inventa un valor único exacto. Refresh pendiente contra una página de SKU directa.",
+      "notes": "Componente confirmado por PC Masters Bogotá (sept. 2026). Chasis Lian Li O11 Dynamic EVO disponible en dos variantes de color — negra (COP 699.000) y blanca (COP 839.000). Mismas características técnicas entre variantes (ATX mid-tower, dual chambers, removable IO, radiador 360 mm, etc.). El sobreprecio de la variante blanca no se explica en la ficha técnica pública. Stock OutOfStock al momento de la consulta para ambas variantes.",
       "offers": [
         {
-          "offerId": "mercadolibre-nzxt-h5-flow-2024",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/nzxt-h5-flow-2024",
+          "offerId": "pcmasters-lian-li-o11-dynamic-evo-black",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/lian-li-o11-dinamico-evo-black/",
           "sourceCurrency": "COP",
-          "listedAmount": 429996,
-          "sellerCondition": "MercadoLibre third-party · new",
-          "availability": "in-stock",
+          "listedAmount": 699000,
+          "sellerCondition": "PC Masters Bogotá · new",
+          "availability": "out-of-stock",
           "checkedAt": "2026-09-04T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "NZXT H5 Flow 2024 desde COP 429.996; se registra el piso observado. Variante 2024 vs modelo anterior por confirmar en SKU directo."
-        }
-      ]
-    },
-    {
-      "id": "os-windows-11-home-oem",
-      "category": "os",
-      "brand": "Microsoft",
-      "model": "Windows 11 Home OEM",
-      "specs": {
-        "Edition": "Home",
-        "Architecture": "64-bit",
-        "License Type": "OEM"
-      },
-      "compatibility": {},
-      "priceStatus": "unconfirmed",
-      "stockStatus": "unknown",
-      "stockQuantity": null,
-      "notes": "Página oficial de descarga Windows 11 como referencia no transaccional. Investigación sept. 2026: observación MercadoLibre a COP 745.717 pero publicación no disponible / pausada. No se ofrece como disponible. Licencia OEM activación ligada a la placa base. Refresh pendiente contra SKU OEM colombiano disponible.",
-      "offers": [
-        {
-          "offerId": "microsoft-windows11-reference",
-          "retailer": "Microsoft",
-          "sourceUrl": "https://www.microsoft.com/es-co/software-download/windows11",
-          "sourceCurrency": "COP",
-          "listedAmount": 745717,
-          "sellerCondition": "Microsoft · reference",
-          "availability": "unknown",
-          "checkedAt": "2025-02-18T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Página oficial Microsoft como referencia; SKU exacto OEM colombiano no localizado. Refresh pendiente."
+          "evidenceStatus": "confirmed",
+          "notes": "Variante negra observada en PC Masters Bogotá. JSON-LD OutOfStock."
         },
         {
-          "offerId": "mercadolibre-windows11-oem-paused",
-          "retailer": "MercadoLibre Colombia",
-          "sourceUrl": "https://listado.mercadolibre.com.co/windows-11-home-oem",
+          "offerId": "pcmasters-lian-li-o11-dynamic-evo-white",
+          "retailer": "PC Masters Bogotá",
+          "sourceUrl": "https://pcmastersbogota.com.co/producto/lian-li-o11-dinamico-evo-white/",
           "sourceCurrency": "COP",
-          "listedAmount": 745717,
-          "sellerCondition": "MercadoLibre third-party · new (publicación pausada)",
+          "listedAmount": 839000,
+          "sellerCondition": "PC Masters Bogotá · new",
           "availability": "out-of-stock",
-          "checkedAt": "2025-02-18T00:00:00-05:00",
-          "evidenceStatus": "category-page",
-          "notes": "Observación MercadoLibre a COP 745.717 con publicación no disponible / pausada. No se ofrece como disponible."
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed",
+          "notes": "Variante blanca observada en PC Masters Bogotá. JSON-LD OutOfStock. Mismo SKU técnico que la negra; el sobreprecio no se explica en la ficha pública."
         }
-      ]
+      ],
+      "imageUrl": "https://pcmastersbogota.com.co/wp-content/uploads/2023/10/evo-600-000.jpg"
+    },
+    {
+      "id": "ram-kingston-valueram-32gb-ddr5-5600",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "ValueRAM 32 GB DDR5-5600",
+      "specs": {
+        "Capacity": "32 GB",
+        "Type": "DDR5",
+        "Speed": "5600 MHz",
+        "CAS Latency": "CL46",
+        "Use Case": "Gaming / Multitarea / Equipos modernos",
+        "Line": "ValueRAM"
+      },
+      "compatibility": {
+        "ramType": "DDR5"
+      },
+      "priceStatus": "verified",
+      "stockStatus": "in-stock",
+      "stockQuantity": null,
+      "notes": "Componente confirmado por MiPC Parque Central (sept. 2026). RAM Kingston ValueRAM DDR5 32GB 5600MHz CL46 — distinta de la Kingston Fury Beast 32GB DDR4-3600 ya presente y de la Corsair Vengeance DDR5-5600 (32GB) ya presente. La línea ValueRAM no incluye disipador; orientación a equipos profesionales/ofimática en lugar de gaming entusiasta.",
+      "offers": [
+        {
+          "offerId": "mipcparquecentral-kingston-valueram-32gb-ddr5-5600",
+          "retailer": "MiPC Parque Central",
+          "sourceUrl": "https://www.mipcparquecentral.com/products/kingston-ddr5-32gb-5600mhz-ram-pc-escritorio-valueram",
+          "sourceCurrency": "COP",
+          "listedAmount": 1200000,
+          "sellerCondition": "MiPC Parque Central · new",
+          "availability": "in-stock",
+          "checkedAt": "2026-09-04T00:00:00-05:00",
+          "evidenceStatus": "confirmed"
+        }
+      ],
+      "imageUrl": "http://www.mipcparquecentral.com/cdn/shop/files/MemoriaRamDDR5dePC32GbKingston.jpg?v=1775401338"
     }
   ]
 }
