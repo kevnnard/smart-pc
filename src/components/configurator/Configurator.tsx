@@ -467,7 +467,7 @@ export default function Configurator({
   return (
     <div className="flex flex-col h-screen w-full bg-navy-950 overflow-hidden pt-16">
       {/* 1. STICKY TOP HUD BAR */}
-      <header className="shrink-0 border-b border-border/80 bg-navy-900/90 backdrop-blur-md px-4 py-3 md:px-8 z-20">
+      <header className="sticky top-16 z-30 shrink-0 border-b border-border/80 bg-navy-900/95 px-4 py-3 backdrop-blur-md md:px-8">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           {/* Stepper horizontal pills */}
           <div
