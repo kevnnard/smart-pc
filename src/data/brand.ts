@@ -17,8 +17,8 @@ export const brand: BrandInfo = {
   tagline: "PCs a tu medida",
   description:
     "Armamos la PC de tus sueños con componentes de primera línea y soporte experto. Desde Colombia para el mundo.",
-  whatsapp: "https://wa.me/573001234567",
-  email: "hola@smart-pc.com",
+  whatsapp: "https://wa.me/573185467155",
+  email: "smart-pc@kevnard.com",
   location: "Bogotá, Colombia",
   social: [
     { platform: "Instagram", url: "#", icon: "instagram" },

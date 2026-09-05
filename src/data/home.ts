@@ -86,7 +86,7 @@ export const faq: readonly FAQItem[] = [
   {
     question: "¿Cómo es el soporte post-venta?",
     answer:
-      "Atención por WhatsApp de lunes a sábado, 9 a 19 h. Soporte remoto incluido de por vida y visitas al taller en Bogotá y Medellín sin costo durante la garantía.",
+      "Atención por WhatsApp de lunes a viernes, 10:00 AM a 5:00 PM (sin atención fines de semana ni festivos). Envíos asegurados a todo el país o por tu transportadora preferida, y entregas presenciales únicamente en Bogotá.",
   },
 ];
 

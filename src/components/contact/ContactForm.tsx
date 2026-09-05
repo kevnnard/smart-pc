@@ -26,7 +26,7 @@ export default function ContactForm({ formspreeId }: Props) {
         (formData.get("message") as string) || "",
       );
       const name = encodeURIComponent((formData.get("name") as string) || "");
-      window.location.href = `mailto:hola@smart-pc.com?subject=${subject}&body=${mailBody}%0A%0ADe: ${name}`;
+      window.location.href = `mailto:smart-pc@kevnard.com?subject=${subject}&body=${mailBody}%0A%0ADe: ${name}`;
       setStatus("success");
       return;
     }

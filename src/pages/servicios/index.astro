@@ -3,41 +3,158 @@ import Footer from "../../components/footer/Footer.astro";
 import Navbar from "../../components/navbar/Navbar.astro";
 import CTAButton from "../../components/ui/CTAButton.astro";
 import ServiceCard from "../../components/ui/ServiceCard.astro";
-import { services } from "../../data/services";
+import { homeServices } from "../../data/home";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const pageMeta = {
-  title: "Servicios | smart-pc",
+  title: "Servicios Técnicos Especializados | smart-pc",
   description:
-    "Armado a medida, pre-armadas, mantenimiento y garantía. Todos nuestros servicios incluyen soporte técnico.",
+    "Armado profesional a medida, stress test de 12h, optimización de BIOS, cable management quirúrgico y soporte directo en Colombia.",
 };
+
+const valuePillars = [
+  {
+    icon: "🔬",
+    title: "Banco de pruebas y Stress-Test de 12h",
+    description:
+      "No entregamos PCs con solo 'encender y ya'. Corremos Cinebench, FurMark y MemTest para garantizar 100% de estabilidad térmica y cero pantallazos azules.",
+  },
+  {
+    icon: "✂️",
+    title: "Cable management quirúrgico",
+    description:
+      "Canalización milimétrica detrás de la placa y enrutamiento limpio para maximizar el flujo de aire fresco y dejar una estética limpia digna de vitrina.",
+  },
+  {
+    icon: "⚡",
+    title: "Optimización profunda de BIOS y Perfiles",
+    description:
+      "Activamos perfiles XMP/EXPO de memoria a su velocidad real, configuramos curvas de ventiladores silenciosas y actualizamos a la última versión estable de BIOS.",
+  },
+  {
+    icon: "🛡️",
+    title: "Garantía total de ensamble por 24 meses",
+    description:
+      "Respaldamos cada tornillo, pasta térmica y conexión. Si algo no funciona como debe, nos encargamos del diagnóstico y trámite directo sin vueltas.",
+  },
+];
 ---
 
 <BaseLayout {...pageMeta}>
   <Navbar slot="navbar" />
-  
+
   <main>
-    <!-- Hero -->
-    <section class="bg-[#0c1333] py-20">
-      <div class="mx-auto max-w-7xl px-4 text-center">
-        <p class="mb-4 font-mono text-sm text-[#22d3ee]">// NUESTROS SERVICIOS</p>
-        <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
-          Todo lo que necesitás para tu PC
-        </h1>
-        <p class="mx-auto mb-8 max-w-2xl text-lg text-white/60">
-          Desde el ensamblaje profesional de tu PC ideal hasta el soporte técnico post-venta. Estamos para vos.
+    <!-- Hero Rediseñado Kinetic Performance -->
+    <section class="relative isolate overflow-hidden bg-navy-950 pb-16 pt-24 md:pt-32">
+      <!-- Glows de fondo -->
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div class="absolute -top-32 left-1/2 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div class="absolute right-0 top-1/4 h-72 w-72 translate-x-1/3 rounded-full bg-blue-600/10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-1/4 h-64 w-64 rounded-full bg-cyan-600/5 blur-3xl"></div>
+      </div>
+
+      <div class="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-8 px-4 text-center md:px-8">
+        <!-- Eyebrow Pill -->
+        <div class="flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-4 py-1.5 shadow-sm">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400"></span>
+          <span class="font-mono text-[11px] uppercase tracking-widest text-cyan-400 font-semibold">Taller técnico de alto rendimiento</span>
+        </div>
+
+        <!-- Headline -->
+        <div class="space-y-4">
+          <h1 class="text-4xl font-bold leading-tight tracking-tight text-text-primary md:text-6xl lg:text-7xl">
+            Ingeniería y ensamble profesional.<br />
+            <span class="bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+              Cero improvisaciones.
+            </span>
+          </h1>
+          <div class="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-cyan-500 via-cyan-400 to-transparent md:w-32"></div>
+        </div>
+
+        <!-- Body -->
+        <p class="max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
+          No somos una tienda genérica de cajas cerradas. Cada computador se ensambla de forma artesanal, con perfiles térmicos a medida, calibración de voltajes y soporte técnico continuo en Colombia.
         </p>
-        <CTAButton href="/contacto" variant="primary">
-          Consultanos →
-        </CTAButton>
+
+        <!-- Social Proof Strip -->
+        <ul class="flex flex-wrap items-center justify-center gap-6 text-xs text-text-muted" role="list" aria-label="Beneficios del servicio">
+          {[
+            "Pasta térmica térmica de alto rendimiento",
+            "Banco de pruebas 12h",
+            "Gestión de cables profesional",
+            "Envío asegurado a todo el país",
+          ].map((item) => (
+            <li class="flex items-center gap-2">
+              <svg class="h-4 w-4 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="font-medium">{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <!-- CTAs -->
+        <div class="flex flex-col items-center gap-3 sm:flex-row">
+          <a
+            href="#servicios"
+            class="rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 px-7 py-3 text-sm font-bold text-navy-950 shadow-lg shadow-cyan-500/25 transition-all hover:brightness-110 hover:shadow-cyan-500/40"
+          >
+            Explorar servicios
+          </a>
+          <CTAButton href="/contacto" variant="outline">
+            Hablar con un técnico →
+          </CTAButton>
+        </div>
       </div>
     </section>
 
-    <!-- Services grid -->
-    <section class="bg-[#0c1324] py-16">
-      <div class="mx-auto max-w-7xl px-4">
-        <div class="grid gap-8 md:grid-cols-2">
-          {services.map((service) => (
+    <!-- Sección de Por Qué Elegirnos (Propuesta de Valor Técnica) -->
+    <section class="border-y border-border/60 bg-navy-900/40 py-16" aria-labelledby="valor-heading">
+      <div class="mx-auto w-full max-w-[1280px] px-4 md:px-8">
+        <div class="mb-12 text-center">
+          <p class="font-mono text-[10px] uppercase tracking-widest text-cyan-400 font-bold">
+            ESTÁNDAR DE TALLER
+          </p>
+          <h2 id="valor-heading" class="mt-1 text-2xl font-bold text-text-primary md:text-3xl">
+            La diferencia entre armar y optimizar
+          </h2>
+          <p class="mx-auto mt-2 max-w-xl text-xs text-text-secondary md:text-sm">
+            Cualquiera puede conectar cables; nosotros aseguramos que tu máquina rinda al 100% de su capacidad sin sobrecalentarse ni degradarse.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {valuePillars.map((pillar) => (
+            <div class="rounded-2xl border border-border/70 bg-navy-900/60 p-6 shadow-sm transition-all hover:border-cyan-500/40 hover:bg-navy-900">
+              <div class="mb-4 text-3xl" aria-hidden="true">
+                {pillar.icon}
+              </div>
+              <h3 class="mb-2 text-base font-bold text-text-primary">
+                {pillar.title}
+              </h3>
+              <p class="text-xs leading-relaxed text-text-secondary">
+                {pillar.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid con ancla -->
+    <section id="servicios" class="bg-navy-950 py-20">
+      <div class="mx-auto max-w-[1280px] px-4 md:px-8">
+        <div class="mb-12 text-center">
+          <p class="font-mono text-[10px] uppercase tracking-widest text-cyan-400 font-bold">
+            SERVICIOS DISPONIBLES
+          </p>
+          <h2 class="mt-1 text-2xl font-bold text-text-primary md:text-3xl">
+            Catálogo de servicios de taller
+          </h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          {homeServices.map((service) => (
             <ServiceCard {service} />
           ))}
         </div>
@@ -45,33 +162,48 @@ const pageMeta = {
     </section>
 
     <!-- Process -->
-    <section class="bg-[#0c1333] py-16">
-      <div class="mx-auto max-w-4xl px-4">
-        <h2 class="mb-10 text-center text-2xl font-bold text-white">
-          ¿Cómo trabajamos?
+    <section class="bg-navy-900/30 py-20 border-t border-border/60">
+      <div class="mx-auto max-w-4xl px-4 text-center">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cyan-400 font-bold">
+          PASO A PASO
+        </p>
+        <h2 class="mt-1 mb-12 text-2xl font-bold text-text-primary md:text-3xl">
+          ¿Cómo es el proceso de trabajo?
         </h2>
-        <div class="grid gap-8 md:grid-cols-3">
-          <div class="text-center">
-            <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#22d3ee]/30 bg-[#22d3ee]/10">
-              <span class="font-mono text-xl font-bold text-[#22d3ee]">01</span>
+        <div class="grid gap-8 md:grid-cols-3 text-left">
+          <div class="rounded-2xl border border-border/60 bg-navy-900/50 p-6">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 font-mono text-lg font-bold text-cyan-400">
+              01
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-white">Consultanos</h3>
-            <p class="text-sm text-white/60">Contanos qué necesitás. Te asesoramos sin compromiso.</p>
+            <h3 class="mb-2 text-base font-bold text-text-primary">Diagnóstico y Asesoría</h3>
+            <p class="text-xs leading-relaxed text-text-secondary">
+              Evaluamos tus necesidades de uso real o revisamos tus componentes para darte una recomendación honesta sin sobrecostos.
+            </p>
           </div>
-          <div class="text-center">
-            <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#22d3ee]/30 bg-[#22d3ee]/10">
-              <span class="font-mono text-xl font-bold text-[#22d3ee]">02</span>
+          <div class="rounded-2xl border border-border/60 bg-navy-900/50 p-6">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 font-mono text-lg font-bold text-cyan-400">
+              02
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-white">Cotizamos</h3>
-            <p class="text-sm text-white/60">Armamos una propuesta con componentes y precio transparente.</p>
+            <h3 class="mb-2 text-base font-bold text-text-primary">Ensamble y Calibración</h3>
+            <p class="text-xs leading-relaxed text-text-secondary">
+              Montaje meticuloso, actualización de firmware, configuración de memoria y banco de pruebas de estrés térmico de 12 horas.
+            </p>
           </div>
-          <div class="text-center">
-            <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#22d3ee]/30 bg-[#22d3ee]/10">
-              <span class="font-mono text-xl font-bold text-[#22d3ee]">03</span>
+          <div class="rounded-2xl border border-border/60 bg-navy-900/50 p-6">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 font-mono text-lg font-bold text-cyan-400">
+              03
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-white">Ensamblamos</h3>
-            <p class="text-sm text-white/60">Armamos tu PC, la testeamos y la enviamos a todo Colombia.</p>
+            <h3 class="mb-2 text-base font-bold text-text-primary">Entrega y Respaldo</h3>
+            <p class="text-xs leading-relaxed text-text-secondary">
+              Empaque protegido de alta densidad, envío asegurado y garantía de 24 meses con soporte directo vía WhatsApp.
+            </p>
           </div>
+        </div>
+
+        <div class="mt-12">
+          <CTAButton href="/contacto" variant="primary">
+            Solicitar servicio o cotización
+          </CTAButton>
         </div>
       </div>
     </section>
