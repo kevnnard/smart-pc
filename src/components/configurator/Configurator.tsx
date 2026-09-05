@@ -454,6 +454,7 @@ export default function Configurator({
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           {/* Stepper horizontal pills */}
           <div
+            ref={stepRailRef}
             className="step-rail flex items-center overflow-x-auto scrollbar-none gap-1.5 py-1 min-w-0"
             role="tablist"
             aria-label="Pasos del configurador"
@@ -467,11 +468,16 @@ export default function Configurator({
                 <button
                   key={s}
                   type="button"
+                  ref={(element) => {
+                    if (element) stepButtonRefs.current.set(s, element);
+                    else stepButtonRefs.current.delete(s);
+                  }}
+                  aria-current={isCurrent ? "step" : undefined}
                   onClick={() => {
                     setStep(s);
                     setActiveBrandFilter("all");
                   }}
-                  className={`step-badge inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
+                  className={`step-badge inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-mono transition-all duration-300 ${
                     isCurrent
                       ? "bg-cyan-500 text-navy-950 font-bold shadow-md shadow-cyan-500/20"
                       : isPast
