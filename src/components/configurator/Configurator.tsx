@@ -391,6 +391,7 @@ export default function Configurator({
   const stepIndex = STEPS.indexOf(step);
   const stepRailRef = useRef<HTMLDivElement>(null);
   const stepButtonRefs = useRef<Map<Step, HTMLButtonElement>>(new Map());
+  const brandRailRef = useRef<HTMLDivElement>(null);
 
   // Scroll the rail itself so the active badge leads the sequence. This scales
   // to future steps without a fixed-width track or badge overlap.
@@ -414,6 +415,13 @@ export default function Configurator({
       behavior: reducedMotion ? "auto" : "smooth",
     });
   }, [step]);
+
+  function scrollBrandRail(direction: "back" | "forward"): void {
+    brandRailRef.current?.scrollBy({
+      left: direction === "forward" ? 240 : -240,
+      behavior: "smooth",
+    });
+  }
 
   const whatsappMessage = useMemo(() => {
     const lines: string[] = [
@@ -617,32 +625,57 @@ export default function Configurator({
 
             {/* Quick Brand Filter Chips */}
             {step !== "summary" && stepBrands.length > 0 && (
-              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pt-1">
-                <button
-                  type="button"
-                  onClick={() => setActiveBrandFilter("all")}
-                  className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-all ${
-                    activeBrandFilter === "all"
-                      ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold"
-                      : "bg-navy-900 border border-border/60 text-text-muted hover:text-text-primary"
-                  }`}
-                >
-                  Todas las marcas
-                </button>
-                {stepBrands.map((b) => (
+              <div className="flex items-center gap-1.5 pt-1">
+                {stepBrands.length > 4 && (
                   <button
-                    key={b}
                     type="button"
-                    onClick={() => setActiveBrandFilter(b)}
-                    className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-all ${
-                      activeBrandFilter.toLowerCase() === b.toLowerCase()
+                    onClick={() => scrollBrandRail("back")}
+                    aria-label="Ver marcas anteriores"
+                    className="shrink-0 rounded-md border border-border/60 bg-navy-900 px-2 py-1 text-xs text-text-muted transition-colors hover:border-cyan-500/50 hover:text-cyan-300"
+                  >
+                    ←
+                  </button>
+                )}
+                <div
+                  ref={brandRailRef}
+                  className="flex min-w-0 items-center gap-1.5 overflow-x-auto py-0.5 scrollbar-none"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActiveBrandFilter("all")}
+                    className={`shrink-0 whitespace-nowrap rounded-md px-2.5 py-1 text-[11px] font-medium transition-all ${
+                      activeBrandFilter === "all"
                         ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold"
                         : "bg-navy-900 border border-border/60 text-text-muted hover:text-text-primary"
                     }`}
                   >
-                    {b}
+                    Todas las marcas
                   </button>
-                ))}
+                  {stepBrands.map((b) => (
+                    <button
+                      key={b}
+                      type="button"
+                      onClick={() => setActiveBrandFilter(b)}
+                      className={`shrink-0 whitespace-nowrap rounded-md px-2.5 py-1 text-[11px] font-medium transition-all ${
+                        activeBrandFilter.toLowerCase() === b.toLowerCase()
+                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold"
+                          : "bg-navy-900 border border-border/60 text-text-muted hover:text-text-primary"
+                      }`}
+                    >
+                      {b}
+                    </button>
+                  ))}
+                </div>
+                {stepBrands.length > 4 && (
+                  <button
+                    type="button"
+                    onClick={() => scrollBrandRail("forward")}
+                    aria-label="Ver más marcas"
+                    className="shrink-0 rounded-md border border-border/60 bg-navy-900 px-2 py-1 text-xs text-text-muted transition-colors hover:border-cyan-500/50 hover:text-cyan-300"
+                  >
+                    →
+                  </button>
+                )}
               </div>
             )}
           </div>
