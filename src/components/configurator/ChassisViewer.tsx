@@ -513,7 +513,9 @@ export default function ChassisViewer({
       metalness: 0.8,
       roughness: 0.3,
     });
-    const ramRgbMat = new THREE.MeshBasicMaterial({ color: 0x22d3ee });
+    const ramRgbMat = new THREE.MeshBasicMaterial({
+      color: isHero ? 0x64748b : 0x22d3ee,
+    });
 
     for (let i = 0; i < 4; i++) {
       const track = new THREE.Mesh(
@@ -872,7 +874,10 @@ export default function ChassisViewer({
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0x22d3ee, 1.8);
+    const keyLight = new THREE.DirectionalLight(
+      isHero ? 0xffffff : 0x22d3ee,
+      isHero ? 1.4 : 1.8,
+    );
     keyLight.position.set(4, 5, 4);
     scene.add(keyLight);
 
@@ -880,7 +885,11 @@ export default function ChassisViewer({
     fillLight.position.set(-3, -1, -2);
     scene.add(fillLight);
 
-    const psuSpot = new THREE.PointLight(0xf59e0b, 1.2, 3);
+    const psuSpot = new THREE.PointLight(
+      isHero ? 0x94a3b8 : 0xf59e0b,
+      isHero ? 0.6 : 1.2,
+      3,
+    );
     psuSpot.position.set(-0.6, -1.2, 0.6);
     scene.add(psuSpot);
 
@@ -970,14 +979,14 @@ export default function ChassisViewer({
 
       // 08. Case: Chassis lights up with ARGB front intake illumination
       if (st.hasCase) {
-        caseOutline.material.color.setHex(0x22d3ee);
+        caseOutline.material.color.setHex(isHero ? 0x94a3b8 : 0x22d3ee);
         caseOutline.material.opacity = 0.85;
-        rearFanMat.color.setHex(0x22d3ee);
+        rearFanMat.color.setHex(isHero ? 0x94a3b8 : 0x22d3ee);
         rearFanMat.opacity = 0.9;
       } else {
-        caseOutline.material.color.setHex(0x38bdf8);
+        caseOutline.material.color.setHex(isHero ? 0x64748b : 0x38bdf8);
         caseOutline.material.opacity = 0.35;
-        rearFanMat.color.setHex(0x1e293b);
+        rearFanMat.color.setHex(isHero ? 0x475569 : 0x1e293b);
         rearFanMat.opacity = 0.4;
       }
 
