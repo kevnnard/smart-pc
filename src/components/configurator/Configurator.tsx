@@ -400,9 +400,15 @@ export default function Configurator({
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    // Measure relative to the scrolling rail, not the page. This pins every
+    // active badge in the same leading position while prior badges slide left.
+    const activeLeft =
+      activeBadge.getBoundingClientRect().left -
+      rail.getBoundingClientRect().left +
+      rail.scrollLeft;
+
     rail.scrollTo({
-      // Keep a generous leading gutter so the active badge never kisses the left edge.
-      left: Math.max(0, activeBadge.offsetLeft - 40),
+      left: Math.max(0, activeLeft - 24),
       behavior: reducedMotion ? "auto" : "smooth",
     });
   }, [step]);
