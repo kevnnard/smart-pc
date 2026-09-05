@@ -65,6 +65,7 @@ export type ComponentCategory =
   | "ram"
   | "storage"
   | "psu"
+  | "case"
   | "cooler"
   | "monitor"
   | "peripheral"
@@ -104,6 +105,8 @@ export interface Component {
   readonly stockQuantity?: number | null;
   /** Optional non-empty free text describing restock expectations. */
   readonly restockNote?: string;
+  /** Real product image URL from verified vendor if available. */
+  readonly imageUrl?: string;
 
   // Compatibility fields — populated only where they apply.
   /** CPU/motherboard socket: `AM4`, `AM5`, `LGA1700`, etc. */

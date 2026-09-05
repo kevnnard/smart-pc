@@ -70,6 +70,7 @@ export function toLegacyComponent(c: CatalogComponent): Component {
     stockStatus: c.stockStatus,
     stockQuantity: c.stockQuantity,
     restockNote: c.restockNote,
+    imageUrl: c.imageUrl,
   };
   return legacy;
 }
