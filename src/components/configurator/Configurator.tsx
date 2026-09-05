@@ -949,7 +949,7 @@ export default function Configurator({
 
         {/* RIGHT 3D CHASSIS VIEWER (40% Desktop, fixed/canvas) */}
         <aside className="hidden lg:flex lg:w-5/12 flex-col bg-navy-950 relative overflow-hidden">
-          <div className="flex-1 relative w-full h-full">
+          <div className="relative min-h-0 w-full flex-1">
             <ChassisViewer
               selection={selection}
               activeStep={step}
