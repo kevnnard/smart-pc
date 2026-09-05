@@ -73,14 +73,14 @@ const alignment =
 <section
   class:list={[
     "relative isolate w-full overflow-hidden bg-navy-950",
-    showChassis && "min-h-[calc(100dvh-4rem)] border-b border-border/60",
+    showChassis && "border-b border-border/60 pt-6 pb-12 md:pt-10 md:pb-16 lg:min-h-[calc(100dvh-4rem)] lg:pt-10",
     !showChassis && "py-20 md:py-28",
     extraClass,
   ]}
 >
   <div
     class:list={[
-      "mx-auto flex h-full w-full max-w-[1280px] flex-col justify-between gap-6 px-4 py-8 md:flex-row md:items-stretch md:px-8 md:py-10",
+      "mx-auto flex h-full w-full max-w-[1280px] flex-col gap-6 px-4 py-2 md:flex-row md:items-stretch md:gap-8 md:px-8 md:py-10",
       showChassis ? "lg:min-h-[calc(100dvh-4rem)]" : "",
     ]}
   >
@@ -95,7 +95,7 @@ const alignment =
 
     <div
       class:list={[
-        "flex w-full flex-col justify-center gap-6 self-center",
+        "flex w-full flex-col justify-start gap-5 self-start md:justify-center md:gap-6 md:self-center",
         showChassis
           ? "lg:max-w-[640px] lg:flex-1 lg:py-10"
           : "lg:max-w-[640px]",
@@ -178,21 +178,30 @@ const alignment =
 
     {
       showChassis && (
-        <div class="relative hidden flex-1 lg:block">
+        <>
           <div
-            class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-cyan-300/80"
-            aria-hidden="true"
+            class="relative h-[280px] w-full overflow-hidden md:h-[360px] lg:hidden"
+            aria-label="Vista previa de la PC ensamblada"
           >
-            <div class="[writing-mode:vertical-rl]">{chassisStatusLabel}</div>
-            <div class="[writing-mode:vertical-rl]">{chassisLocaleLabel}</div>
+            <div class="pointer-events-none absolute inset-x-8 top-1/2 h-44 -translate-y-1/2 rounded-full bg-blue-500/10 blur-3xl" aria-hidden="true"></div>
+            <HeroChassis client:visible />
           </div>
-          <div
-            class="pointer-events-none absolute inset-10 rounded-full bg-blue-500/15 blur-3xl"
-            aria-hidden="true"
-          >
+          <div class="relative hidden flex-1 lg:flex">
+            <div
+              class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-cyan-300/80"
+              aria-hidden="true"
+            >
+              <div class="[writing-mode:vertical-rl]">{chassisStatusLabel}</div>
+              <div class="[writing-mode:vertical-rl]">{chassisLocaleLabel}</div>
+            </div>
+            <div
+              class="pointer-events-none absolute inset-10 rounded-full bg-blue-500/8 blur-3xl"
+              aria-hidden="true"
+            >
+            </div>
+            <HeroChassis client:visible />
           </div>
-          <HeroChassis client:visible />
-        </div>
+        </>
       )
     }
   </div>
