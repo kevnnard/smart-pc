@@ -498,6 +498,8 @@ export default function Configurator({
                 </button>
               );
             })}
+            {/* Keeps the final badge able to occupy the same pinned focus point. */}
+            <span aria-hidden="true" className="w-[50vw] shrink-0" />
           </div>
 
           {/* Right Metrics & Global Budget */}
