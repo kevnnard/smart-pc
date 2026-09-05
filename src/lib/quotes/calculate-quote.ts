@@ -66,7 +66,7 @@ const LABELS = {
   components: "Subtotal de componentes",
   service: "Servicio de armado",
   fixedMargin: "Margen fijo",
-  percentageMargin: "Margen porcentual",
+  percentageMargin: "Gestión y logística de armado",
   totalMargin: "Margen total",
   total: "Total (COP)",
 } as const;

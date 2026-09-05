@@ -66,6 +66,8 @@ export type ComponentCategory =
   | "storage"
   | "psu"
   | "cooler"
+  | "monitor"
+  | "peripheral"
   | "os";
 
 /**
@@ -149,10 +151,34 @@ export interface PrebuiltPC {
   readonly basePrice: number | null;
   /** Ordered list of parts that make up this build. */
   readonly components: readonly Component[];
+  /**
+   * Optional add-ons (keyboards, monitors, etc.) shown on the detail page
+   * but NOT included in the build price. Each entry has an id, type,
+   * priceCop, and URL pointing back to the PC Masters Bogotá listing.
+   */
+  readonly addOns?: readonly AddOn[];
   /** Show on home pre-armadas teaser. */
   readonly featured: boolean;
   /** Optional badge text, e.g. "Más vendido". */
   readonly badge?: string;
+}
+
+/**
+ * A single optional add-on shown on the pre-armada detail page.
+ * Marketed as "Addicional opcional" — explicitly excluded from the base
+ * price displayed on the index card.
+ */
+export interface AddOn {
+  /** Internal key, e.g. "monitor_22_basico". */
+  readonly key: string;
+  /** Human-readable type label, e.g. "monitor", "keyboard+mouse". */
+  readonly type: string;
+  /** Internal catalog id used for cross-linking. */
+  readonly id: string;
+  /** Listed price in COP, taken from the catalog offer. */
+  readonly priceCop: number;
+  /** PC Masters Bogotá product URL. */
+  readonly url: string;
 }
 
 // ---------------------------------------------------------------------------

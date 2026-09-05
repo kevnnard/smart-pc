@@ -1,6 +1,8 @@
 {
   "schemaVersion": 1,
-  "freshness": { "staleAfterDays": 30 },
+  "freshness": {
+    "staleAfterDays": 30
+  },
   "defaultPolicyId": "default",
   "policies": [
     {
@@ -9,7 +11,31 @@
       "fixedMarginCop": 0,
       "percentageMargin": 20,
       "confirmed": true,
-      "note": "Margen de negocio; no modifica el precio observado de ningún componente."
+      "note": "Margen general del 20% para configuraciones a medida."
+    },
+    {
+      "id": "policy-essentials",
+      "label": "Ensamble Essentials (5%)",
+      "fixedMarginCop": 0,
+      "percentageMargin": 5,
+      "confirmed": true,
+      "note": "5% para la línea de entrada Essentials."
+    },
+    {
+      "id": "policy-creator",
+      "label": "Ensamble Creator (10%)",
+      "fixedMarginCop": 0,
+      "percentageMargin": 10,
+      "confirmed": true,
+      "note": "10% para la gama media Creator."
+    },
+    {
+      "id": "policy-apex",
+      "label": "Ensamble Apex (15%)",
+      "fixedMarginCop": 0,
+      "percentageMargin": 15,
+      "confirmed": true,
+      "note": "15% para la gama alta Apex por complejidad de ensamble, AIO y componentes pesados."
     }
   ]
 }

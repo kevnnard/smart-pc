@@ -67,6 +67,8 @@ const COMPONENT_CATEGORIES: readonly ComponentCategory[] = [
   "psu",
   "case",
   "cooler",
+  "monitor",
+  "peripheral",
   "os",
 ];
 
@@ -1376,6 +1378,11 @@ export function validateCatalogPrebuilds(
       return;
     }
 
+    const addOnOptionsRaw = (entry as Record<string, unknown>).addOnOptions;
+    const addOnOptions = isPlainObject(addOnOptionsRaw)
+      ? (addOnOptionsRaw as CatalogPrebuild["addOnOptions"])
+      : undefined;
+
     prebuilds.push({
       slug,
       name,
@@ -1386,6 +1393,7 @@ export function validateCatalogPrebuilds(
       pricingPolicyId,
       featured,
       badge: isString(badge) ? badge : undefined,
+      ...(addOnOptions ? { addOnOptions } : {}),
     });
   });
 

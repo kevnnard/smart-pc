@@ -130,7 +130,7 @@ describe("validateCatalogComponents", () => {
     const input = [
       {
         ...validCatalog.components[0],
-        category: "monitor",
+        category: "smartwatch",
       },
     ];
     const result = validateCatalogComponents(input);

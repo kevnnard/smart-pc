@@ -38,6 +38,8 @@ export type ComponentCategory =
   | "psu"
   | "case"
   | "cooler"
+  | "monitor"
+  | "peripheral"
   | "os";
 
 /** Availability bucket for both components and offers. */
@@ -230,6 +232,17 @@ export interface CatalogPrebuild {
   readonly pricingPolicyId: string;
   readonly featured: boolean;
   readonly badge?: string;
+  readonly addOnOptions?: Readonly<
+    Record<
+      string,
+      {
+        readonly type: string;
+        readonly id: string;
+        readonly price_cop: number;
+        readonly url: string;
+      }
+    >
+  >;
 }
 
 export interface PricingPolicy {

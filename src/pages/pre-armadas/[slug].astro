@@ -10,27 +10,16 @@ import type { PrebuiltPC } from "../../data/types";
  *
  * F3 · Build detail. `getStaticPaths()` returns one static route per entry in
  * `src/data/prebuilds.ts`. A request for an unknown slug falls through to
- * Astro's default 404 (Astro 7 raises `404 Not found` when `getStaticPaths` does
- * not match).
+ * Astro's default 404.
  *
  * Composition:
  *   1. <Navbar>             — global header (slot).
  *   2. Header               — back link, badge, name, tagline, large price tag.
- *   3. Specs                — `SpecList` rendering `prebuild.components` in the
- *                              default "list" variant (F3.4).
- *   4. Breakdown            — Quote breakdown line items (PR 2): components,
- *                              service, fixed margin, percentage margin,
- *                              total margin, final total.
- *   5. CTA                  — WhatsApp anchor (`wa.me/573001234567`, line 147 of
- *                              spec.md) + outline CTA to /configurar so the
- *                              visitor can keep iterating on a custom build.
- *   6. <Footer>             — global footer (slot).
- *
- * Pricing notes (post PR 2):
- *   - `prebuild.basePrice` is the derived final customer price in whole COP,
- *     computed by the quote engine from referenced components + confirmed
- *     service + disclosed margin (see `src/data/components.ts` /
- *     `src/lib/quotes/calculate-quote.ts`). Rendered via `formatCop()`.
+ *   3. Specs                — `SpecList` rendering `prebuild.components`.
+ *   4. Breakdown            — Quote breakdown line items (PR 2).
+ *   5. Add-ons (optional)   — Complementos opcionales (monitores, periféricos) cotizados aparte.
+ *   6. Tail trust strip     — Garantías y ensamblaje profesional.
+ *   7. <Footer>             — global footer (slot).
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { catalog } from "../../lib/catalog/load-catalog";
@@ -50,9 +39,6 @@ interface Props {
 
 const { prebuild } = Astro.props;
 
-// Re-derive the quote breakdown at render time so the page discloses the
-// component subtotal, confirmed service fee, fixed margin, percentage margin,
-// total margin, and final total as separate line items.
 const catalogPrebuild = catalog.byPrebuildSlug.get(prebuild.slug);
 const quote = catalogPrebuild
   ? calculateQuote(
@@ -201,33 +187,115 @@ const pageMeta = {
                 </tr>
               </thead>
               <tbody>
-                {breakdown.map((line) => (
-                  <tr
-                    class="border-t border-border"
-                    class:list={[
-                      line.kind === "total" && "bg-navy-800 font-semibold",
-                    ]}
-                  >
-                    <td class="px-4 py-3 text-text-primary">
-                      {line.label}
-                      {line.kind === "percentage-margin" && line.rate !== undefined && (
-                        <span class="ml-2 text-xs text-text-muted">
-                          ({line.rate}%)
-                        </span>
+                {(() => {
+                  const compLine = breakdown.find((l) => l.kind === "components");
+                  const srvLine = breakdown.find((l) => l.kind === "service");
+                  const pctLine = breakdown.find((l) => l.kind === "percentage-margin");
+                  const totLine = breakdown.find((l) => l.kind === "total");
+
+                  const totalServiceAndAssembly = (srvLine?.amountCop ?? 0) + (pctLine?.amountCop ?? 0);
+                  const rateStr = pctLine?.rate !== undefined ? ` (${pctLine.rate}%)` : "";
+
+                  return (
+                    <>
+                      {compLine && (
+                        <tr class="border-t border-border">
+                          <td class="px-4 py-3 text-text-primary">
+                            Subtotal de componentes
+                          </td>
+                          <td class="px-4 py-3 text-right font-mono text-cyan-500">
+                            {formatCop(compLine.amountCop)}
+                          </td>
+                        </tr>
                       )}
-                    </td>
-                    <td
-                      class="px-4 py-3 text-right font-mono text-cyan-500"
-                      class:list={[line.kind === "total" && "text-lg"]}
-                    >
-                      {formatCop(line.amountCop)}
-                    </td>
-                  </tr>
-                ))}
+                      <tr class="border-t border-border">
+                        <td class="px-4 py-3 text-text-primary">
+                          Servicio de ensamble, garantía y optimización ($150.000 + {pctLine?.rate ?? 0}%)
+                        </td>
+                        <td class="px-4 py-3 text-right font-mono text-cyan-500">
+                          {formatCop(totalServiceAndAssembly)}
+                        </td>
+                      </tr>
+                      {totLine && (
+                        <tr class="border-t border-border bg-navy-800 font-semibold">
+                          <td class="px-4 py-3 text-text-primary">
+                            Total (COP)
+                          </td>
+                          <td class="px-4 py-3 text-right font-mono text-cyan-500 text-lg">
+                            {formatCop(totLine.amountCop)}
+                          </td>
+                        </tr>
+                      )}
+                    </>
+                  );
+                })()}
               </tbody>
             </table>
           </div>
           <p class="mt-4 text-xs text-text-muted">{PRICE_VARIATION_NOTICE}</p>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Add-ons opcionales (no impactan el total del build) -->
+  {
+    prebuild.addOns && prebuild.addOns.length > 0 && (
+      <section class="bg-navy-950 pt-2 pb-12">
+        <div class="mx-auto max-w-4xl px-4">
+          <div class="rounded-2xl border border-cyan-500/25 bg-navy-900/60 p-6 shadow-sm">
+            <div class="mb-1 flex items-center gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-widest text-cyan-400 font-bold">
+                ADICIONALES OPCIONALES
+              </span>
+              <span class="text-[11px] text-text-muted">· No incluidos en el precio base</span>
+            </div>
+            <h3 class="text-lg font-bold text-text-primary">
+              Complementá tu equipo
+            </h3>
+            <p class="mt-1 text-xs text-text-secondary leading-relaxed">
+              Monitores y periféricos compatibles para dejar tu estación lista. Se cotizan por separado según tu necesidad.
+            </p>
+
+            <ul class="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2" role="list" aria-label="Adicionales opcionales">
+              {prebuild.addOns.map((addon) => {
+                const catalogComp = catalog.byComponentId.get(addon.id);
+                const title = catalogComp?.model ?? addon.id;
+                const typeLabel = addon.type === "monitor"
+                  ? "Monitor"
+                  : addon.type === "keyboard+mouse"
+                    ? "Kit teclado + ratón"
+                    : "Accesorio";
+
+                return (
+                  <li class="flex items-center justify-between gap-3 rounded-xl border border-border/70 bg-navy-950/70 p-3.5 transition-colors hover:border-cyan-500/40">
+                    <div class="min-w-0 flex-1">
+                      <span class="inline-block rounded bg-cyan-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-cyan-400 mb-1">
+                        {typeLabel}
+                      </span>
+                      <p class="font-semibold text-xs text-text-primary truncate" title={title}>
+                        {title}
+                      </p>
+                    </div>
+                    <div class="shrink-0 text-right">
+                      <p class="font-mono text-xs font-bold text-cyan-300">
+                        {formatCop(addon.priceCop)}
+                      </p>
+                      <a
+                        href={addon.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        class="inline-flex items-center gap-0.5 text-[10px] text-text-muted hover:text-cyan-400 underline underline-offset-2 transition-colors"
+                      >
+                        <span>Ver oferta</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </section>
     )
@@ -252,7 +320,7 @@ const pageMeta = {
     </div>
   </section>
 
-    <Footer slot="footer" />
+  <Footer slot="footer" />
 </BaseLayout>
 
 <script is:inline>

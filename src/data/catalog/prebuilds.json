@@ -7,18 +7,44 @@
       "tier": "essentials",
       "tagline": "Home · Office · Estudio",
       "componentIds": [
-        "cpu-amd-ryzen-5-5600",
-        "mb-gigabyte-b550m-k",
-        "ram-kingston-valueram-32gb-ddr5-5600",
-        "ssd-samsung-980-500gb",
-        "psu-corsair-rm850x",
-        "cooler-cooler-master-hyper-212",
-        "case-corsair-4000d-airflow"
+        "cpu-amd-ryzen-3-3200g",
+        "mb-msi-b450m-pro-vdh-max",
+        "ram-memoria-ddr4-8gb-3200mhz-viper-patriot-steel",
+        "storage-kingston-a400-sata-480gb",
+        "psu-aerocool-vx500-500w",
+        "case-ip-case-c3ip-054b-3-rgb"
       ],
       "serviceId": "armado-basico-confirmado",
-      "pricingPolicyId": "default",
+      "pricingPolicyId": "policy-essentials",
       "featured": false,
-      "badge": "Más vendido"
+      "badge": "Más vendido",
+      "addOnOptions": {
+        "kit_combo_teclado_mouse_inalambrico_trust_ziva": {
+          "type": "keyboard+mouse",
+          "id": "peripheral-tecladomouse-trust-ziva-inalambrico",
+          "price_cop": 116050,
+          "url": "https://pcmastersbogota.com.co/producto/tecladomouse-trust-ziva-inalambrico/"
+        },
+        "monitor_22_ips_75hz_basico": {
+          "type": "monitor",
+          "id": "monitor-samsung-22-ips-75hz",
+          "price_cop": 399000,
+          "url": "https://pcmastersbogota.com.co/producto/samsung-22-ips-75hz/"
+        },
+        "monitor_24_ips_75hz_avanzado": {
+          "type": "monitor",
+          "id": "monitor-monitor-koorui-24-full-hd-75hz-ips-vesa",
+          "price_cop": 499900,
+          "url": "https://pcmastersbogota.com.co/producto/monitor-koorui-24-full-hd-75hz-ips-vesa/"
+        },
+        "monitor_24_gaming_165hz": {
+          "type": "monitor",
+          "id": "monitor-koorui-24-165hz-1ms-gaming",
+          "price_cop": 690000,
+          "url": "https://pcmastersbogota.com.co/producto/koorui-24-165hz-1ms-gaming/"
+        }
+      },
+      "notes": "PC esencial para estudio/ofimática/multimedia. Ryzen 3 3200G con iGPU Radeon y ventilador de stock incluidos. Sin GPU dedicada, sin cooler adicional. Margen 10% para mantener precio accesible."
     },
     {
       "slug": "creator",
@@ -26,15 +52,16 @@
       "tier": "creator",
       "tagline": "Creator · Streaming · 1440p",
       "componentIds": [
-        "cpu-amd-ryzen-7-5800x",
-        "gpu-nvidia-rtx-4070",
-        "mb-asus-rog-strix-b550-f",
-        "ram-kingston-valueram-32gb-ddr5-5600",
-        "ssd-wd-sn850x-8tb",
-        "psu-corsair-rm850x"
+        "cpu-amd-ryzen-7-5700g",
+        "mb-gigabyte-b550m-k",
+        "ram-memoria-ddr4-32gb-3200mhz-viper-patriot-steel-rgb",
+        "storage-crucial-bx500-sata-1tb",
+        "gpu-msi-ventus-x2-rtx-3050-de-6gb-oc",
+        "psu-corsair-80plus-gold-full-modular-850w",
+        "case-lian-li-lancool-207"
       ],
       "serviceId": "armado-basico-confirmado",
-      "pricingPolicyId": "default",
+      "pricingPolicyId": "policy-creator",
       "featured": true
     },
     {
@@ -43,13 +70,17 @@
       "tier": "apex",
       "tagline": "4K Gaming · Workstation",
       "componentIds": [
-        "cpu-amd-ryzen-9-7900x",
+        "cpu-amd-ryzen-9-7900x-12-nucleos-24-hilos-5-6ghz",
+        "mb-asus-prime-x870-p",
+        "ram-memoria-ram-t-force-delta-rgb-32gb-2-x-16gb-ddr5-6000mhz",
+        "storage-8tb-western-digital-black-sn850x-nvme",
         "gpu-nvidia-rtx-4080-super",
-        "ssd-wd-sn850x-8tb",
-        "psu-corsair-rm1000x-shift"
+        "psu-corsair-rm1000x-shift-atx-3-0-1000w-80-plus-gold",
+        "case-lian-li-o11-dynamic-evo",
+        "cooler-cooler-masterair-tuf-ed-ma620p-rgb-aire"
       ],
       "serviceId": "armado-basico-confirmado",
-      "pricingPolicyId": "default",
+      "pricingPolicyId": "policy-apex",
       "featured": false,
       "badge": "Top tier"
     }

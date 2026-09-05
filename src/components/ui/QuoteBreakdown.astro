@@ -43,7 +43,9 @@ const {
   class: extraClass = "",
 } = Astro.props;
 
-const rows = buildQuoteBreakdownRows(lines);
+const rows = buildQuoteBreakdownRows(lines).filter(
+  (r) => r.kind !== "total-margin",
+);
 const warnings = staleWarningSummary(staleWarnings);
 const visibleLines = errorMessage ? rows.filter((r) => !r.isTotal) : rows;
 ---

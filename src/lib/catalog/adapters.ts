@@ -143,6 +143,17 @@ export function toLegacyPrebuilt(
     if (c) components.push(toLegacyComponent(c));
   }
 
+  // Map addOnOptions to the legacy AddOn shape
+  const addOns = prebuild.addOnOptions
+    ? Object.entries(prebuild.addOnOptions).map(([key, v]) => ({
+        key,
+        type: v.type,
+        id: v.id,
+        priceCop: v.price_cop,
+        url: v.url,
+      }))
+    : undefined;
+
   const result_prebuilt: PrebuiltPC = {
     slug: prebuild.slug,
     name: prebuild.name,
@@ -151,6 +162,7 @@ export function toLegacyPrebuilt(
     basePrice,
     featured: prebuild.featured,
     components,
+    ...(addOns ? { addOns } : {}),
   };
   if (prebuild.badge !== undefined) {
     return { ...result_prebuilt, badge: prebuild.badge };
