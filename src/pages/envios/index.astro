@@ -1,0 +1,180 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import CTAButton from "../../components/ui/CTAButton.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "Envíos y Entregas | smart-pc",
+  description:
+    "Envíos asegurados a toda Colombia por Coordinadora, Servientrega, Envia o la transportadora de tu elección. Entregas personales exclusivamente en Bogotá.",
+};
+
+const deliveryCards = [
+  {
+    icon: "🏙️",
+    title: "Entregas personales en Bogotá",
+    badge: "Exclusivo Bogotá",
+    highlight: "Coordinación directa en taller",
+    description:
+      "Si estás en Bogotá, podés retirar tu PC directamente en nuestro taller técnico o coordinar entrega directa con nuestro equipo. Revisás el computador encendido, verificás componentes y firmas acta de entrega en mano.",
+  },
+  {
+    icon: "📦",
+    title: "Envíos nacionales 100% asegurados",
+    badge: "Todo Colombia",
+    highlight: "Empaque de alta densidad",
+    description:
+      "Despachamos a Medellín, Cali, Barranquilla, Bucaramanga y cualquier municipio del país con seguro contra pérdida o daño por el 100% del valor comercial declarado.",
+  },
+  {
+    icon: "🚚",
+    title: "Transportadora a tu elección",
+    badge: "Libre elección",
+    highlight: "Coordinadora, Servientrega, Envía, Inter Rapidísimo",
+    description:
+      "Si tenés convenio, preferencia o mayor confianza con una transportadora específica en tu ciudad, despachamos por la empresa que elijas y te entregamos guía de rastreo inmediata.",
+  },
+];
+
+const packingSteps = [
+  {
+    step: "01",
+    title: "Soporte interno de GPU y Cooler",
+    desc: "Instalamos espuma expansible o soportes especiales dentro del chasis para que la tarjeta de video y el disipador no sufran palanca durante el trayecto.",
+  },
+  {
+    step: "02",
+    title: "Caja doble y esquineros reforzados",
+    desc: "El computador viaja dentro de la caja original del gabinete, protegido por anime de alta densidad y una segunda caja externa con flejes de seguridad.",
+  },
+  {
+    step: "03",
+    title: "Cajas y manuales originales incluidos",
+    desc: "Te enviamos todas las cajas, manuales, cables sobrantes y certificados de garantía de cada uno de los componentes utilizados en el ensamble.",
+  },
+];
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <main>
+    <!-- Hero -->
+    <section class="relative isolate overflow-hidden bg-navy-950 pb-12 pt-20 md:pt-28">
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div class="absolute -top-32 left-1/2 h-[450px] w-[650px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div class="absolute right-0 top-1/4 h-72 w-72 translate-x-1/3 rounded-full bg-blue-600/10 blur-3xl"></div>
+      </div>
+
+      <div class="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-6 px-4 text-center md:px-8">
+        <div class="flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-4 py-1.5 shadow-sm">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400"></span>
+          <span class="font-mono text-[11px] font-semibold uppercase tracking-widest text-cyan-400">Logística de Precisión</span>
+        </div>
+
+        <h1 class="text-4xl font-bold tracking-tight text-text-primary md:text-6xl">
+          Envíos protegidos.<br />
+          <span class="bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+            Tu PC llega perfecta o nos hacemos cargo.
+          </span>
+        </h1>
+
+        <p class="max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
+          Sabemos el valor de cada máquina. Diseñamos un protocolo de empaque blindado y despachos asegurados a todo el territorio colombiano.
+        </p>
+      </div>
+    </section>
+
+    <!-- Modalidades de entrega -->
+    <section class="border-y border-border/60 bg-navy-900/40 py-16" aria-labelledby="modalities-heading">
+      <div class="mx-auto w-full max-w-[1280px] px-4 md:px-8">
+        <div class="mb-12 text-center">
+          <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-400">COBERTURA NACIONAL</p>
+          <h2 id="modalities-heading" class="mt-1 text-2xl font-bold text-text-primary md:text-3xl">
+            Opciones de entrega y retiro
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+          {deliveryCards.map((c) => (
+            <div class="flex flex-col justify-between rounded-2xl border border-border/70 bg-navy-900/60 p-7 shadow-sm transition-all hover:border-cyan-500/40 hover:bg-navy-900">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-4">
+                  <span class="text-3xl" aria-hidden="true">{c.icon}</span>
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-400 bg-navy-950 border border-cyan-500/30 rounded-md px-2 py-0.5">
+                    {c.badge}
+                  </span>
+                </div>
+                <h3 class="text-lg font-bold text-text-primary">{c.title}</h3>
+                <p class="mt-1 text-xs font-mono text-cyan-300 font-semibold">{c.highlight}</p>
+                <p class="mt-3 text-xs leading-relaxed text-text-secondary">{c.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Protocolo de Empaque -->
+    <section class="bg-navy-950 py-20" aria-labelledby="packing-heading">
+      <div class="mx-auto max-w-[1280px] px-4 md:px-8">
+        <div class="mb-14 text-center">
+          <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-400">SEGURIDAD FÍSICA</p>
+          <h2 id="packing-heading" class="mt-1 text-3xl font-bold text-text-primary md:text-4xl">
+            Protocolo de empaque de grado técnico
+          </h2>
+          <p class="mx-auto mt-2 max-w-xl text-xs text-text-secondary md:text-sm">
+            Un PC gamer o workstation no se envía como un paquete ordinario. Cuidamos cada punto de tensión mecánica.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {packingSteps.map((step) => (
+            <div class="rounded-2xl border border-border/60 bg-navy-900/40 p-6">
+              <span class="font-mono text-xl font-bold text-cyan-400">{step.step}</span>
+              <h3 class="mt-2 text-base font-bold text-text-primary">{step.title}</h3>
+              <p class="mt-2 text-xs leading-relaxed text-text-secondary">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Tiempos de Entrega -->
+    <section class="border-t border-border/60 bg-navy-900/30 py-16">
+      <div class="mx-auto max-w-4xl px-4">
+        <div class="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-6 md:p-8">
+          <h3 class="text-lg font-bold text-text-primary mb-3">
+            ⏱️ Tiempos estimados de entrega
+          </h3>
+          <ul class="space-y-2 text-xs text-text-secondary leading-relaxed md:text-sm">
+            <li>• <strong>Alistamiento y Ensamble:</strong> 2 a 4 días hábiles (incluye banco de pruebas térmicas y 12h de stress test).</li>
+            <li>• <strong>Bogotá:</strong> Entrega el mismo día hábil una vez finalizadas las pruebas de laboratorio.</li>
+            <li>• <strong>Ciudades principales (Medellín, Cali, Barranquilla, Bucaramanga, etc.):</strong> 1 a 2 días hábiles en tránsito.</li>
+            <li>• <strong>Resto del país y trayectos especiales:</strong> 2 a 4 días hábiles dependiendo de la cobertura de la transportadora.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="border-t border-border/60 bg-navy-950 py-14 text-center">
+      <div class="mx-auto max-w-3xl px-4">
+        <h2 class="text-xl font-bold text-text-primary md:text-2xl">
+          ¿Querés cotizar el flete exacto a tu ciudad?
+        </h2>
+        <p class="mt-2 text-xs text-text-secondary">
+          Escribinos indicando tu ciudad o municipio y te calculamos el envío asegurado al instante.
+        </p>
+        <div class="mt-6 flex justify-center">
+          <CTAButton href="/contacto" variant="primary">
+            Coordinar entrega o cotizar envío
+          </CTAButton>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>

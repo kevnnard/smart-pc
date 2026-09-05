@@ -1,0 +1,105 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "Política de Privacidad y Tratamiento de Datos | smart-pc",
+  description:
+    "Política de tratamiento y protección de datos personales de smart-pc en Colombia, en cumplimiento estricto de la Ley 1581 de 2012 y el Decreto 1377 de 2013.",
+};
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <main class="bg-navy-950 py-16 md:py-24">
+    <div class="mx-auto max-w-4xl px-4 md:px-8">
+      <!-- Encabezado -->
+      <div class="mb-12 border-b border-border/70 pb-8 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-3.5 py-1 mb-4">
+          <span class="font-mono text-[10px] uppercase tracking-widest text-cyan-400 font-bold">HABEAS DATA · LEY 1581 DE 2012</span>
+        </div>
+        <h1 class="text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
+          Política de Privacidad
+        </h1>
+        <p class="mt-2 text-xs font-mono text-text-muted">
+          Última actualización: Septiembre de 2026 · smart-pc Colombia (Responsable: Kevin Londoño)
+        </p>
+      </div>
+
+      <!-- Contenido Legal -->
+      <div class="prose prose-invert max-w-none space-y-10 text-xs leading-relaxed text-text-secondary md:text-sm">
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">1. Identificación del Responsable del Tratamiento</h2>
+          <p>
+            El responsable del tratamiento de los datos personales recolectados a través del sitio web y canales de mensajería de <strong>smart-pc</strong> es <strong>Kevin Londoño</strong>, con domicilio en Bogotá D.C., Colombia, correo electrónico de contacto oficial: <strong>smart-pc@kevnard.com</strong> y línea de atención: <strong>+57 318 546 7155</strong>.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">2. Marco Normativo</h2>
+          <p>
+            La presente política se rige por las disposiciones constitucionales de Colombia (artículo 15 de la Constitución Política), la Ley Estatutaria 1581 de 2012 (Régimen General de Protección de Datos Personales), el Decreto Reglamentario 1377 de 2013 y demás normas que las modifiquen o complementen.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">3. Finalidad de la Recolección de Datos</h2>
+          <p>Los datos solicitados a través de formularios de contacto, configuradores o mensajería (nombre, correo electrónico, teléfono, ciudad y dirección de envío) se tratan exclusivamente para los siguientes fines:</p>
+          <ul class="mt-3 space-y-2 list-disc pl-5">
+            <li>Elaborar y remitir cotizaciones técnicas personalizadas solicitadas voluntariamente por el usuario.</li>
+            <li>Gestionar el proceso de facturación, ensamble y despacho del computador o componentes adquiridos.</li>
+            <li>Coordinar entregas personales en Bogotá o generar guías de transporte asegurado a nivel nacional.</li>
+            <li>Hacer seguimiento al soporte técnico post-venta y trámites de garantía durante los 24 meses de cobertura.</li>
+            <li>Prevenir el fraude en transacciones electrónicas en coordinación con nuestras pasarelas aliadas (Wompi, Mercado Pago, Lemon Squeezy).</li>
+          </ul>
+          <p class="mt-3 font-semibold text-cyan-400">
+            smart-pc NO comercializa, no cede ni transfiere bases de datos de clientes a terceros con fines publicitarios o de telemercadeo invasivo.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">4. Pasarelas de Pago y Datos Financieros</h2>
+          <p>
+            smart-pc no almacena, no procesa ni tiene acceso a números de tarjetas de crédito, claves de banco ni códigos de seguridad CVV. Todas las transacciones se realizan directamente en los entornos seguros de las pasarelas certificadas bajo estándar PCI-DSS nivel 1:
+          </p>
+          <ul class="mt-2 space-y-1 list-disc pl-5">
+            <li><strong>Wompi (Grupo Bancolombia):</strong> Pagos con cuenta bancaria, PSE, Nequi y tarjetas locales.</li>
+            <li><strong>Mercado Pago Colombia:</strong> Pagos con tarjeta de crédito en cuotas y fondos en cuenta.</li>
+            <li><strong>Lemon Squeezy / PayPal:</strong> Pasarelas internacionales reguladas para compras transfronterizas.</li>
+          </ul>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">5. Derechos del Titular de los Datos (Habeas Data)</h2>
+          <p>Conforme al artículo 8 de la Ley 1581 de 2012, el titular de los datos personales tiene derecho a:</p>
+          <ul class="mt-3 space-y-2 list-disc pl-5">
+            <li>Conocer, actualizar y rectificar sus datos personales frente al responsable.</li>
+            <li>Solicitar prueba de la autorización otorgada para el tratamiento de datos.</li>
+            <li>Ser informado sobre el uso que se le ha dado a sus datos personales.</li>
+            <li>Revocar la autorización o solicitar la supresión de sus datos cuando considere que no se respetan los principios legales.</li>
+            <li>Acceder de forma gratuita a sus datos personales que hayan sido objeto de tratamiento.</li>
+          </ul>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">6. Procedimiento para Ejercer los Derechos</h2>
+          <p>
+            Para consultar, actualizar, rectificar o solicitar la eliminación de sus datos personales de nuestras bases operativas, el titular puede enviar una comunicación formal al correo electrónico:
+          </p>
+          <div class="mt-3 rounded-xl bg-navy-950 p-4 border border-border font-mono text-xs text-cyan-400">
+            Asunto: Ejercicio de Derechos Habeas Data - smart-pc<br />
+            Destinatario: smart-pc@kevnard.com<br />
+            Atención: Kevin Londoño - Responsable de Protección de Datos
+          </div>
+          <p class="mt-3">
+            La solicitud será atendida en un término máximo de diez (10) días hábiles contados a partir del recibo de la misma, conforme a los plazos legales establecidos en Colombia.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>

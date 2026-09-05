@@ -1,0 +1,195 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import CTAButton from "../../components/ui/CTAButton.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "Sobre Nosotros | smart-pc",
+  description:
+    "Conocé la historia, los principios técnicos y el equipo detrás de smart-pc en Colombia. Pasión por el hardware, transparencia total y ensamble de alta gama.",
+};
+
+const founder = {
+  name: "Kevin Londoño",
+  role: "Fundador & Lead Systems Architect",
+  github: "https://github.com/kevnnard",
+  website: "https://kevnnard.com/",
+  twitter: "https://x.com/kevnnard",
+  avatar: "https://avatars.githubusercontent.com/u/82115669?v=4",
+  bio: "Software Engineer, constructor de ecosistemas tecnológicos y entusiasta empedernido del hardware de alto rendimiento. Fundó smart-pc con el propósito de erradicar la improvisación y la falta de transparencia en la venta y ensamble de computadores en Colombia.",
+};
+
+const principles = [
+  {
+    icon: "🎯",
+    title: "Transparencia sin letra chica",
+    description:
+      "Mostramos la procedencia de cada componente, las condiciones de precio reales y desglosamos el costo de mano de obra. Jamás inflamos especificaciones ni vendemos partes usadas como nuevas.",
+  },
+  {
+    icon: "🔬",
+    title: "Criterio de ingeniería pura",
+    description:
+      "No armamos computadores por inercia. Analizamos la arquitectura de cada chip, balance térmico, fases de poder en placa madre y perfiles de memoria para que cada peso invertido rinda de verdad.",
+  },
+  {
+    icon: "🤝",
+    title: "Acompañamiento post-venta real",
+    description:
+      "La relación no termina cuando recibís la caja. Brindamos soporte técnico directo vía WhatsApp, orientación para futuras actualizaciones y cobertura de garantía de 24 meses sin trabas burocráticas.",
+  },
+  {
+    icon: "🇨🇴",
+    title: "Compromiso local en Colombia",
+    description:
+      "Construido desde Bogotá para creadores de contenido, ingenieros, streamers y gamers de todo el país, impulsando el acceso a tecnología de clase mundial con respaldo local inmediato.",
+  },
+];
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <main>
+    <!-- Hero Section -->
+    <section class="relative isolate overflow-hidden bg-navy-950 pb-16 pt-20 md:pt-28">
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div class="absolute -top-32 left-1/2 h-[450px] w-[650px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div class="absolute right-0 top-1/4 h-72 w-72 translate-x-1/3 rounded-full bg-blue-600/10 blur-3xl"></div>
+      </div>
+
+      <div class="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-6 px-4 text-center md:px-8">
+        <div class="flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-4 py-1.5 shadow-sm">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400"></span>
+          <span class="font-mono text-[11px] font-semibold uppercase tracking-widest text-cyan-400">Nuestra Identidad</span>
+        </div>
+
+        <h1 class="text-4xl font-bold tracking-tight text-text-primary md:text-6xl">
+          Pasión por el hardware.<br />
+          <span class="bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+            Rigor en cada detalle.
+          </span>
+        </h1>
+
+        <p class="max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
+          Nacimos con una misión clara: ofrecer en Colombia una alternativa seria, técnica y 100% transparente para quienes necesitan una máquina de alto desempeño sin sorpresas ni sobrecostos ocultos.
+        </p>
+      </div>
+    </section>
+
+    <!-- Fundador / Liderazgo -->
+    <section class="border-y border-border/60 bg-navy-900/40 py-16" aria-labelledby="founder-heading">
+      <div class="mx-auto w-full max-w-[1280px] px-4 md:px-8">
+        <div class="mx-auto max-w-4xl rounded-2xl border border-cyan-500/25 bg-navy-900/80 p-8 shadow-xl md:p-10">
+          <div class="flex flex-col items-center gap-8 md:flex-row md:items-start">
+            <div class="relative shrink-0">
+              <div class="h-32 w-32 overflow-hidden rounded-2xl border-2 border-cyan-400 shadow-lg shadow-cyan-500/20 md:h-40 md:w-40">
+                <img
+                  src={founder.avatar}
+                  alt={founder.name}
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="absolute -bottom-2 -right-2 rounded-lg bg-navy-950 px-2 py-0.5 text-[10px] font-mono font-bold text-cyan-400 border border-cyan-500/40 shadow">
+                LEAD
+              </div>
+            </div>
+
+            <div class="flex-1 text-center md:text-left">
+              <span class="font-mono text-[10px] uppercase tracking-widest text-cyan-400 font-bold">LIDERAZGO TÉCNICO</span>
+              <h2 id="founder-heading" class="mt-1 text-2xl font-bold text-text-primary md:text-3xl">
+                {founder.name}
+              </h2>
+              <p class="font-mono text-xs text-text-muted mt-0.5">{founder.role}</p>
+
+              <p class="mt-4 text-sm leading-relaxed text-text-secondary">
+                {founder.bio}
+              </p>
+
+              <div class="mt-6 flex flex-wrap items-center justify-center gap-4 md:justify-start">
+                <a
+                  href={founder.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 rounded-xl border border-border bg-navy-950 px-4 py-2 text-xs font-semibold text-text-primary transition-colors hover:border-cyan-500/40 hover:text-cyan-300"
+                >
+                  <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                  </svg>
+                  <span>GitHub @kevnnard</span>
+                </a>
+                <a
+                  href={founder.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 hover:underline"
+                >
+                  <span>Sitio personal</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a
+                  href={founder.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-text-primary"
+                >
+                  <span>X / Twitter</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pilares de Valor -->
+    <section class="bg-navy-950 py-20" aria-labelledby="principles-heading">
+      <div class="mx-auto max-w-[1280px] px-4 md:px-8">
+        <div class="mb-14 text-center">
+          <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-400">NUESTRA FILOSOFÍA</p>
+          <h2 id="principles-heading" class="mt-1 text-3xl font-bold text-text-primary md:text-4xl">
+            Los principios que guían cada ensamble
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {principles.map((item) => (
+            <div class="flex gap-5 rounded-2xl border border-border/70 bg-navy-900/60 p-7 transition-colors hover:border-cyan-500/40 hover:bg-navy-900">
+              <div class="text-3xl shrink-0" aria-hidden="true">{item.icon}</div>
+              <div>
+                <h3 class="text-lg font-bold text-text-primary">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-text-secondary">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="border-t border-border/60 bg-navy-900/30 py-16 text-center">
+      <div class="mx-auto max-w-3xl px-4">
+        <h2 class="text-2xl font-bold text-text-primary md:text-3xl">
+          ¿Querés armar tu próximo equipo con nosotros?
+        </h2>
+        <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-text-secondary">
+          Escribinos directamente para recibir asesoría técnica de acuerdo a tu flujo de trabajo o presupuesto.
+        </p>
+        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <CTAButton href="/configurar" variant="primary">
+            Abrir configurador
+          </CTAButton>
+          <CTAButton href="/contacto" variant="outline">
+            Hablar con Kevin o el equipo →
+          </CTAButton>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>

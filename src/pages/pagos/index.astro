@@ -1,0 +1,218 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import CTAButton from "../../components/ui/CTAButton.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "Métodos de Pago y Pasarelas | smart-pc",
+  description:
+    "Pagos 100% seguros en Colombia: Wompi (Bancolombia, Nequi, PSE, tarjetas), Mercado Pago, Lemon Squeezy y PayPal para pagos internacionales. Política clara sin contraentrega.",
+};
+
+const gateways = [
+  {
+    name: "Wompi (Bancolombia)",
+    badge: "Principal Colombia",
+    color: "border-cyan-500/40 bg-cyan-500/5",
+    description:
+      "Nuestra pasarela local por excelencia. Respaldada por el Grupo Bancolombia, permite transferencias inmediatas por PSE, pagos rápidos mediante Botón Bancolombia, QR Nequi y tarjetas crédito/débito nacionales con cifrado de nivel bancario.",
+    methods: [
+      "PSE",
+      "Botón Bancolombia",
+      "Nequi",
+      "Tarjetas Visa / Mastercard / Amex",
+    ],
+  },
+  {
+    name: "Mercado Pago",
+    badge: "Tarjetas & Cuotas",
+    color: "border-blue-500/40 bg-blue-500/5",
+    description:
+      "Protección al comprador líder en América Latina. Ideal para diferir pagos con tarjeta de crédito en cuotas, pagar con saldo en cuenta de Mercado Pago o tarjetas prepagadas, respaldado por algoritmos antifraude en tiempo real.",
+    methods: [
+      "Tarjetas de crédito en cuotas",
+      "Saldo Mercado Pago",
+      "Efecty / Vía Baloto",
+    ],
+  },
+  {
+    name: "Lemon Squeezy",
+    badge: "Internacional Segura (Merchant of Record)",
+    color: "border-amber-500/40 bg-amber-500/5",
+    description:
+      "Pasarela internacional de máxima seguridad que actúa como Merchant of Record (MoR). Permite a clientes en el extranjero comprar para familiares o empresas en Colombia con tarjetas internacionales, Apple Pay y Google Pay con total cumplimiento tributario y protección contra fraude.",
+    methods: [
+      "Apple Pay",
+      "Google Pay",
+      "Tarjetas internacionales USD/EUR",
+      "Facturación MoR",
+    ],
+  },
+  {
+    name: "PayPal",
+    badge: "Internacional",
+    color: "border-indigo-500/40 bg-indigo-500/5",
+    description:
+      "El estándar global de pagos en línea. Disponible para transacciones en dólares estadounidenses (USD) desde cualquier país del mundo con Protección al Comprador de PayPal activa.",
+    methods: [
+      "Cuenta PayPal",
+      "Tarjetas en USD/EUR",
+      "Cuentas bancarias internacionales",
+    ],
+  },
+];
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <main>
+    <!-- Hero -->
+    <section class="relative isolate overflow-hidden bg-navy-950 pb-12 pt-20 md:pt-28">
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div class="absolute -top-32 left-1/2 h-[450px] w-[650px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div class="absolute right-0 top-1/4 h-72 w-72 translate-x-1/3 rounded-full bg-blue-600/10 blur-3xl"></div>
+      </div>
+
+      <div class="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-6 px-4 text-center md:px-8">
+        <div class="flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-4 py-1.5 shadow-sm">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400"></span>
+          <span class="font-mono text-[11px] font-semibold uppercase tracking-widest text-cyan-400">Transacciones Seguras</span>
+        </div>
+
+        <h1 class="text-4xl font-bold tracking-tight text-text-primary md:text-6xl">
+          Métodos de pago transparentes.<br />
+          <span class="bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+            Seguridad en cada transacción.
+          </span>
+        </h1>
+
+        <p class="max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
+          Operamos exclusivamente con pasarelas certificadas con cifrado TLS 1.3 y estándares PCI-DSS. Tu dinero y tus datos siempre están protegidos.
+        </p>
+      </div>
+    </section>
+
+    <!-- Alerta de Política: Por qué no manejamos Contraentrega -->
+    <section class="bg-navy-950 pb-12">
+      <div class="mx-auto max-w-[1280px] px-4 md:px-8">
+        <div class="mx-auto max-w-4xl rounded-2xl border border-amber-500/30 bg-amber-500/5 p-6 md:p-8">
+          <div class="flex items-start gap-4">
+            <div class="text-2xl shrink-0 mt-0.5" aria-hidden="true">⚠️</div>
+            <div class="space-y-2">
+              <h2 class="text-base font-bold text-amber-300 md:text-lg">
+                ¿Por qué NO manejamos pago contraentrega en computadores armados?
+              </h2>
+              <p class="text-xs leading-relaxed text-text-secondary md:text-sm">
+                En <strong>smart-pc</strong> ensamblamos equipos a medida con componentes de alta gama cuyos valores oscilan entre <strong>$1.900.000 y más de $18.000.000 COP</strong>.
+              </p>
+              <p class="text-xs leading-relaxed text-text-secondary md:text-sm">
+                Las transportadoras nacionales fijan límites estrictos de manejo de efectivo, cobran seguros y comisiones abusivas por recaudos en efectivo en puerta y exponen a conductores y clientes a riesgos de seguridad inaceptables. Asimismo, un equipo a medida requiere pruebas de estrés de 12h y alistamiento técnico que inicia una vez confirmada la orden.
+              </p>
+              <div class="pt-2">
+                <span class="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-cyan-400">
+                  <span>✓ Alternativa segura:</span>
+                  <span class="text-text-primary">Para clientes en Bogotá ofrecemos entrega personal en taller con verificación presencial previa.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grilla de Pasarelas -->
+    <section class="border-y border-border/60 bg-navy-900/40 py-16" aria-labelledby="gateways-heading">
+      <div class="mx-auto w-full max-w-[1280px] px-4 md:px-8">
+        <div class="mb-12 text-center">
+          <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-400">PASARELAS CERTIFICADAS</p>
+          <h2 id="gateways-heading" class="mt-1 text-2xl font-bold text-text-primary md:text-3xl">
+            Nuestros canales oficiales de pago
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {gateways.map((g) => (
+            <div class:list={["rounded-2xl border p-7 shadow-sm transition-all hover:bg-navy-900", g.color]}>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-400 border border-cyan-500/30 rounded-md px-2 py-0.5 bg-navy-950">
+                  {g.badge}
+                </span>
+                <span class="text-xs text-text-muted">100% Cifrado</span>
+              </div>
+              <h3 class="text-xl font-bold text-text-primary">{g.name}</h3>
+              <p class="mt-3 text-xs leading-relaxed text-text-secondary md:text-sm">{g.description}</p>
+
+              <div class="mt-6 pt-4 border-t border-border/50">
+                <p class="font-mono text-[10px] uppercase tracking-wider text-text-muted mb-2">Medios soportados:</p>
+                <div class="flex flex-wrap gap-1.5">
+                  {g.methods.map((m) => (
+                    <span class="rounded-lg bg-navy-950 px-2.5 py-1 font-mono text-[11px] text-text-primary border border-border">
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes de pago -->
+    <section class="bg-navy-950 py-16">
+      <div class="mx-auto max-w-4xl px-4">
+        <h2 class="text-2xl font-bold text-text-primary mb-8 text-center">
+          Dudas frecuentes sobre pagos
+        </h2>
+
+        <div class="space-y-4">
+          <div class="rounded-2xl border border-border bg-navy-900/60 p-6">
+            <h3 class="text-base font-bold text-text-primary">¿Emiten factura legal para empresas o personas naturales?</h3>
+            <p class="mt-2 text-xs text-text-secondary leading-relaxed">
+              Sí. Todas las compras cuentan con comprobante y factura electrónica en regla con los requisitos de la DIAN en Colombia, discriminando IVA y los conceptos correspondientes.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-border bg-navy-900/60 p-6">
+            <h3 class="text-base font-bold text-text-primary">¿Se puede pagar con dos tarjetas distintas?</h3>
+            <p class="mt-2 text-xs text-text-secondary leading-relaxed">
+              A través de Mercado Pago o con asistencia de nuestros asesores por WhatsApp podemos coordinar pagos divididos entre dos métodos (por ejemplo, parte por PSE y saldo restante con tarjeta de crédito).
+            </p>
+          </div>
+          <div class="rounded-2xl border border-border bg-navy-900/60 p-6">
+            <h3 class="text-base font-bold text-text-primary">¿Cuánto tarda en confirmarse mi pago?</h3>
+            <p class="mt-2 text-xs text-text-secondary leading-relaxed">
+              Pagos vía Wompi (PSE, Botón Bancolombia, Nequi), Mercado Pago y Lemon Squeezy se aprueban de manera instantánea. Una vez acreditado, el equipo ingresa inmediatamente al taller de ensamble.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="border-t border-border/60 bg-navy-900/40 py-14 text-center">
+      <div class="mx-auto max-w-3xl px-4">
+        <h2 class="text-xl font-bold text-text-primary md:text-2xl">
+          ¿Tenés dudas sobre cómo pagar tu equipo?
+        </h2>
+        <p class="mt-2 text-xs text-text-secondary">
+          Contactanos por WhatsApp y te generamos un link de pago directo y verificado.
+        </p>
+        <div class="mt-6 flex justify-center">
+          <a
+            href="https://wa.me/573185467155"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105"
+          >
+            <span>Consultar por WhatsApp</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>

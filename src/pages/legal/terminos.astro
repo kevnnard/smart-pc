@@ -1,0 +1,119 @@
+---
+import Footer from "../../components/footer/Footer.astro";
+import Navbar from "../../components/navbar/Navbar.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageMeta = {
+  title: "Términos y Condiciones de Servicio | smart-pc",
+  description:
+    "Términos y condiciones comerciales de smart-pc en Colombia. Cotizaciones, proceso de ensamble, políticas de pago, envíos y derechos del consumidor.",
+};
+---
+
+<BaseLayout {...pageMeta}>
+  <Navbar slot="navbar" />
+
+  <main class="bg-navy-950 py-16 md:py-24">
+    <div class="mx-auto max-w-4xl px-4 md:px-8">
+      <!-- Encabezado -->
+      <div class="mb-12 border-b border-border/70 pb-8 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-3.5 py-1 mb-4">
+          <span class="font-mono text-[10px] uppercase tracking-widest text-cyan-400 font-bold">MARCO LEGAL COLOMBIANO</span>
+        </div>
+        <h1 class="text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
+          Términos y Condiciones
+        </h1>
+        <p class="mt-2 text-xs font-mono text-text-muted">
+          Última actualización: Septiembre de 2026 · smart-pc Colombia (smart-pc@kevnard.com)
+        </p>
+      </div>
+
+      <!-- Contenido Legal -->
+      <div class="prose prose-invert max-w-none space-y-10 text-xs leading-relaxed text-text-secondary md:text-sm">
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">1. Objeto y Generalidades</h2>
+          <p>
+            El presente documento establece los términos y condiciones comerciales que rigen la relación entre <strong>smart-pc</strong> (representada técnicamente por Kevin Londoño, en adelante "smart-pc") y cualquier persona natural o jurídica (el "Cliente") que contrate servicios de cotización, ensamble, optimización o adquiera equipos pre-armados a través de nuestro sitio web oficial o canales de mensajería autorizados.
+          </p>
+          <p class="mt-2">
+            La aceptación de una cotización y/o el pago de cualquier orden implica la aceptación plena e incondicional de estos términos, ajustados a la legislación comercial colombiana y al Estatuto del Consumidor (Ley 1480 de 2011).
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">2. Cotizaciones, Precios y Validez</h2>
+          <p>
+            • <strong>Precios observados en tiempo real:</strong> Los precios de los componentes exhibidos en el catálogo corresponden a observaciones verificadas en distribuidores y retailers colombianos autorizados. Debido a la fluctuación cambiaria (TRM) y disponibilidad de mercado, las cotizaciones personalizadas tienen una vigencia máxima de <strong>24 a 48 horas hábiles</strong>.
+          </p>
+          <p class="mt-2">
+            • <strong>Desglose transparente:</strong> Toda cotización desglosa con total claridad el subtotal de componentes, el servicio de armado profesional ($150.000 COP) y la tarifa técnica de ensamble, calibración y garantía según el nivel del equipo (5% Essentials, 10% Creator, 15% Apex). No existen cobros ocultos.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">3. Condiciones de Pago y Política de NO Contraentrega</h2>
+          <p>
+            • <strong>Medios autorizados:</strong> Se reciben pagos única y exclusivamente por pasarelas certificadas: Wompi (Bancolombia, PSE, Nequi, tarjetas de crédito/débito), Mercado Pago y Lemon Squeezy / PayPal para órdenes internacionales.
+          </p>
+          <p class="mt-2">
+            • <strong>Exclusión de pago contraentrega:</strong> Debido al alto valor intrínseco de los computadores armados ($1.900.000 a más de $18.000.000 COP), a las restricciones de recaudo en efectivo de las empresas transportadoras y por motivos estrictos de seguridad física y antifraude, <strong>smart-pc no ofrece modalidad de pago contraentrega</strong>. El alistamiento e inicio de ensamble se realiza con el pago confirmado al 100%. Para clientes en Bogotá se ofrece entrega personal en taller con verificación presencial previa.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">4. Proceso de Ensamble y Pruebas Técnicas</h2>
+          <p>
+            • <strong>Plazo de ensamble:</strong> El tiempo regular de armado, gestión de cableado, actualización de BIOS y banco de pruebas de estrés térmico (12 horas continuas con Cinebench, FurMark y MemTest) es de <strong>2 a 4 días hábiles</strong> posteriores a la confirmación del pago y disponibilidad de partes.
+          </p>
+          <p class="mt-2">
+            • <strong>Propiedad de empaques:</strong> El Cliente recibe la totalidad de cajas, empaques originales, cables accesorios y manuales de cada componente utilizado en el ensamble.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">5. Envíos, Transporte y Entrega</h2>
+          <p>
+            • <strong>Envíos nacionales:</strong> Despachamos a toda Colombia a través de Coordinadora, Servientrega, Envía o la transportadora que el Cliente elija. Todos los envíos van <strong>100% asegurados</strong> contra pérdida o daño total/parcial durante el transporte.
+          </p>
+          <p class="mt-2">
+            • <strong>Revisión al recibir:</strong> El Cliente debe verificar el estado del paquete al momento de la entrega. En caso de notar la caja perforada, golpeada o con sellos violados, debe dejar constancia inmediata en la guía de la transportadora y notificar a smart-pc dentro de las primeras 24 horas.
+          </p>
+          <p class="mt-2">
+            • <strong>Entregas en Bogotá:</strong> Disponibles en nuestro taller de ensamble o entrega directa coordinada con cita previa de lunes a viernes de 10:00 AM a 5:00 PM.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">6. Garantías y Soporte Post-Venta</h2>
+          <p>
+            • <strong>Garantía de ensamble:</strong> smart-pc otorga <strong>24 meses de garantía escrita</strong> sobre la mano de obra, integridad del ensamble, estabilidad térmica y soporte técnico remoto.
+          </p>
+          <p class="mt-2">
+            • <strong>Garantía de componentes:</strong> Los componentes individuales están cubiertos por la garantía oficial de cada fabricante o importador directo en Colombia (desde 12 meses hasta 5 o 10 años en memorias y fuentes Gold). smart-pc asume la gestión y tramitación del RMA sin sobrecosto de intermediación para el Cliente.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">7. Derecho de Retracto</h2>
+          <p>
+            Conforme al artículo 47 de la Ley 1480 de 2011, se exceptúan del derecho de retracto los bienes confeccionados o armados conforme a las especificaciones personalizadas del consumidor. No obstante, para componentes individuales sin ensamblar adquiridos por separado, el Cliente cuenta con 5 días hábiles siguientes a la entrega para ejercer su derecho, devolviendo el bien en su empaque original sin abrir y asumiendo los costos de transporte correspondientes.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-navy-900/50 p-6 md:p-8">
+          <h2 class="text-lg font-bold text-text-primary mb-3">8. Canales de Notificación y Horarios</h2>
+          <p>
+            Cualquier solicitud, duda técnica o trámite de garantía debe cursarse a través de nuestros canales oficiales:
+          </p>
+          <ul class="mt-2 space-y-1 font-mono text-xs text-cyan-400">
+            <li>• Correo: smart-pc@kevnard.com</li>
+            <li>• WhatsApp de taller: +57 318 546 7155</li>
+            <li>• Horario: Lunes a viernes de 10:00 AM a 5:00 PM (Colombia). No se atienden fines de semana ni festivos.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>

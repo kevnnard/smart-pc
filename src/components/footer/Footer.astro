@@ -2,19 +2,15 @@
 /**
  * Footer.astro
  *
- * Site-wide footer for smart-pc. Models the Stitch screen
- * 7b31e97588ae4f6abd53b627a317cb7d:
- *   - navy-950 surface with a thin cyan gradient hairline at the top
- *   - 4-column grid: brand column (logo, tagline, description, socials, WhatsApp
- *     CTA) + Productos / Servicios / Información navigation columns
- *   - bottom bar with copyright, payment-provider placeholders and the
- *     "Hecho en Colombia 🇨🇴" marker.
- *
- * The footer ships zero JavaScript: every link is a plain anchor, every icon is
- * inline SVG, and the social/WhatsApp targets open in a new tab via
- * `target="_blank"` + `rel="noopener noreferrer"`.
+ * Site-wide footer for smart-pc.
+ *   - Logo: Clean SVG wordmark mirroring the Navbar styling (SMART-PC).
+ *   - Category links: Query parameters for `nuqs` (?categoria=...) so clicking
+ *     takes the user straight to filtered results in `/productos`.
+ *   - Dynamic copyright year via `new Date().getFullYear()`.
+ *   - Direct GitHub credit to founder @kevnnard for credibility.
+ *   - Verified WhatsApp +57 318 546 7155.
  */
-const year = Date.now().toLocaleString();
+const currentYear = new Date().getFullYear();
 
 interface Column {
   title: string;
@@ -22,21 +18,25 @@ interface Column {
 }
 
 const productLinks: Column["links"] = [
-  { label: "PC Pre-armadas", href: "/pre-armadas" },
-  { label: "Armá tu PC", href: "/configurar" },
-  { label: "Componentes", href: "/productos" },
-  { label: "Periféricos", href: "/perifericos" },
-  { label: "Monitores", href: "/monitores" },
-  { label: "Accesorios", href: "/accesorios" },
+  { label: "Todos los componentes", href: "/productos" },
+  { label: "Procesadores (CPU)", href: "/productos?categoria=cpu" },
+  { label: "Tarjetas de video (GPU)", href: "/productos?categoria=gpu" },
+  { label: "Placas base", href: "/productos?categoria=motherboard" },
+  { label: "Memorias RAM", href: "/productos?categoria=ram" },
+  { label: "Almacenamiento (SSD/HDD)", href: "/productos?categoria=storage" },
+  { label: "Fuentes de poder", href: "/productos?categoria=psu" },
+  { label: "Chasis / Gabinetes", href: "/productos?categoria=case" },
+  { label: "Refrigeración", href: "/productos?categoria=cooler" },
+  { label: "Monitores", href: "/productos?categoria=monitor" },
+  { label: "Periféricos", href: "/productos?categoria=peripheral" },
 ];
 
 const serviceLinks: Column["links"] = [
-  { label: "Armado de PC", href: "/servicios#armado" },
-  { label: "Upgrades", href: "/servicios#upgrades" },
-  { label: "Reparación", href: "/servicios#reparacion" },
-  { label: "Soporte técnico", href: "/servicios#soporte" },
-  { label: "Instalación de software", href: "/servicios#software" },
-  { label: "Configuración de red", href: "/servicios#red" },
+  { label: "PC Pre-armadas", href: "/pre-armadas" },
+  { label: "Armá tu PC a medida", href: "/configurar" },
+  { label: "Servicios de taller", href: "/servicios" },
+  { label: "Mantenimiento y upgrades", href: "/servicios#servicios" },
+  { label: "Garantía y soporte", href: "/garantia" },
 ];
 
 const infoLinks: Column["links"] = [
@@ -45,7 +45,9 @@ const infoLinks: Column["links"] = [
   { label: "Envíos y entregas", href: "/envios" },
   { label: "Política de garantía", href: "/garantia" },
   { label: "Términos y condiciones", href: "/legal/terminos" },
-  { label: "FAQ", href: "/faq" },
+  { label: "Política de privacidad", href: "/legal/privacidad" },
+  { label: "Preguntas frecuentes (FAQ)", href: "/faq" },
+  { label: "Contacto directo", href: "/contacto" },
 ];
 
 interface SocialLink {
@@ -57,19 +59,19 @@ interface SocialLink {
 
 const socials: SocialLink[] = [
   {
-    label: "Instagram",
-    href: "https://instagram.com/smartpc.co",
-    path: "M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.62 4.15.32 4.91.12 5.79.06 7.06.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.85.62 19.09.32 18.21.12 16.94.06 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z",
+    label: "GitHub @kevnnard",
+    href: "https://github.com/kevnnard",
+    path: "M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z",
   },
   {
     label: "X (Twitter)",
-    href: "https://x.com/smartpc_co",
+    href: "https://x.com/kevnnard",
     path: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
   },
   {
-    label: "YouTube",
-    href: "https://youtube.com/@smartpc",
-    path: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
+    label: "Instagram",
+    href: "https://instagram.com/smartpc.co",
+    path: "M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.62 4.15.32 4.91.12 5.79.06 7.06.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.85.62 19.09.32 18.21.12 16.94.06 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z",
   },
   {
     label: "Discord",
@@ -80,26 +82,28 @@ const socials: SocialLink[] = [
 
 interface PaymentChip {
   label: string;
+  name: string;
   bgClass: string;
 }
 
-/**
- * Placeholder payment-provider chips. The real Stitch icon set will replace
- * these later — for now we render small colored discs with the provider's
- * initials so the layout and color rhythm match the design.
- */
 const payments: PaymentChip[] = [
-  { label: "VISA", bgClass: "bg-[#1a1f71]" },
-  { label: "MC", bgClass: "bg-[#eb001b]" },
-  { label: "MP", bgClass: "bg-[#00b5e2]" },
-  { label: "NAR", bgClass: "bg-[#ff6600]" },
+  { label: "WOMPI", name: "Wompi Bancolombia", bgClass: "bg-[#002d72]" },
+  { label: "PSE", name: "PSE", bgClass: "bg-[#003865]" },
+  { label: "NEQUI", name: "Nequi", bgClass: "bg-[#200020]" },
+  { label: "MP", name: "Mercado Pago", bgClass: "bg-[#00b5e2]" },
+  {
+    label: "LEMON",
+    name: "Lemon Squeezy",
+    bgClass: "bg-[#ffc83b] text-navy-950 font-bold",
+  },
+  { label: "PAYPAL", name: "PayPal", bgClass: "bg-[#003087]" },
 ];
 
 const whatsappPath =
   "M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .18 5.32.18 11.86c0 2.09.55 4.13 1.59 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.68 1.45h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.39-8.44zM12.05 21.7h-.01a9.83 9.83 0 0 1-5-1.36l-.36-.21-3.78 1 1.01-3.69-.23-.38a9.84 9.84 0 1 1 18.24-5.2c0 5.43-4.42 9.84-9.87 9.84zm5.46-7.36c-.3-.15-1.76-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.21 5.08 4.5.71.31 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z";
 ---
 
-<footer class="bg-navy-950 text-text-secondary">
+<footer class="bg-navy-950 text-text-secondary border-t border-border/60">
   <!-- Subtle cyan gradient hairline at the top of the footer. -->
   <div
     class="h-px bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent"
@@ -112,27 +116,27 @@ const whatsappPath =
       class="grid grid-cols-1 gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-12"
     >
       <!-- Brand column -->
-      <div class="space-y-5">
+      <div class="space-y-4">
+        <!-- Logo TEXT wordmark (exacto al Navbar, sin imagen rota) -->
         <a
           href="/"
-          class="inline-block"
+          class="inline-flex flex-col group transition-all duration-200 hover:opacity-80"
           aria-label="smart-pc — ir al inicio"
         >
-          <img src="/logo.svg" alt="smart-pc" class="h-8 w-auto" />
+          <div class="font-bold tracking-tighter flex items-baseline gap-0.5 text-xl leading-none">
+            <span class="text-cyan-400 font-extrabold">SMART</span><span class="text-white">-PC</span>
+          </div>
+          <span class="font-mono text-[10px] text-white/40 uppercase tracking-widest leading-none mt-1">
+            PCs a tu medida
+          </span>
         </a>
 
-        <p
-          class="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-500"
-        >
-          PCs a tu medida
+        <p class="max-w-sm text-xs leading-relaxed text-text-secondary">
+          Taller especializado en ensamble de alto rendimiento, optimización térmica y venta de hardware con fuentes verificadas. Desde Bogotá para toda Colombia.
         </p>
 
-        <p class="max-w-sm text-sm leading-relaxed text-text-secondary">
-          Armamos la PC de tus sueños con componentes de primera línea y soporte
-          experto. Desde Colombia para el mundo.
-        </p>
-
-        <ul class="flex items-center gap-2 pt-1" aria-label="Redes sociales">
+        <!-- Redes y perfil de Kevin -->
+        <ul class="flex items-center gap-2 pt-1" aria-label="Redes sociales y desarrollador">
           {
             socials.map((s) => (
               <li>
@@ -141,11 +145,12 @@ const whatsappPath =
                   rel="noopener noreferrer"
                   target="_blank"
                   aria-label={s.label}
-                  class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-secondary transition-colors hover:border-cyan-500 hover:text-cyan-500"
+                  class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-navy-900/60 text-text-secondary transition-all hover:border-cyan-500/50 hover:bg-navy-800 hover:text-cyan-300"
+                  title={s.label}
                 >
                   <svg
                     viewBox="0 0 24 24"
-                    class="h-4 w-4"
+                    class="h-3.5 w-3.5"
                     fill="currentColor"
                     aria-hidden="true"
                   >
@@ -157,42 +162,42 @@ const whatsappPath =
           }
         </ul>
 
-        <a
-          href="https://wa.me/573000000000"
-          rel="noopener noreferrer"
-          target="_blank"
-          class="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#1ebe5d]"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="h-4 w-4"
-            fill="currentColor"
-            aria-hidden="true"
+        <div>
+          <a
+            href="https://wa.me/573185467155"
+            rel="noopener noreferrer"
+            target="_blank"
+            class="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-4 py-2 text-xs font-bold text-white shadow-md transition-all hover:brightness-110"
           >
-            <path d={whatsappPath} />
-          </svg>
-          WhatsApp
-        </a>
+            <svg
+              viewBox="0 0 24 24"
+              class="h-3.5 w-3.5"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d={whatsappPath} />
+            </svg>
+            <span>WhatsApp directo</span>
+          </a>
+        </div>
       </div>
 
-      <!-- Productos -->
-      <nav aria-label="Productos" class="space-y-4">
-        <h2
-          class="text-sm font-bold uppercase tracking-[0.18em] text-text-primary"
-        >
-          Productos
+      <!-- Productos con filtro nuqs -->
+      <nav aria-label="Catálogo por componentes" class="space-y-3">
+        <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-text-primary">
+          Catálogo Técnico
           <span
-            class="mt-2 block h-0.5 w-8 rounded-full bg-cyan-500"
+            class="mt-1.5 block h-0.5 w-6 rounded-full bg-cyan-500"
             aria-hidden="true"
           ></span>
         </h2>
-        <ul class="space-y-2 text-sm">
+        <ul class="space-y-1.5 text-xs">
           {
             productLinks.map((link) => (
               <li>
                 <a
                   href={link.href}
-                  class="text-text-secondary transition-colors hover:text-cyan-500"
+                  class="text-text-secondary transition-colors hover:text-cyan-400"
                 >
                   {link.label}
                 </a>
@@ -203,23 +208,21 @@ const whatsappPath =
       </nav>
 
       <!-- Servicios -->
-      <nav aria-label="Servicios" class="space-y-4">
-        <h2
-          class="text-sm font-bold uppercase tracking-[0.18em] text-text-primary"
-        >
-          Servicios
+      <nav aria-label="Servicios" class="space-y-3">
+        <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-text-primary">
+          Servicios y PCs
           <span
-            class="mt-2 block h-0.5 w-8 rounded-full bg-cyan-500"
+            class="mt-1.5 block h-0.5 w-6 rounded-full bg-cyan-500"
             aria-hidden="true"
           ></span>
         </h2>
-        <ul class="space-y-2 text-sm">
+        <ul class="space-y-1.5 text-xs">
           {
             serviceLinks.map((link) => (
               <li>
                 <a
                   href={link.href}
-                  class="text-text-secondary transition-colors hover:text-cyan-500"
+                  class="text-text-secondary transition-colors hover:text-cyan-400"
                 >
                   {link.label}
                 </a>
@@ -229,24 +232,22 @@ const whatsappPath =
         </ul>
       </nav>
 
-      <!-- Información -->
-      <nav aria-label="Información" class="space-y-4">
-        <h2
-          class="text-sm font-bold uppercase tracking-[0.18em] text-text-primary"
-        >
-          Información
+      <!-- Información institucional -->
+      <nav aria-label="Información institucional" class="space-y-3">
+        <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-text-primary">
+          Información y Legal
           <span
-            class="mt-2 block h-0.5 w-8 rounded-full bg-cyan-500"
+            class="mt-1.5 block h-0.5 w-6 rounded-full bg-cyan-500"
             aria-hidden="true"
           ></span>
         </h2>
-        <ul class="space-y-2 text-sm">
+        <ul class="space-y-1.5 text-xs">
           {
             infoLinks.map((link) => (
               <li>
                 <a
                   href={link.href}
-                  class="text-text-secondary transition-colors hover:text-cyan-500"
+                  class="text-text-secondary transition-colors hover:text-cyan-400"
                 >
                   {link.label}
                 </a>
@@ -259,19 +260,32 @@ const whatsappPath =
   </div>
 
   <!-- Bottom bar -->
-  <div class="border-t border-border">
+  <div class="border-t border-border/80 bg-navy-950">
     <div
       class="mx-auto flex w-full max-w-[1280px] flex-col items-center justify-between gap-4 px-4 py-5 text-xs text-text-muted md:flex-row md:px-8"
     >
-      <p>© {year} smart-pc. Todos los derechos reservados.</p>
+      <div class="flex flex-col items-center gap-1 text-center md:items-start md:text-left">
+        <p>© {currentYear} smart-pc. Todos los derechos reservados.</p>
+        <p class="text-[11px] text-text-muted">
+          Diseñado y desarrollado por{" "}
+          <a
+            href="https://github.com/kevnnard"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-mono text-cyan-400 hover:underline hover:text-cyan-300"
+          >
+            Kevin Londoño (@kevnnard)
+          </a>
+        </p>
+      </div>
 
-      <ul class="flex items-center gap-2" aria-label="Métodos de pago">
+      <!-- Pasarelas soportadas -->
+      <ul class="flex flex-wrap items-center justify-center gap-1.5" aria-label="Pasarelas de pago soportadas">
         {
           payments.map((p) => (
-            <li>
+            <li title={p.name}>
               <span
-                class={`inline-flex h-6 w-6 items-center justify-center rounded-full text-[9px] font-bold text-white shadow-sm ${p.bgClass}`}
-                aria-label={p.label}
+                class={`inline-flex items-center justify-center rounded px-2 py-0.5 text-[9px] font-mono font-bold tracking-wider text-white shadow-sm border border-white/10 ${p.bgClass}`}
               >
                 {p.label}
               </span>
@@ -280,7 +294,7 @@ const whatsappPath =
         }
       </ul>
 
-      <p>
+      <p class="text-[11px]">
         Hecho en Colombia <span aria-hidden="true">🇨🇴</span>
       </p>
     </div>
