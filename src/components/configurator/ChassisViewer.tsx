@@ -80,9 +80,10 @@ export default function ChassisViewer({
     const height = container.clientHeight || 500;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    // Pull back slightly so the full chassis remains comfortably framed.
-    camera.position.set(5.5, 2.5, 6);
+    // Slightly wider lens preserves the original, stable camera position while
+    // giving the chassis a little more breathing room.
+    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+    camera.position.set(4.8, 2.2, 5.2);
     camera.lookAt(0, 0.0, 0);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
