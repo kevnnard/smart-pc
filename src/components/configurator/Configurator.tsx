@@ -401,7 +401,8 @@ export default function Configurator({
       "(prefers-reduced-motion: reduce)",
     ).matches;
     rail.scrollTo({
-      left: Math.max(0, activeBadge.offsetLeft - 16),
+      // Keep a generous leading gutter so the active badge never kisses the left edge.
+      left: Math.max(0, activeBadge.offsetLeft - 40),
       behavior: reducedMotion ? "auto" : "smooth",
     });
   }, [step]);
