@@ -9,6 +9,7 @@ interface Props {
   readonly onLoadConfig?: () => void;
   readonly hasSavedConfig?: boolean;
   readonly saveFeedback?: string | null;
+  readonly variant?: "configurator" | "hero";
 }
 
 /**
@@ -43,30 +44,34 @@ export default function ChassisViewer({
   onLoadConfig,
   hasSavedConfig = false,
   saveFeedback = null,
+  variant = "configurator",
 }: Props) {
+  const isHero = variant === "hero";
   const containerRef = useRef<HTMLDivElement>(null);
   const stateRef = useRef({
-    hasCpu: Boolean(selection.cpu),
-    hasMotherboard: Boolean(selection.motherboard),
-    hasRam: Boolean(selection.ram && selection.ram.length > 0),
-    hasGpu: Boolean(selection.gpu),
-    hasStorage: Boolean(selection.storage && selection.storage.length > 0),
-    hasPsu: Boolean(selection.psu),
-    hasCooler: Boolean(selection.cooler),
-    hasCase: Boolean(selection.case),
+    hasCpu: isHero || Boolean(selection.cpu),
+    hasMotherboard: isHero || Boolean(selection.motherboard),
+    hasRam: isHero || Boolean(selection.ram && selection.ram.length > 0),
+    hasGpu: isHero || Boolean(selection.gpu),
+    hasStorage:
+      isHero || Boolean(selection.storage && selection.storage.length > 0),
+    hasPsu: isHero || Boolean(selection.psu),
+    hasCooler: isHero || Boolean(selection.cooler),
+    hasCase: isHero || Boolean(selection.case),
     activeStep,
   });
 
   useEffect(() => {
     stateRef.current = {
-      hasCpu: Boolean(selection.cpu),
-      hasMotherboard: Boolean(selection.motherboard),
-      hasRam: Boolean(selection.ram && selection.ram.length > 0),
-      hasGpu: Boolean(selection.gpu),
-      hasStorage: Boolean(selection.storage && selection.storage.length > 0),
-      hasPsu: Boolean(selection.psu),
-      hasCooler: Boolean(selection.cooler),
-      hasCase: Boolean(selection.case),
+      hasCpu: isHero || Boolean(selection.cpu),
+      hasMotherboard: isHero || Boolean(selection.motherboard),
+      hasRam: isHero || Boolean(selection.ram && selection.ram.length > 0),
+      hasGpu: isHero || Boolean(selection.gpu),
+      hasStorage:
+        isHero || Boolean(selection.storage && selection.storage.length > 0),
+      hasPsu: isHero || Boolean(selection.psu),
+      hasCooler: isHero || Boolean(selection.cooler),
+      hasCase: isHero || Boolean(selection.case),
       activeStep,
     };
   }, [selection, activeStep]);
@@ -83,7 +88,8 @@ export default function ChassisViewer({
     // Slightly wider lens preserves the original, stable camera position while
     // giving the chassis a little more breathing room.
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(4.8, 2.2, 5.2);
+    if (isHero) camera.position.set(5.2, 2.4, 5.8);
+    else camera.position.set(4.8, 2.2, 5.2);
     camera.lookAt(0, 0.0, 0);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -433,8 +439,8 @@ export default function ChassisViewer({
       color: 0xcfd8dc,
       roughness: 0.15,
       metalness: 0.95,
-      emissive: 0x22d3ee,
-      emissiveIntensity: 0.4,
+      emissive: isHero ? 0xcfd8dc : 0x22d3ee,
+      emissiveIntensity: isHero ? 0 : 0.4,
     });
     const cpuMesh = new THREE.Mesh(
       new THREE.BoxGeometry(0.36, 0.36, 0.04),
@@ -878,9 +884,11 @@ export default function ChassisViewer({
     psuSpot.position.set(-0.6, -1.2, 0.6);
     scene.add(psuSpot);
 
-    const gridHelper = new THREE.GridHelper(7, 14, 0x22d3ee, 0x1e293b);
-    gridHelper.position.y = -1.82;
-    scene.add(gridHelper);
+    if (!isHero) {
+      const gridHelper = new THREE.GridHelper(7, 14, 0x22d3ee, 0x1e293b);
+      gridHelper.position.y = -1.82;
+      scene.add(gridHelper);
+    }
 
     // Mouse Drag Rotation
     let isDragging = false;
@@ -909,9 +917,11 @@ export default function ChassisViewer({
       isDragging = false;
     };
 
-    container.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    if (!isHero) {
+      container.addEventListener("mousedown", onMouseDown);
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseup", onMouseUp);
+    }
 
     // =========================================================================
     // ANIMATION & VISIBILITY REACTION LOOP
@@ -921,8 +931,8 @@ export default function ChassisViewer({
       animationFrameId = requestAnimationFrame(animate);
       clock += 0.02;
 
-      if (!isDragging) {
-        buildGroup.rotation.y += 0.0025;
+      if (isHero || !isDragging) {
+        buildGroup.rotation.y += isHero ? 0.0012 : 0.0025;
       }
 
       const st = stateRef.current;
@@ -988,9 +998,11 @@ export default function ChassisViewer({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      container.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
+      if (!isHero) {
+        container.removeEventListener("mousedown", onMouseDown);
+        window.removeEventListener("mousemove", onMouseMove);
+        window.removeEventListener("mouseup", onMouseUp);
+      }
       window.removeEventListener("resize", onResize);
       if (renderer.domElement && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
@@ -1000,95 +1012,103 @@ export default function ChassisViewer({
   }, []);
 
   return (
-    <div className="relative h-full w-full select-none overflow-hidden bg-navy-950">
+    <div
+      className={`relative h-full w-full select-none overflow-hidden ${isHero ? "bg-transparent" : "bg-navy-950"}`}
+    >
       {/* 3D WebGL Canvas */}
       <div
         ref={containerRef}
-        className="h-full w-full cursor-grab active:cursor-grabbing"
+        className={`h-full w-full ${isHero ? "" : "cursor-grab active:cursor-grabbing"}`}
       />
 
-      {/* Blueprint Grid Overlay */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(34, 211, 238, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.15) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
+      {!isHero && (
+        <>
+          {/* Blueprint Grid Overlay */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-20"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(34, 211, 238, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.15) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
 
-      {/* HUD Corner Tech Annotations */}
-      <div className="pointer-events-none absolute left-4 top-4 flex flex-col gap-1 text-[10px] font-mono tracking-widest text-cyan-400">
-        <span className="flex items-center gap-1.5 font-bold">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400" />
-          ENSAMBLE 3D CON RUTA TRASERA DE CABLES
-        </span>
-        <span className="text-text-muted">
-          BANDEJA CON PASACABLES · CONEXIONES EN VIVO
-        </span>
-      </div>
+          {/* HUD Corner Tech Annotations */}
+          <div className="pointer-events-none absolute left-4 top-4 flex flex-col gap-1 text-[10px] font-mono tracking-widest text-cyan-400">
+            <span className="flex items-center gap-1.5 font-bold">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400" />
+              ENSAMBLE 3D CON RUTA TRASERA DE CABLES
+            </span>
+            <span className="text-text-muted">
+              BANDEJA CON PASACABLES · CONEXIONES EN VIVO
+            </span>
+          </div>
 
-      {/* Subtle floating Save/Load actions in top-right corner of 3D Canvas */}
-      <div className="absolute right-4 top-4 flex items-center gap-2 z-30">
-        {saveFeedback && (
-          <span className="animate-fade-in rounded-lg bg-emerald-500/20 border border-emerald-500/40 px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-300 backdrop-blur-md">
-            {saveFeedback}
-          </span>
-        )}
+          {/* Subtle floating Save/Load actions in top-right corner of 3D Canvas */}
+          <div className="absolute right-4 top-4 flex items-center gap-2 z-30">
+            {saveFeedback && (
+              <span className="animate-fade-in rounded-lg bg-emerald-500/20 border border-emerald-500/40 px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-300 backdrop-blur-md">
+                {saveFeedback}
+              </span>
+            )}
 
-        {hasSavedConfig && onLoadConfig && (
-          <button
-            type="button"
-            onClick={onLoadConfig}
-            title="Recuperar tu configuración guardada anteriormente"
-            className="flex items-center gap-1.5 rounded-lg border border-border/80 bg-navy-900/80 px-2.5 py-1 text-[11px] font-mono font-medium text-text-secondary backdrop-blur-md transition-all hover:border-cyan-500/50 hover:bg-navy-800 hover:text-cyan-300"
-          >
-            <span>↩</span>
-            <span>Recuperar</span>
-          </button>
-        )}
+            {hasSavedConfig && onLoadConfig && (
+              <button
+                type="button"
+                onClick={onLoadConfig}
+                title="Recuperar tu configuración guardada anteriormente"
+                className="flex items-center gap-1.5 rounded-lg border border-border/80 bg-navy-900/80 px-2.5 py-1 text-[11px] font-mono font-medium text-text-secondary backdrop-blur-md transition-all hover:border-cyan-500/50 hover:bg-navy-800 hover:text-cyan-300"
+              >
+                <span>↩</span>
+                <span>Recuperar</span>
+              </button>
+            )}
 
-        {onSaveConfig && (
-          <button
-            type="button"
-            onClick={onSaveConfig}
-            title="Guardar esta configuración en tu navegador"
-            className="flex items-center gap-1.5 rounded-lg border border-cyan-500/30 bg-navy-900/80 px-2.5 py-1 text-[11px] font-mono font-semibold text-cyan-300 backdrop-blur-md transition-all hover:border-cyan-400 hover:bg-cyan-500/10 hover:shadow-sm hover:shadow-cyan-500/20"
-          >
-            <svg
-              className="h-3 w-3"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 17v-6"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 14l3 3 3-3"
-              />
-            </svg>
-            <span>Guardar</span>
-          </button>
-        )}
-      </div>
+            {onSaveConfig && (
+              <button
+                type="button"
+                onClick={onSaveConfig}
+                title="Guardar esta configuración en tu navegador"
+                className="flex items-center gap-1.5 rounded-lg border border-cyan-500/30 bg-navy-900/80 px-2.5 py-1 text-[11px] font-mono font-semibold text-cyan-300 backdrop-blur-md transition-all hover:border-cyan-400 hover:bg-cyan-500/10 hover:shadow-sm hover:shadow-cyan-500/20"
+              >
+                <svg
+                  className="h-3 w-3"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 17v-6"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 14l3 3 3-3"
+                  />
+                </svg>
+                <span>Guardar</span>
+              </button>
+            )}
+          </div>
 
-      <div className="pointer-events-none absolute bottom-4 left-4 text-[10px] font-mono text-text-muted flex items-center gap-2">
-        <span>GIRAR: ARRASTRAR CON RATÓN</span>
-        <span>·</span>
-        <span className="text-cyan-400">ENRUTAMIENTO TRASERO PROFESIONAL</span>
-      </div>
+          <div className="pointer-events-none absolute bottom-4 left-4 text-[10px] font-mono text-text-muted flex items-center gap-2">
+            <span>GIRAR: ARRASTRAR CON RATÓN</span>
+            <span>·</span>
+            <span className="text-cyan-400">
+              ENRUTAMIENTO TRASERO PROFESIONAL
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 }

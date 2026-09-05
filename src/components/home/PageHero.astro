@@ -27,6 +27,7 @@
  * Composition: imports `CTAButton` from the shared UI library.
  */
 import CTAButton from "../ui/CTAButton.astro";
+import HeroChassis from "./HeroChassis";
 
 interface Props {
   readonly eyebrow?: string;
@@ -38,6 +39,13 @@ interface Props {
   readonly outlineHref?: string;
   readonly outlineLabel?: string;
   readonly align?: "left" | "center";
+  readonly showChassis?: boolean;
+  readonly chassisStatusLabel?: string;
+  readonly chassisLocaleLabel?: string;
+  readonly stats?: readonly {
+    readonly label: string;
+    readonly value: string;
+  }[];
   readonly class?: string;
 }
 
@@ -51,6 +59,10 @@ const {
   outlineHref,
   outlineLabel,
   align = "left",
+  showChassis = false,
+  chassisStatusLabel = "SYS.TEMP: OPTIMAL",
+  chassisLocaleLabel = "THE CLOUD: BOGOTÁ D.C.",
+  stats = [],
   class: extraClass = "",
 } = Astro.props;
 
@@ -60,96 +72,126 @@ const alignment =
 
 <section
   class:list={[
-    "relative isolate w-full overflow-hidden bg-navy-950 py-20 md:py-28",
+    "relative isolate w-full overflow-hidden bg-navy-950",
+    showChassis && "min-h-[calc(100dvh-4rem)] border-b border-border/60",
+    !showChassis && "py-20 md:py-28",
     extraClass,
   ]}
 >
   <div
-    class="pointer-events-none absolute inset-0 -z-10 opacity-40"
-    aria-hidden="true"
-  >
-    <div
-      class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl"
-    >
-    </div>
-    <div
-      class="absolute bottom-0 right-0 h-72 w-72 translate-x-1/4 rounded-full bg-violet-500/10 blur-3xl"
-    >
-    </div>
-  </div>
-
-  <div
     class:list={[
-      "mx-auto flex w-full max-w-[1280px] flex-col gap-6 px-4 md:px-8",
-      alignment,
+      "mx-auto flex h-full w-full max-w-[1280px] flex-col justify-between gap-6 px-4 py-8 md:flex-row md:items-stretch md:px-8 md:py-10",
+      showChassis ? "lg:min-h-[calc(100dvh-4rem)]" : "",
     ]}
   >
     {
-      eyebrow && (
-        <span
-          class="font-mono text-xs tracking-widest text-cyan-500 md:text-sm"
-        >
-          {eyebrow}
-        </span>
+      showChassis && (
+        <aside class="pointer-events-none hidden flex-col justify-between pb-2 pt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-300/80 lg:flex lg:w-12 lg:text-[11px]">
+          <span class="-rotate-180 [writing-mode:vertical-rl]">SYS.ONLINE</span>
+          <span class="[writing-mode:vertical-rl]">VER 2024.1</span>
+        </aside>
       )
     }
 
-    <h1
-      class="text-4xl font-bold leading-tight tracking-tight text-text-primary md:text-6xl"
+    <div
+      class:list={[
+        "flex w-full flex-col justify-center gap-6 self-center",
+        showChassis
+          ? "lg:max-w-[640px] lg:flex-1 lg:py-10"
+          : "lg:max-w-[640px]",
+        alignment,
+      ]}
     >
-      {title}
       {
-        accent && (
-          <>
-            <br />
-            <span class="text-cyan-500">{accent}</span>
-          </>
+        eyebrow && (
+          <span
+            class="inline-flex items-center gap-2 self-start font-mono text-[10px] uppercase tracking-[0.18em] text-text-secondary md:text-xs"
+          >
+            <span class="h-1.5 w-1.5 rounded-sm bg-cyan-400" aria-hidden="true" />
+            {eyebrow}
+          </span>
         )
       }
-    </h1>
+
+      <h1
+        class="text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-7xl"
+      >
+        {title}
+        {
+          accent && (
+            <>
+              <br />
+              <span class="text-cyan-400">{accent}</span>
+            </>
+          )
+        }
+      </h1>
+
+      {
+        body && (
+          <p class="max-w-xl text-base leading-relaxed text-text-secondary md:text-lg">
+            {body}
+          </p>
+        )
+      }
+
+      {
+        (primaryHref || outlineHref) && (
+          <div
+            class:list={[
+              "mt-2 flex flex-col gap-3 sm:flex-row",
+              align === "center" && "justify-center",
+              align === "left" && "justify-start",
+            ]}
+          >
+            {primaryHref && primaryLabel && (
+              <CTAButton href={primaryHref} variant="primary" size="lg">
+                {primaryLabel}
+              </CTAButton>
+            )}
+            {outlineHref && outlineLabel && (
+              <CTAButton href={outlineHref} variant="outline" size="lg">
+                {outlineLabel}
+              </CTAButton>
+            )}
+          </div>
+        )
+      }
+
+      {
+        showChassis && stats.length > 0 && (
+          <dl class="mt-10 grid w-full max-w-md grid-cols-3 gap-x-6 border-t border-border/60 pt-6">
+            {stats.map((stat) => (
+              <div class="flex flex-col gap-1">
+                <dt class="font-mono text-[10px] uppercase tracking-[0.18em] text-text-muted">
+                  {stat.label}
+                </dt>
+                <dd class="font-mono text-lg font-bold text-text-primary md:text-xl">
+                  {stat.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+    </div>
 
     {
-      /*
-       * Accent underline: a thin cyan gradient bar beneath the H1 that
-       * marks it as the section's primary focal point. Renders only when
-       * an `accent` prop is supplied — the cyan line reinforces the accent
-       * word rendered on the second H1 line.
-       */
-      accent && (
-        <div
-          class="mt-2 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-500 via-cyan-400 to-transparent md:mt-3 md:w-32"
-          aria-hidden="true"
-        />
-      )
-    }
-
-    {
-      body && (
-        <p class="max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
-          {body}
-        </p>
-      )
-    }
-
-    {
-      (primaryHref || outlineHref) && (
-        <div
-          class:list={[
-            "mt-2 flex flex-col gap-3 sm:flex-row",
-            align === "center" && "justify-center",
-            align === "left" && "justify-start",
-          ]}
-        >
-          {primaryHref && primaryLabel && (
-            <CTAButton href={primaryHref} variant="primary" size="lg">
-              {primaryLabel}
-            </CTAButton>
-          )}
-          {outlineHref && outlineLabel && (
-            <CTAButton href={outlineHref} variant="outline" size="lg">
-              {outlineLabel}
-            </CTAButton>
-          )}
+      showChassis && (
+        <div class="relative hidden flex-1 lg:block">
+          <div
+            class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-cyan-300/80"
+            aria-hidden="true"
+          >
+            <div class="[writing-mode:vertical-rl]">{chassisStatusLabel}</div>
+            <div class="[writing-mode:vertical-rl]">{chassisLocaleLabel}</div>
+          </div>
+          <div
+            class="pointer-events-none absolute inset-10 rounded-full bg-blue-500/15 blur-3xl"
+            aria-hidden="true"
+          >
+          </div>
+          <HeroChassis client:visible />
         </div>
       )
     }
