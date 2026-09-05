@@ -204,7 +204,9 @@ export default function Configurator({
     draw += ram.length * 5;
     draw += storage.length * 10;
     const psuCapacity = psu?.wattage ?? 0;
-    return { draw, psuCapacity };
+    // PCs distribute their main load through the PSU's standard 12 V DC rail.
+    const estimated12VCurrentA = draw / 12;
+    return { draw, psuCapacity, estimated12VCurrentA };
   }, [cpu, gpu, ram, storage, psu]);
 
   const componentIds = useMemo(
@@ -515,6 +517,17 @@ export default function Configurator({
                     / {estimatedPower.psuCapacity}W
                   </span>
                 )}
+              </span>
+            </div>
+
+            {/* 12 V rail estimate: useful for checking the main DC load. */}
+            <div
+              title="Estimación del consumo sobre el riel principal de 12 V de la fuente"
+              className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-navy-950/80 px-2.5 py-1 font-mono text-xs"
+            >
+              <span className="text-amber-300">⎓</span>
+              <span className="text-text-secondary text-[11px]">
+                12V · {estimatedPower.estimated12VCurrentA.toFixed(1)}A
               </span>
             </div>
 
