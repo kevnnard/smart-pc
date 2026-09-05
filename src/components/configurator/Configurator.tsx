@@ -972,7 +972,7 @@ export default function Configurator({
             </div>
 
             {/* Quick mini parts strip */}
-            <div className="flex flex-wrap gap-1 max-h-20 overflow-y-auto scrollbar-thin">
+            <div className="flex h-14 flex-wrap content-start gap-1 overflow-y-auto scrollbar-thin">
               {selectedComponents.map((c) => (
                 <span
                   key={c.id}
@@ -984,7 +984,7 @@ export default function Configurator({
               ))}
             </div>
 
-            <div className="pt-2 border-t border-border/60 flex items-center justify-between">
+            <div className="flex shrink-0 items-center justify-between border-t border-border/60 pt-2">
               <div>
                 <p className="text-[10px] font-mono uppercase text-text-muted">
                   Subtotal en vivo
